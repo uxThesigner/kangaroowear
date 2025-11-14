@@ -1,0 +1,13 @@
+/* Estilos Específicos da Página de Busca (busca.html)
+*/
+
+.search-page-main {
+    padding: 60px 0 80px 0;
+}
+
+/* Define o NÚMERO DE COLUNAS para a grade de busca.
+  O 'display: grid' e 'gap' vêm de components.css.
+*/
+.search-results-grid {
+    grid-template-columns: repeat(5, 1fr);
+}

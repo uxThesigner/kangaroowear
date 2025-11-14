@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca | KANGAROO WEAR</title>
+    
+    <link rel="icon" href="../Imagens/Banners/favicon.png" type="image/png">
+    
+    <!-- === CSS MODULARIZADO === -->
+    <!-- Núcleo do Site -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="components.css">
+    
+    <!-- CSS Específico da Página -->
+    <link rel="stylesheet" href="page-search.css">
+
+    <!-- CSS Responsivo (deve ser o último) -->
+    <link rel="stylesheet" href="responsive.css">
+    <!-- ======================== -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="search-page page-with-fixed-header">
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        
+        <section class="internal-banner-wrapper search-hero-banner">
+            <div class="internal-banner-carousel" id="internal-banner-carousel-busca">
+                <div class="internal-banner-item active" style="background-image: url('../Imagens/Banners/herobusca.jpg');"></div>
+                <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/herobusca2.jpg');"></div>
+                <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/herobusca3.jpg');"></div>
+                <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/herobusca4.jpg');"></div>
+            </div>
+        </section>
+
+        <div class="container search-page-main">
+            <h2 id="search-title" style="font-weight: 800; margin-bottom: 30px;"></h2>
+    
+            <div class="search-results-grid" id="search-results">
+            </div>
+        </div>
+
+    </main>
+    
+    <footer class="footer">
+        <div id="footer-placeholder">
+            </div>
+    </footer>
+
+    <!-- ==== SESSÃO DE DADOS ==== -->
+    <script src="products.js" defer></script>
+    <script src="coupons.js" defer></script>
+    <script src="partners.js" defer></script>
+    
+    <!-- ==== SESSÃO DE LÓGICA MODULARIZADA ==== -->
+    <script src="functions.js" defer></script> <!-- A Biblioteca de Ferramentas -->
+    <script src="main.js" defer></script>      <!-- O Cérebro (Execução) -->
+    <!-- ======================================= -->
+</body>
+</html>

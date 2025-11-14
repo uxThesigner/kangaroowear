@@ -1,0 +1,396 @@
+/* ------------------------------------------- */
+/* --- 1. HEADER (FIXO e TRANSLÚCIDO) --- */
+/* ------------------------------------------- */
+.header {
+    background-color: rgba(26, 26, 26, 0.9); 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; 
+    backdrop-filter: blur(5px); 
+    transition: background-color 0.3s, backdrop-filter 0.3s;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    width: 90%;
+    max-width: 1280px; 
+    margin: 0 auto;
+}
+
+/* Bloco Esquerdo (Logo + Menu) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 40px; 
+}
+
+/* LOGO DE IMAGEM */
+.logo {
+    padding-right: 0;
+    border-right: none; 
+}
+.logo-img {
+    height: 25px; 
+    width: auto;
+    filter: none; 
+}
+.logo h1 {
+    display: none; 
+}
+
+/* Menu de Navegação */
+.nav-menu > ul { 
+    list-style: none;
+    display: flex;
+}
+.nav-menu a {
+    color: white; 
+    padding: 0 20px; 
+    font-size: 0.85em;
+    font-weight: 700; 
+    letter-spacing: 0.5px;
+    transition: color 0.3s; 
+}
+
+/* Ícones (Busca, Usuário, Carrinho) */
+.header-icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px; 
+}
+.header-icons a, .header-icons .search-icon {
+    color: white; 
+    font-size: 1.1em;
+    position: relative;
+    margin-left: 0;
+    transition: color 0.3s; 
+}
+.search-box-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Caixa de Busca */
+.search-input {
+    width: 200px; /* Largura fixa da caixa */
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5); /* Borda branca mais suave */
+    background: transparent;
+    color: white;
+    font-size: 0.9em; /* Leve ajuste de tamanho */
+    opacity: 1;
+    position: relative; 
+    right: auto;
+    top: auto;
+    transform: none;
+    z-index: auto;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-bottom: 2px solid var(--color-accent); /* Fica verde neon ao digitar */
+}
+
+/* ------------------------------------------- */
+/* --- ESTILO SCROLLED (BASE FIXA) --- */
+/* ------------------------------------------- */
+.header.scrolled {
+    background-color: var(--color-primary); 
+    backdrop-filter: none; 
+    position: fixed; 
+}
+
+.header.scrolled .nav-menu a,
+.header.scrolled .header-icons a,
+.header.scrolled .header-icons .search-icon,
+.header.scrolled .search-input {
+    color: white; 
+}
+.header.scrolled .search-input {
+    border-bottom-color: rgba(255, 255, 255, 0.5); /* Mantém a borda suave no scroll */
+    color: white;
+}
+.header.scrolled .logo-img {
+    filter: none; 
+}
+.header.scrolled .logo {
+    border-right-color: rgba(255, 255, 255, 0.1);
+}
+.header.scrolled .header-content {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+/* ---------------------------------------------------- */
+/* ESTILOS PARA PÁGINAS INTERNAS (CARRINHO, BUSCA, PRODUTOS, PAGAMENTOS) */
+/* ---------------------------------------------------- */
+.header.product-page-header {
+    background-color: var(--color-background); /* Fundo branco fixo */
+    position: fixed; /* MANTÉM FIXO no topo */
+    border-bottom: 1px solid var(--color-border);
+}
+.product-page-header .logo-img {
+    filter: invert(1); /* Logo escuro no fundo claro */
+}
+.product-page-header .nav-menu a, 
+.product-page-header .header-icons a,
+.product-page-header .search-icon {
+    color: var(--color-text); /* Ícones e links escuros */
+}
+.product-page-header .header-content {
+    border-bottom: none;
+}
+.product-page-header .logo {
+    border-right: 1px solid var(--color-border);
+}
+.product-page-header .search-input {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3); 
+    color: var(--color-text);
+}
+.product-page-header .search-input:focus {
+    border-bottom: 2px solid var(--color-accent); /* Fica verde neon ao digitar */
+}
+
+
+/* ---------------------------------------------------- */
+/* --- ESTILOS DO DROPDOWN MENU (CSS PURO) --- */
+/* ---------------------------------------------------- */
+.nav-menu .nav-dropdown {
+    position: relative;
+    padding-bottom: 20px; 
+    margin-bottom: -20px; 
+}
+
+.dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; 
+    transition: opacity 0.2s, visibility 0.2s;
+    
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    
+    background-color: var(--color-primary); 
+    backdrop-filter: none;
+
+    min-width: 200px;
+    padding: 10px 0; 
+    list-style: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+.nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto; 
+}
+
+.dropdown-menu li a {
+    color: white; 
+    padding: 8px 20px;
+    font-size: 0.85em;
+    font-weight: 400; 
+    display: block; 
+    white-space: nowrap; 
+}
+.dropdown-menu li a:hover {
+    background-color: #004D00; 
+    color: var(--color-accent); 
+}
+
+.highlight-link {
+    color: var(--color-accent) !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 5px;
+}
+.highlight-link:hover {
+    background-color: #004D00;
+    color: white !important;
+}
+
+
+.product-page-header .dropdown-menu {
+    background-color: var(--color-background); 
+    backdrop-filter: none; 
+    border: 1px solid var(--color-border); 
+    border-top: none; 
+}
+.product-page-header .dropdown-menu li a {
+    color: var(--color-text); 
+}
+.product-page-header .dropdown-menu li a:hover {
+    background-color: var(--color-light-gray); 
+}
+
+/* Estilos para o dropdown de usuário */
+.user-dropdown {
+    position: relative;
+    padding-bottom: 20px; 
+    margin-bottom: -20px;
+    display: flex; 
+    align-items: center;
+}
+.user-dropdown .dropdown-menu {
+    left: auto; /* Remove o alinhamento padrão da esquerda */
+    right: 0;   /* Alinha o menu à direita do ícone */
+    min-width: 160px;
+}
+.user-dropdown .user-icon-toggle {
+    padding: 0 5px; /* Adiciona um leve espaçamento para o clique */
+}
+
+
+/* --- CORREÇÃO HOVER DO HEADER --- */
+.nav-menu a:hover,
+.header-icons a:hover,
+.header-icons .search-icon:hover {
+    color: var(--color-accent); 
+}
+
+.product-page-header .nav-menu a:hover,
+.product-page-header .header-icons a:hover,
+.product-page-header .search-icon:hover {
+    color: var(--color-accent); 
+}
+
+/* ======================================================= */
+/* --- AJUSTES DE NAVEGAÇÃO MOBILE (MENU HAMBÚRGUER) --- */
+/* ======================================================= */
+.menu-toggle {
+    display: none; 
+    cursor: pointer;
+    font-size: 1.5em;
+    color: white; 
+    transition: color 0.3s;
+}
+.menu-toggle:hover {
+    color: var(--color-accent);
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px; 
+    height: 100%;
+    background-color: var(--color-primary); 
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transform: translateX(100%); 
+    transition: transform 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+.mobile-menu.open {
+    transform: translateX(0); 
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-img-mobile {
+    height: 25px;
+}
+
+.close-menu {
+    font-size: 1.5em;
+    color: white;
+    cursor: pointer;
+}
+
+.mobile-nav {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.mobile-nav ul {
+    list-style: none; /* Remove todos os marcadores de lista */
+    padding-left: 0;  /* Remove o preenchimento padrão da lista */
+}
+
+.mobile-nav li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav li a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.mobile-nav li a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav .mobile-dropdown {
+    list-style: none;
+    padding-left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: none; /* Começa fechado */
+}
+.mobile-nav .mobile-dropdown.active {
+    display: block; /* Abre no clique */
+}
+
+.mobile-nav .mobile-dropdown li {
+    border-bottom: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav .mobile-dropdown li a {
+    padding-left: 35px;
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.user-link {
+    background-color: var(--color-accent);
+}
+.user-link a {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.menu-footer {
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.menu-footer p {
+    font-size: 0.9em;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+.menu-footer .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    font-size: 1.5em;
+}
+.menu-footer .social-icons a {
+    color: white;
+}

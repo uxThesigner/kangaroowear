@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu Carrinho | KANGAROO WEAR</title>
+    
+    <link rel="icon" href="../Imagens/Banners/favicon.png" type="image/png">
+    
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="page-cart.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="cart-page"> 
+
+    <div id="header-placeholder"></div>
+
+    <main class="cart-main container">
+        
+        <h1 class="page-title">SEU CARRINHO</h1>
+
+        <div class="cart-content-wrapper">
+            
+            <div class="cart-list-container">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th class="th-product">Produto</th>
+                            <th>Cor</th>
+                            <th>Tamanho</th>
+                            <th>Quantidade</th>
+                            <th>Preço</th>
+                            <th>Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-list-body">
+                    </tbody>
+                </table>
+                <div class="back-to-shop">
+                    <a href="index.html" class="btn btn-secondary">← Continuar Comprando</a>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h3>RESUMO DO PEDIDO</h3>
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <span id="summary-subtotal">R$ 0,00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Frete</span>
+                    <span id="summary-shipping">R$ 0,00</span>
+                </div>
+                
+                <div class="summary-line-cupom">
+                    <input type="text" id="cupom-input" placeholder="Adicionar cupom">
+                    <button id="cupom-btn" class="btn btn-secondary">OK</button>
+                </div>
+                
+                <div class="summary-line" id="summary-discount-line" style="display: none;">
+                    <span>Desconto (<span id="discount-percent">0%</span>)</span>
+                    <span id="summary-discount">- R$ 0,00</span>
+                </div>
+
+                <p id="cupom-status-message" class="cupom-message-status"></p>
+                
+                <div class="summary-line total-line">
+                    <strong>Total</strong>
+                    <strong id="summary-total">R$ 0,00</strong>
+                </div>
+
+                <p class="installments-info">Em até 6x de R$ 0,00 sem juros.</p>
+
+                <button id="checkout-btn" class="btn btn-primary checkout-btn">
+                    FINALIZAR COMPRA
+                </button>
+                
+                <div class="share-cart-container">
+                    <a href="#" id="share-cart-btn">
+                        <i class="fas fa-share-alt"></i> Compartilhar Carrinho
+                    </a>
+                    <span id="share-cart-success" style="display: none;">Link copiado!</span>
+                </div>
+                </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div id="footer-placeholder">
+            </div>
+    </footer>
+
+    <script src="products.js" defer></script>
+    <script src="coupons.js" defer></script>
+    <script src="partners.js" defer></script>
+    
+    <script src="functions.js" defer></script> <script src="main.js" defer></script>      </body>
+</html>

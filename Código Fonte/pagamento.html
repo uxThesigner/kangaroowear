@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Pedido | KANGAROO WEAR</title>
+    
+    <link rel="icon" href="../Imagens/Banners/favicon.png" type="image/png">
+    
+    <!-- === CSS MODULARIZADO === -->
+    <!-- Núcleo do Site -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="components.css">
+    
+    <!-- CSS Específico da Página -->
+    <link rel="stylesheet" href="page-checkout.css">
+
+    <!-- CSS Responsivo (deve ser o último) -->
+    <link rel="stylesheet" href="responsive.css">
+    <!-- ======================== -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="checkout-page page-with-fixed-header">
+
+    <div id="header-placeholder"></div>
+
+    <main class="checkout-main container">
+
+        <h1 class="page-title">CONFIRMAR PEDIDO</h1>
+
+        <div class="checkout-grid">
+            
+            <div class="checkout-forms">
+
+                <form id="contact-info-form" class="checkout-form-data">
+                    
+                    <h3 class="form-section-title">1. Dados Pessoais</h3>
+                    
+                    <h3 class="form-subtitle">Informe seus dados</h3>
+                    <div class="form-row-grid">
+                        <div class="form-group-full">
+                            <label for="nome-completo">Nome Completo</label>
+                            <input type="text" id="nome-completo" name="nome_cliente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf-cnpj">CPF ou CNPJ</label>
+                            <input type="text" id="cpf-cnpj" name="cpf_cliente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="data-nascimento">Data de Nascimento</label>
+                            <input type="date" id="data-nascimento" name="data_nascimento" required>
+                        </div>
+                    </div>
+
+                    <h3 class="form-subtitle">Endereço de Envio</h3>
+                    <div class="form-row-grid">
+                        <div class="form-group-full">
+                            <label for="rua">Rua / Avenida</label>
+                            <input type="text" id="rua" name="rua" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="numero">Número</label>
+                            <input type="text" id="numero" name="numero" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" id="bairro" name="bairro" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" id="cidade" name="cidade" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input type="text" id="estado" name="estado" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cep">CEP</label>
+                            <input type="text" id="cep" name="cep" required>
+                        </div>
+                    </div>
+
+                    <h3 class="form-section-title">2. Dados do Pagador</h3>
+                    <div class="checkbox-line">
+                        <input type="checkbox" id="mesmos-dados-check">
+                        <label for="mesmos-dados-check">Usar os mesmos dados do cliente.</label>
+                    </div>
+
+                     <div class="form-row-grid">
+                        <div class="form-group-full">
+                            <label for="pagador-nome">Nome Completo</label>
+                            <input type="text" id="pagador-nome" name="nome_pagador" required>
+                        </div>
+                        <div class="form-group-full">
+                            <label for="pagador-cpf">CPF ou CNPJ</label>
+                            <input type="text" id="pagador-cpf" name="cpf_pagador" required>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-actions">
+                        <button type="submit" id="confirm-payment-btn" class="btn btn-primary">
+                            Confirmar Pagamento
+                        </button>
+                    </div>
+                    <div class="cancel-link-container">
+                        <a href="#" id="cancel-order-btn" class="cancel-link">Cancelar Pedido</a>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="checkout-summary">
+                 <h3 class="summary-title">RESUMO DO PEDIDO</h3>
+                 
+                 <div id="checkout-summary-items">
+                     </div>
+                 
+                 <div class="summary-totals">
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <span id="co_subtotal">R$ 0,00</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Frete</span>
+                        <span id="co_shipping">R$ 0,00</span>
+                    </div>
+                    <div class="summary-line discount-line" id="co_discount_line" style="display: none;">
+                        <span>Desconto</span>
+                        <span id="co_discount">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="summary-line total-line">
+                        <strong>Total Geral</strong>
+                        <strong id="co_total">R$ 0,00</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="cancel-modal" class="cancel-modal" style="display: none;">
+        <div class="modal-content">
+            <h2 class="modal-title">Pedido de Cancelamento</h2>
+            <p>Você está tão perto de vestir sua **KANGAROO WEAR**!</p>
+            <p>Tem certeza de que deseja cancelar e perder essa coleção?</p>
+            <div class="modal-actions">
+                <button id="modal-close-btn" class="btn btn-secondary">Continuar a Comprar</button>
+                <button id="modal-confirm-cancel" class="btn btn-primary">Sim, Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div id="footer-placeholder">
+            </div>
+    </footer>
+
+    <!-- ==== SESSÃO DE DADOS ==== -->
+    <script src="products.js" defer></script>
+    <script src="coupons.js" defer></script>
+    <script src="partners.js" defer></script>
+    
+    <!-- ==== SESSÃO DE LÓGICA MODULARIZADA ==== -->
+    <script src="functions.js" defer></script> <!-- A Biblioteca de Ferramentas -->
+    <script src="main.js" defer></script>      <!-- O Cérebro (Execução) -->
+    <!-- ======================================= -->
+</body>
+</html>

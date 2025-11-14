@@ -1,0 +1,221 @@
+/* Estilos Específicos da Página do Carrinho (carrinho.html)
+*/
+
+.cart-main {
+    /* (O padding-top: 100px; foi movido para base.css -> .page-with-fixed-header) */
+    padding-top: 60px; /* Reduzido o padding-top já que o header não é fixo aqui */
+    padding-bottom: 80px;
+}
+
+/* Título principal (usado em busca.html e carrinho.html) */
+.page-title {
+    font-size: 2.5em;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--color-primary);
+}
+
+.cart-content-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Coluna da lista é 2x maior que a da resumo */
+    gap: 40px;
+}
+
+/* --- Tabela (Esquerda) --- */
+.cart-list-container {
+    width: 100%;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-table th, 
+.cart-table td {
+    padding: 15px 10px;
+    border-bottom: 1px solid var(--color-light-gray);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.cart-table th {
+    font-size: 0.8em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #555;
+}
+
+.cart-table .th-product {
+    text-align: left;
+    width: 50%;
+}
+
+.product-info-cell {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.product-info-cell span {
+    font-size: 0.95em;
+    font-weight: 600;
+}
+
+.cart-product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+}
+
+.cart-quantity-input {
+    width: 60px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid var(--color-border);
+}
+
+.btn-remove-item {
+    background: none;
+    border: none;
+    color: var(--color-highlight);
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.btn-remove-item:hover {
+    color: var(--color-primary);
+}
+
+.back-to-shop {
+    margin-top: 30px;
+}
+
+/* --- Resumo (Direita) --- */
+.cart-summary {
+    background-color: #fdfdfd;
+    border: 1px solid var(--color-light-gray);
+    padding: 30px;
+    height: fit-content; /* Faz o resumo ter a altura do seu conteúdo */
+}
+
+.cart-summary h3 {
+    font-size: 1.3em;
+    font-weight: 800;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+
+.summary-line span:first-child {
+    color: #444;
+}
+.summary-line span:last-child {
+    font-weight: 600;
+}
+
+.summary-line.total-line {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.summary-line.total-line strong:last-child {
+    font-size: 1.3em;
+    color: var(--color-highlight);
+}
+
+.installments-info {
+    font-size: 0.85em;
+    color: #555;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 25px;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 1.1em;
+}
+
+/* --- Cupom --- */
+.summary-line-cupom {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    border-top: 1px solid var(--color-light-gray);
+    border-bottom: 1px solid var(--color-light-gray);
+    padding: 20px 0;
+}
+.summary-line-cupom input {
+    flex-grow: 1; /* O input ocupa o espaço restante */
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9em;
+}
+.summary-line-cupom .btn-secondary {
+    padding: 10px 15px; /* Botão OK menor */
+    flex-shrink: 0; /* Impede que o botão encolha */
+    font-size: 0.9em;
+    background-color: var(--color-light-gray); /* Fundo cinza para o botão "OK" */
+}
+.summary-line-cupom .btn-secondary:hover {
+    background-color: var(--color-border);
+}
+
+.cupom-message-status {
+    width: 100%;
+    margin-top: 10px;
+    font-weight: 700;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 0.9em;
+}
+.cupom-message-status[style*="var(--color-highlight)"] {
+    color: var(--color-highlight) !important; 
+}
+.cupom-message-status[style*="var(--color-accent)"] {
+    color: var(--color-accent) !important;
+}
+
+/* === NOVO ESTILO: Botão Compartilhar Carrinho === */
+.share-cart-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#share-cart-btn {
+    text-decoration: none;
+    color: #555;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+#share-cart-btn i {
+    margin-right: 8px;
+}
+
+#share-cart-btn:hover {
+    color: var(--color-accent);
+}
+
+#share-cart-success {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--color-accent);
+}

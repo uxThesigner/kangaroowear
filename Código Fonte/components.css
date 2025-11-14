@@ -1,0 +1,451 @@
+/* Arquivo de Componentes Reutilizáveis
+  (Cards, Sliders, Heros, Banners, e agora, a Grade de Busca)
+*/
+
+/* --- 1. SLIDER/ESTEIRA DE PRODUTOS (Genérico) --- */
+.product-slider-section {
+    padding: 60px 0 80px 0; 
+    background-color: var(--color-background); /* Fundo branco padrão */
+}
+.product-slider-section h2 {
+    text-align: center;
+    margin-bottom: 40px; 
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 900; 
+    font-size: 2em; 
+    color: var(--color-primary); 
+}
+
+.slider-wrapper {
+    padding: 0; 
+    overflow: hidden;
+}
+.product-slider, .partner-slider {
+    display: flex; 
+    overflow-x: scroll; 
+    gap: 20px; 
+    padding-bottom: 20px;
+}
+.product-slider::-webkit-scrollbar, .partner-slider::-webkit-scrollbar {
+    display: none; 
+}
+
+/* --- 2. CARD DE PRODUTO (Layout Padrão) --- */
+.product-card-link {
+    text-decoration: none;
+    color: var(--color-text);
+    scroll-snap-align: start; 
+    border: 1px solid transparent; /* Borda para o hover */
+    transition: border-color 0.3s;
+    
+    /* AJUSTE: Garante que o card se estique verticalmente (bom para grids) */
+    display: flex;
+    flex-direction: column;
+}
+.product-card-link .product-card {
+    height: 100%; /* Faz o card preencher o link */
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card-link:hover {
+    border-color: var(--color-border);
+}
+
+.product-image-container {
+    width: 100%; 
+    padding-bottom: 100%; /* Força a proporção 1:1 (Quadrada) */
+    height: 0;
+    background-color: var(--color-light-gray);
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.product-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem preencha o container */
+}
+
+.product-info {
+    padding: 10px 5px; /* Padding para o texto */
+    text-align: left; /* Alinha todo o texto à esquerda */
+    
+    /* AJUSTE: Garante que o texto preencha o espaço */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Faz esta seção crescer para preencher o card */
+}
+
+.product-meta {
+    display: flex;
+    justify-content: space-between; /* Nota na esquerda, reviews na direita */
+    align-items: center;
+    font-size: 0.8em;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.product-meta .rating {
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.product-meta .rating .fas {
+    color: var(--color-accent); /* Estrela verde neon */
+    margin-right: 3px;
+}
+
+.product-meta .reviews-count {
+    font-size: 0.9em;
+}
+
+.product-info h3 {
+    font-size: 0.95em; /* Tamanho do Título */
+    font-weight: 700;
+    margin: 0 0 10px 0; /* Espaçamento */
+    height: 2.4em; /* Força 2 linhas de altura */
+    overflow: hidden;
+    line-height: 1.2;
+}
+
+.price-box {
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.price-tag {
+    font-size: 0.8em; /* "por apenas" pequeno */
+    font-weight: 400;
+    color: #555;
+    display: block; /* Fica acima do preço */
+}
+
+.current-price {
+    font-size: 1.3em; /* Preço destacado */
+    font-weight: 800; 
+    color: var(--color-highlight); /* Vermelho */
+}
+
+.coupon-notice {
+    font-size: 0.8em; /* Cupom sutil */
+    color: var(--color-text);
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    padding: 0;
+    
+    /* AJUSTE: Garante que o cupom fique em baixo */
+    margin-top: auto; 
+}
+.coupon-notice strong {
+    font-weight: 800;
+    color: var(--color-primary); 
+}
+
+.color-swatches {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+    height: 15px; /* Altura fixa para os quadradinhos */
+}
+
+.color-swatch {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px; /* Quadradinhos arredondados */
+    border: 1px solid var(--color-border);
+}
+
+
+/* --- 3. CARD DE PARCEIRO (Layout) --- */
+.partner-slider-section {
+    padding: 60px 0 80px 0;
+    background-color: var(--color-background);
+}
+.partner-slider-section h2 {
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: 900; 
+    font-size: 2em;
+}
+
+.partner-slider-wrapper-centralized {
+    /* (120px * 8 cards) + (10px * 7 gaps) = 1030px */
+    /* Este max-width pode ser ajustado por página (ex: 1200px) */
+    max-width: 1030px; 
+    margin: 0 auto;
+    position: relative; 
+}
+
+.partner-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--color-primary);
+    font-size: 1.8em;
+    opacity: 0.5;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.partner-arrow.prev { 
+    left: -55px; 
+} 
+.partner-arrow.next { 
+    right: -55px; 
+}
+.partner-arrow:hover {
+    color: var(--color-accent);
+    transform: translateY(-50%) scale(1.2); /* Efeito de "saltar" */
+    opacity: 1;
+}
+
+.partner-card-link {
+    display: block;
+    text-decoration: none;
+    flex: 0 0 120px; 
+    min-width: 120px; 
+    margin-right: 10px; 
+    scroll-snap-align: start;
+}
+
+.partner-card {
+    background-color: transparent; 
+    border: none;
+    overflow: hidden;
+    box-shadow: none;
+    transition: box-shadow 0.3s ease;
+    
+    height: 100%; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.partner-image-container {
+    width: 100%;
+    max-width: 120px; 
+    aspect-ratio: 1 / 1; 
+    overflow: hidden;
+    
+    background-color: var(--color-primary); 
+    border-radius: 50%; 
+    border: 2px solid var(--color-accent); 
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s;
+}
+
+.partner-image-container img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+    display: block;
+    filter: grayscale(100%); 
+    transition: filter 0.3s, transform 0.3s;
+}
+
+.partner-card-link:hover .partner-image-container {
+    border-color: #00E600; 
+}
+.partner-card-link:hover .partner-image-container img {
+    filter: none; 
+    transform: scale(1.05);
+}
+
+.partner-info {
+    padding: 10px 0;
+    text-align: center;
+    background-color: transparent; 
+    border-top: none; 
+}
+
+.partner-info h3 {
+    font-size: 0.85em; 
+    font-weight: 800; 
+    margin: 0 0 5px;
+    color: var(--color-primary); 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.partner-nickname {
+    font-size: 0.75em; 
+    color: var(--color-text);
+    margin: 0;
+    font-weight: 600;
+}
+
+
+/* --- 4. HERO BANNER (Vídeo Home/Love) --- */
+.hero-banner-video {
+    min-height: 100vh; 
+    padding-top: 0; 
+    background-color: var(--color-primary); 
+    position: relative;
+    
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: 1; 
+    object-fit: cover;
+}
+
+.hero-content {
+    padding-top: 100px; 
+    position: relative;
+    z-index: 2; /* Assegura que o texto está SOBRE o vídeo */
+    padding-bottom: 80px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7); 
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px); 
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); 
+    }
+}
+
+.fade-in-text {
+    opacity: 0; 
+    animation: fadeInUp 1s ease-out 0.3s forwards; 
+}
+
+
+/* --- 5. FAIXA DE OFERTAS (Marquee) --- */
+.offer-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3; 
+    
+    background-color: rgba(17, 17, 17, 0.75); 
+    backdrop-filter: blur(2px);
+    
+    color: white;
+    padding: 8px 0; 
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0.9em; 
+    font-weight: 600; 
+    text-transform: uppercase;
+}
+
+@keyframes marquee {
+    from { transform: translateX(0%); } 
+    to { transform: translateX(-100%); }
+}
+
+.offer-bar-content {
+    display: inline-block;
+    padding-left: 0; 
+    animation: marquee 45s linear infinite; 
+    min-width: 100%; 
+    font-family: 'Poppins', Arial, sans-serif;
+}
+.offer-bar-content span {
+    margin-right: 50px; 
+}
+
+
+/* --- 6. BANNER INTERNO (Busca, Produto) --- */
+.internal-banner-wrapper {
+    min-height: 30vh; 
+    max-height: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.internal-banner-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.internal-banner-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0; /* Começa escondido */
+    transition: opacity 1s ease-in-out;
+}
+
+.internal-banner-item.active {
+    opacity: 1; /* Aparece */
+}
+
+.search-hero-content {
+    position: relative;
+    z-index: 5; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.search-hero-content h1 {
+    font-size: 2.5em;
+    font-weight: 900;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    padding-top: 0; 
+}
+
+
+/* === CORREÇÃO: MOVIDO DE page-search.css === */
+/* --- 7. GRADE DE RESULTADOS DE BUSCA (Componente) --- */
+.search-results-grid {
+    display: grid;
+    /* Colunas são definidas por página (page-search.css ou page-love.css) */
+    /* Ex: grid-template-columns: repeat(5, 1fr); */
+    gap: 20px;
+    
+    /* Garante que os cards na mesma linha tenham a mesma altura */
+    align-items: stretch;
+}
+
+.search-no-results {
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
+    grid-column: 1 / -1; /* Ocupa todo o espaço do grid */
+}
+/* ============================================== */

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carregando... | KANGAROO WEAR</title>
+    
+    <link rel="icon" href="../Imagens/Banners/favicon.png" type="image/png">
+    
+    <!-- === CSS MODULARIZADO === -->
+    <!-- Núcleo do Site -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="components.css">
+    
+    <!-- CSS Específico da Página -->
+    <link rel="stylesheet" href="page-product.css">
+
+    <!-- CSS Responsivo (deve ser o último) -->
+    <link rel="stylesheet" href="responsive.css">
+    <!-- ======================== -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="product-detail-page page-with-fixed-header"> 
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        
+        <section class="internal-banner-wrapper search-hero-banner">
+            <div class="internal-banner-carousel" id="internal-banner-carousel-produto">
+                <div class="internal-banner-item active" style="background-image: url('../Imagens/Banners/herobusca.jpg');"></div>
+                <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/herobusca2.jpg');"></div>
+                <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/herobusca3.jpg');"></div>
+                <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/herobusca4.jpg');"></div>
+            </div>
+        </section>
+
+        <div class="container product-detail-main">
+            <div class="product-detail-grid">
+                
+                <div class="product-gallery">
+                    <div class="main-photo-container">
+                        <img id="main-product-image" src="" alt="Foto principal do produto">
+                    </div>
+                    <div class="thumbnail-gallery" id="thumbnail-gallery">
+                        </div>
+                </div>
+
+                <div class="product-info-details">
+                    <h1 id="product-name">Nome do Produto</h1>
+                    
+                    <div class="product-meta-detail">
+                        <span id="product-rating"><i class="fas fa-star"></i> 0.0</span>
+                        <span id="product-reviews">(0 reviews)</span>
+                    </div>
+
+                    <div class="price-box-detail">
+                        <span class="price-tag-detail">por apenas</span>
+                        <span class="current-price-detail" id="product-price">R$ 0,00</span>
+                    </div>
+
+                    <p class="product-material-desc">
+                        <strong>Material:</strong> <span id="product-material">...</span>
+                    </p>
+
+                    <form id="add-to-cart-form">
+                        <div class="form-group">
+                            <label for="color-select">Cor:</label>
+                            <select id="color-select" name="color" required>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="size-select">Tamanho:</label>
+                            <select id="size-select" name="size" required>
+                                </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quantity-input">Quantidade:</label>
+                            <input type="number" id="quantity-input" name="quantity" value="1" min="1" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> ADICIONAR AO CARRINHO
+                        </button>
+                        <p id="add-to-cart-message" class="form-message-success"></p>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <section class="related-products-section">
+            <div class="container">
+                <h2>COMPLETE SUA COLEÇÃO</h2>
+                
+                <div class="partner-slider-wrapper-centralized" style="max-width: 1200px;">
+                    <button class="partner-arrow prev" onclick="scrollSlider('related-products-slider', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="slider-wrapper"> 
+                        <div class="product-slider" id="related-products-slider">
+                        </div>
+                    </div>
+                    
+                    <button class="partner-arrow next" onclick="scrollSlider('related-products-slider', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="footer">
+        <div id="footer-placeholder">
+            </div>
+    </footer>
+
+    <!-- ==== SESSÃO DE DADOS ==== -->
+    <script src="products.js" defer></script>
+    <script src="coupons.js" defer></script>
+    <script src="partners.js" defer></script>
+    
+    <!-- ==== SESSÃO DE LÓGICA MODULARIZADA ==== -->
+    <script src="functions.js" defer></script> <!-- A Biblioteca de Ferramentas -->
+    <script src="main.js" defer></script>      <!-- O Cérebro (Execução) -->
+    <!-- ======================================= -->
+</body>
+</html>

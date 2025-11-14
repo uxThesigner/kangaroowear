@@ -1,0 +1,92 @@
+/* Reset, Fontes, Cores, e Estilos Base Globais
+*/
+
+/* Paleta de Cores (Inspirada em LOLJA: Escuro e Neon) */
+:root {
+    --color-primary: #1A1A1A;   /* Novo Preto Primário (Base Escura) */
+    --color-accent: #00FF00;    /* Verde Neon/Elétrico (Destaque Principal) */
+    --color-text: #000;         
+    --color-background: #fff;   
+    --color-light-gray: #f2f2f2; /* Cinza claro suave */
+    --color-border: #ddd;       
+    --color-sale-old: #999;     
+    --color-highlight: #CC0000; /* Vermelho forte (Urgência) */
+    --color-marquee: #111;      /* Cor escura para faixa e rodapé */
+}
+
+/* Importação da fonte Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap'); 
+
+/* Reset, Fontes e Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif; 
+    color: var(--color-text);
+    line-height: 1.5;
+    background-color: var(--color-background);
+}
+
+.container {
+    width: 90%;
+    max-width: 1280px; 
+    margin: 0 auto;
+}
+
+/* Padding para páginas com header fixo */
+.page-with-fixed-header main {
+    padding-top: 70px; /* Espaço para o header fixo (altura do .header) */
+}
+
+
+/* --- Botões (Estilos genéricos) --- */
+.btn {
+    text-decoration: none;
+    padding: 12px 30px;
+    border: 1px solid;
+    border-radius: 0; 
+    font-weight: 700; 
+    letter-spacing: 1px;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    text-transform: uppercase;
+}
+
+.btn-primary {
+    background-color: var(--color-accent); 
+    color: var(--color-primary); 
+    border-color: var(--color-accent);
+}
+.btn-primary:hover {
+    background-color: #00E600; 
+    border-color: #00E600;
+}
+.btn-primary:disabled {
+    background-color: #999;
+    border-color: #999;
+    color: #f2f2f2;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-primary); 
+    border-color: var(--color-primary); 
+}
+.btn-secondary:hover {
+    background-color: var(--color-light-gray);
+}
+
+/* === NOVO: Classe Auxiliar para Copiar === */
+.clipboard-helper {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    opacity: 0;
+    height: 1px;
+    width: 1px;
+}

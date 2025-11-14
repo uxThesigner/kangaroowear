@@ -1,0 +1,200 @@
+/* --- PÁGINA DE DETALHE DO PRODUTO (produtos.html) --- */
+
+.product-detail-main {
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+
+.product-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas de tamanho igual */
+    gap: 60px;
+}
+
+/* --- Galeria (Esquerda) --- */
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.main-photo-container {
+    width: 100%;
+    padding-bottom: 100%; /* Força proporção 1:1 */
+    height: 0;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.main-photo-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail-gallery {
+    display: grid;
+    /* 5 colunas como pedido */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.thumbnail-item {
+    width: 100%;
+    padding-bottom: 100%; /* Força proporção 1:1 */
+    height: 0;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--color-border);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, border-color 0.2s;
+}
+
+.thumbnail-item:hover,
+.thumbnail-item.active {
+    opacity: 1;
+    border-color: var(--color-accent);
+}
+
+.thumbnail-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* --- Informações (Direita) --- */
+.product-info-details h1 {
+    font-size: 2.2em;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.product-meta-detail {
+    font-size: 0.9em;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.product-meta-detail span {
+    margin-right: 15px;
+}
+
+.product-meta-detail #product-rating {
+    font-weight: 700;
+    color: var(--color-text);
+}
+.product-meta-detail #product-rating .fas {
+    color: var(--color-accent);
+    margin-right: 5px;
+}
+
+.price-box-detail {
+    margin-bottom: 25px;
+}
+
+.price-tag-detail {
+    font-size: 0.9em;
+    font-weight: 400;
+    color: #555;
+    display: block;
+}
+
+.current-price-detail {
+    font-size: 2.5em;
+    font-weight: 800;
+    color: var(--color-highlight);
+    line-height: 1.1;
+}
+
+.product-material-desc {
+    font-size: 0.95em;
+    color: #333;
+    margin-bottom: 25px;
+    border-top: 1px solid var(--color-light-gray);
+    padding-top: 20px;
+}
+
+#add-to-cart-form {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem a linha */
+    gap: 20px;
+    align-items: flex-end; /* Alinha labels e inputs */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 100px; /* Largura mínima para cor/tamanho */
+}
+
+.form-group label {
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.form-group select,
+.form-group input[type="number"] {
+    padding: 12px 10px;
+    border: 1px solid var(--color-border);
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group input[type="number"] {
+    width: 80px; /* Largura fixa para quantidade */
+}
+
+.add-to-cart-btn {
+    width: 100%; /* Botão ocupa a largura total */
+    padding: 15px 30px;
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+.form-message-success {
+    color: var(--color-accent);
+    font-weight: 600;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+/* --- Seção "Complete sua Coleção" --- */
+.related-products-section {
+    padding: 80px 0;
+    border-top: 1px solid var(--color-light-gray);
+    margin-top: 60px;
+}
+
+.related-products-section h2 {
+    text-align: center;
+    margin-bottom: 40px; 
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 900; 
+    font-size: 2em; 
+    color: var(--color-primary); 
+}
+
+/* Ajusta o carrossel de produtos para usar os cards corretos */
+.related-products-section .product-slider {
+    gap: 20px;
+}
+
+/* Sobrescreve o tamanho do card de parceiro para o card de produto */
+.related-products-section .product-card-link {
+    flex: 0 0 220px; /* Um pouco maior que o card da busca (5 colunas) */
+    min-width: 220px;
+}

@@ -1,0 +1,161 @@
+/* ======================================================= */
+/* --- AJUSTES GERAIS DE RESPONSIVIDADE (MOBILE FIRST) --- */
+/* ======================================================= */
+
+/* Força o menu desktop em telas grandes */
+@media (min-width: 1025px) {
+    .nav-menu {
+        display: flex !important;
+    }
+    .menu-toggle {
+        display: none !important; /* FORÇA a ocultação em telas grandes */
+    }
+}
+
+/* Oculta o menu desktop e mostra o ícone em telas médias/pequenas */
+@media (max-width: 1024px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+        order: 3; 
+        margin-left: 20px;
+    }
+    
+    .logo {
+        padding-right: 0;
+        border-right: none;
+    }
+    
+    .nav-left {
+        gap: 0;
+    }
+
+    .header-icons {
+        order: 4;
+    }
+    
+    .slider-wrapper {
+        padding: 0 10px; 
+    }
+    
+    /* Ajusta o grid de busca para 3 colunas em tablets */
+    .search-results-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Ajusta grid de 'love' para 3 colunas em tablets */
+    .love-results-container .search-results-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .header-content {
+        padding: 10px 0;
+    }
+    .logo-img {
+        height: 20px;
+    }
+    
+    .hero-banner-video {
+        min-height: 50vh;
+        padding-top: 60px;
+    }
+    
+    .product-slider {
+        gap: 20px;
+    }
+    
+    .related-products-section .product-card-link {
+        flex: 0 0 45%; 
+        min-width: 45%; 
+        max-width: 45%;
+    }
+
+    .partner-card-link {
+        flex: 0 0 100px; 
+        min-width: 100px;
+    }
+    .partner-image-container {
+        max-width: 100px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    .footer-column .social-icons {
+        justify-content: center;
+    }
+    .footer-column.logo-column {
+        text-align: center; 
+    }
+    
+    /* Ajusta o grid de busca para 2 colunas em mobile */
+    .search-results-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .search-hero-banner h1 {
+        font-size: 2em;
+    }
+
+    /* --- Responsivo da Página de Produto --- */
+    .product-detail-grid {
+        grid-template-columns: 1fr; /* Coluna única em mobile */
+        gap: 40px;
+    }
+    .search-hero-banner h1 {
+        font-size: 1.8em;
+    }
+    .product-info-details h1 {
+        font-size: 1.8em;
+    }
+    .current-price-detail {
+        font-size: 2em;
+    }
+
+    /* --- Responsivo do Carrinho --- */
+    .cart-content-wrapper {
+        grid-template-columns: 1fr; /* Coluna única em tablet/mobile */
+        gap: 50px;
+    }
+
+    .page-title {
+        font-size: 2em;
+    }
+    
+    .cart-table .th-product {
+        width: auto;
+    }
+
+    .product-info-cell {
+        flex-direction: column; /* Empilha imagem e nome */
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .cart-table td {
+        padding: 10px 5px;
+        font-size: 0.9em;
+    }
+    
+    /* --- Responsivo Checkout de Pagamento --- */
+    .checkout-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .form-row-grid {
+        grid-template-columns: 1fr 1fr; /* 2 colunas em mobile */
+        gap: 15px;
+    }
+
+    /* Responsivo da Página Love */
+    .love-results-container .search-results-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

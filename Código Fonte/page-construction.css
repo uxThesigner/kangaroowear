@@ -1,0 +1,92 @@
+/* --- LAYOUT DE CONSTRUÇÃO (AFILIADOS/PARCERIAS) --- */
+
+.content-page-main {
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+.construction-hero-banner {
+    min-height: 40vh; /* Mais curto que o hero da home */
+    max-height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Imagens Específicas */
+.afiliados-banner-bg {
+    background-image: url('../Imagens/Banners/heroafiliados.jpg');
+}
+.parcerias-banner-bg {
+    background-image: url('../Imagens/Banners/heroparceiros.jpg');
+}
+
+.construction-hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.construction-hero-banner h1 {
+    font-size: 1.8em; /* Reduzido o tamanho */
+    font-weight: 600; /* Mais fino */
+    position: relative;
+    z-index: 2;
+    border: 2px solid var(--color-accent); /* Borda mais fina */
+    padding: 10px 30px;
+    text-shadow: none;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.construction-hero-banner h1::before {
+    /* ÍCONE DE MANUTENÇÃO: fa-wrench */
+    content: "\f0ad"; 
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 15px;
+}
+
+
+.construction-marquee {
+    position: relative; 
+    bottom: auto;
+    left: auto;
+    background-color: var(--color-primary); 
+    color: white;
+    padding: 10px 0;
+    z-index: 5;
+    border-bottom: 3px solid var(--color-accent);
+}
+
+.main-content-section {
+    padding: 40px 0;
+    text-align: center;
+}
+            
+.section-title {
+    font-size: 2em;
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.content-text {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    line-height: 1.8;
+    color: #444;
+}
+
+/* Ajuste do carrossel de afiliados para usar o layout do parceiro */
+.afiliados-page .partner-slider-section {
+    padding: 60px 0 80px 0;
+}
