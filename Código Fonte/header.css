@@ -34,19 +34,22 @@
     gap: 40px; 
 }
 
-/* LOGO DE IMAGEM */
+/* === LOGOS (Desktop vs Mobile) === */
 .logo {
     padding-right: 0;
     border-right: none; 
 }
-.logo-img {
+.logo-img { /* Logo Desktop Padrão */
     height: 25px; 
     width: auto;
     filter: none; 
+    display: block; /* Desktop visível por padrão */
 }
-.logo h1 {
-    display: none; 
+.logo-img.mobile-logo {
+    display: none; /* Mobile escondido por padrão */
 }
+/* ================================== */
+
 
 /* Menu de Navegação */
 .nav-menu {
@@ -100,7 +103,7 @@
     top: auto;
     transform: none;
     z-index: auto;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, width 0.3s;
 }
 
 .search-input:focus {
@@ -142,12 +145,17 @@
     border-bottom: 1px solid var(--color-border);
 }
 .product-page-header .logo-img {
-    filter: invert(1); /* Logo escuro no fundo claro */
+    filter: invert(1); /* Logo desktop escuro no fundo claro */
 }
+/* O logo mobile (SVG) deve ser escuro por natureza, então não precisa de filtro */
+.product-page-header .logo-img.mobile-logo {
+    filter: none; 
+}
+
 .product-page-header .nav-menu a, 
 .product-page-header .header-icons a,
 .product-page-header .search-icon,
-.product-page-header .menu-toggle { /* Adicionado .menu-toggle */
+.product-page-header .menu-toggle {
     color: var(--color-text); /* Ícones e links escuros */
 }
 .product-page-header .header-content {
@@ -237,7 +245,7 @@
     background-color: var(--color-light-gray); 
 }
 
-/* Dropdown de usuário */
+/* Dropdown de usuário (Desktop) */
 .user-dropdown {
     position: relative;
     padding-bottom: 20px; 
@@ -255,7 +263,7 @@
 }
 
 
-/* --- CORREÇÃO HOVER DO HEADER --- */
+/* --- HOVER DO HEADER --- */
 .nav-menu a:hover,
 .header-icons a:hover,
 .header-icons .search-icon:hover {
@@ -267,7 +275,7 @@
     color: var(--color-accent); 
 }
 
-/* === AJUSTE 1: Menu Hambúrguer (Base) === */
+/* === Menu Hambúrguer (Base) === */
 .menu-toggle {
     display: none; 
     cursor: pointer;
@@ -281,7 +289,6 @@
     color: var(--color-accent);
     background-color: rgba(255, 255, 255, 0.1); /* Feedback de clique */
 }
-/* ======================================= */
 
 
 /* --- NAVEGAÇÃO MOBILE (Layout) --- */
@@ -344,6 +351,11 @@
     font-weight: 600;
     font-size: 1.1em;
 }
+.mobile-nav li a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
 
 .mobile-nav li a:hover {
     background-color: rgba(255, 255, 255, 0.05);
@@ -370,13 +382,15 @@
     font-weight: 400;
 }
 
-.user-link {
-    background-color: var(--color-accent);
-}
-.user-link a {
-    color: var(--color-primary);
+/* === NOVOS ESTILOS: Links de Ícone Mobile === */
+.user-link-mobile a {
+    color: var(--color-accent);
     font-weight: 700;
 }
+.cart-link-mobile a {
+    /* (Estilo padrão já é bom) */
+}
+/* ========================================= */
 
 .menu-footer {
     padding: 20px;
