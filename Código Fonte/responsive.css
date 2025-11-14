@@ -1,6 +1,5 @@
-/* ======================================================= */
-/* --- AJUSTES GERAIS DE RESPONSIVIDADE (MOBILE FIRST) --- */
-/* ======================================================= */
+/* Arquivo de Media Queries (Responsividade)
+*/
 
 /* Força o menu desktop em telas grandes */
 @media (min-width: 1025px) {
@@ -18,11 +17,13 @@
         display: none;
     }
 
+    /* === AJUSTE 1: Menu Hambúrguer (Responsivo) === */
     .menu-toggle {
         display: block;
         order: 3; 
-        margin-left: 20px;
+        margin-left: 10px; /* Ajustado de 20px para 10px */
     }
+    /* ============================================= */
     
     .logo {
         padding-right: 0;
@@ -42,12 +43,12 @@
     }
     
     /* Ajusta o grid de busca para 3 colunas em tablets */
-    .search-results-grid {
+    .search-page .search-results-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    /* Ajusta grid de 'love' para 3 colunas em tablets */
-    .love-results-container .search-results-grid {
+    /* Ajusta o grid da Love para 3 colunas em tablets */
+    .love-page .love-results-container .search-results-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
@@ -65,7 +66,7 @@
         min-height: 50vh;
         padding-top: 60px;
     }
-    
+
     .product-slider {
         gap: 20px;
     }
@@ -97,7 +98,7 @@
     }
     
     /* Ajusta o grid de busca para 2 colunas em mobile */
-    .search-results-grid {
+    .search-page .search-results-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     .search-hero-banner h1 {
@@ -154,8 +155,8 @@
         gap: 15px;
     }
 
-    /* Responsivo da Página Love */
-    .love-results-container .search-results-grid {
+    /* --- Responsivo Página Love --- */
+    .love-page .love-results-container .search-results-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
