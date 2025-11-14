@@ -11,31 +11,59 @@
     }
 }
 
-/* Oculta o menu desktop e mostra o ícone em telas médias/pequenas */
+/* === NOVO LAYOUT MOBILE (max-width: 1024px) === */
 @media (max-width: 1024px) {
+    
+    /* 1. Esconde elementos do Desktop */
     .nav-menu {
-        display: none;
+        display: none; /* Esconde menu desktop (Coleções, etc.) */
+    }
+    .logo-img.desktop-logo {
+        display: none; /* Esconde logo desktop */
+    }
+    .header-icons .user-dropdown {
+        display: none; /* Esconde ícone de usuário desktop */
+    }
+    .header-icons .cart-icon-link {
+        display: none; /* Esconde ícone de carrinho desktop */
     }
 
-    /* === AJUSTE 1: Menu Hambúrguer (Responsivo) === */
-    .menu-toggle {
-        display: block;
-        order: 3; 
-        margin-left: 10px; /* Ajustado de 20px para 10px */
+    /* 2. Mostra elementos do Mobile */
+    .logo-img.mobile-logo {
+        display: block; /* Mostra logo mobile */
     }
-    /* ============================================= */
+    .menu-toggle {
+        display: block; /* Mostra ícone hambúrguer */
+    }
+
+    /* 3. Aplica o Layout de Grade (Logo | Busca | Hambúrguer) */
+    .header-content {
+        display: grid;
+        grid-template-columns: auto 1fr auto; /* Colunas: (Tamanho do logo) (Espaço flexível) (Tamanho do ícone) */
+        align-items: center;
+        gap: 15px; /* Espaçamento entre os 3 itens */
+    }
+
+    /* 4. Posiciona os Itens na Grade */
+    .nav-left {
+        grid-column: 1 / 2; /* Logo na primeira coluna */
+        gap: 0; /* Remove gap do nav-left desktop */
+    }
+    .search-box-container {
+        grid-column: 2 / 3; /* Busca na segunda coluna (central) */
+        width: 100%; /* Faz a busca ocupar o espaço */
+    }
+    .search-input {
+        width: 100%; /* Faz o input ocupar 100% do container */
+    }
+    .header-icons {
+        grid-column: 3 / 4; /* Ícones (só o hambúrguer) na terceira coluna */
+        gap: 0; /* Remove gaps desnecessários */
+    }
     
     .logo {
         padding-right: 0;
         border-right: none;
-    }
-    
-    .nav-left {
-        gap: 0;
-    }
-
-    .header-icons {
-        order: 4;
     }
     
     .slider-wrapper {
@@ -52,14 +80,19 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+/* ============================================= */
 
 
 @media (max-width: 768px) {
     .header-content {
         padding: 10px 0;
+        gap: 10px; /* Diminui o gap no celular */
     }
     .logo-img {
-        height: 20px;
+        height: 20px; /* (Isso se aplica ao logo desktop, que está escondido) */
+    }
+    .logo-img.mobile-logo {
+        height: 20px; /* Ajusta o logo mobile */
     }
     
     .hero-banner-video {
