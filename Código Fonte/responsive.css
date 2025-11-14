@@ -11,7 +11,7 @@
     }
 }
 
-/* === NOVO LAYOUT MOBILE (max-width: 1024px) === */
+/* Oculta o menu desktop e mostra o ícone em telas médias/pequenas */
 @media (max-width: 1024px) {
     
     /* 1. Esconde elementos do Desktop */
@@ -21,11 +21,10 @@
     .logo-img.desktop-logo {
         display: none; /* Esconde logo desktop */
     }
-    .header-icons .user-dropdown {
-        display: none; /* Esconde ícone de usuário desktop */
-    }
+    /* Remove ícones de usuário e carrinho da barra (agora estão no menu) */
+    .header-icons .user-dropdown,
     .header-icons .cart-icon-link {
-        display: none; /* Esconde ícone de carrinho desktop */
+        display: none;
     }
 
     /* 2. Mostra elementos do Mobile */
@@ -79,8 +78,33 @@
     .love-page .love-results-container .search-results-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    /* === CORREÇÃO 2: Vão Branco (Overflow) === */
+    /* Move as setas do carrossel para dentro do container */
+    .partner-arrow {
+        font-size: 1.5em; /* Um pouco menor */
+        opacity: 0.3;
+        
+        /* Corrigido para funcionar em páginas claras e escuras */
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+    }
+    .product-page-header .partner-arrow {
+         background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    .partner-arrow.prev { 
+        left: 10px; /* De -55px para 10px */
+    } 
+    .partner-arrow.next { 
+        right: 10px; /* De -55px para 10px */
+    }
+     /* ======================================= */
 }
-/* ============================================= */
 
 
 @media (max-width: 768px) {
