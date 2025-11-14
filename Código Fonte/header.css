@@ -1,6 +1,6 @@
-/* ------------------------------------------- */
-/* --- 1. HEADER (FIXO e TRANSLÚCIDO) --- */
-/* ------------------------------------------- */
+/* Estilos do Cabeçalho (Desktop e Mobile Base)
+*/
+
 .header {
     background-color: rgba(26, 26, 26, 0.9); 
     position: fixed; 
@@ -49,6 +49,9 @@
 }
 
 /* Menu de Navegação */
+.nav-menu {
+    display: none; /* Oculto por padrão, ativado por responsive.css */
+}
 .nav-menu > ul { 
     list-style: none;
     display: flex;
@@ -82,7 +85,7 @@
     align-items: center;
 }
 
-/* Caixa de Busca */
+/* Caixa de Busca Sutil */
 .search-input {
     width: 200px; /* Largura fixa da caixa */
     padding: 5px 10px;
@@ -92,7 +95,7 @@
     color: white;
     font-size: 0.9em; /* Leve ajuste de tamanho */
     opacity: 1;
-    position: relative; 
+    position: relative;
     right: auto;
     top: auto;
     transform: none;
@@ -105,9 +108,7 @@
     border-bottom: 2px solid var(--color-accent); /* Fica verde neon ao digitar */
 }
 
-/* ------------------------------------------- */
 /* --- ESTILO SCROLLED (BASE FIXA) --- */
-/* ------------------------------------------- */
 .header.scrolled {
     background-color: var(--color-primary); 
     backdrop-filter: none; 
@@ -121,7 +122,7 @@
     color: white; 
 }
 .header.scrolled .search-input {
-    border-bottom-color: rgba(255, 255, 255, 0.5); /* Mantém a borda suave no scroll */
+    border-bottom-color: rgba(255, 255, 255, 0.5); 
     color: white;
 }
 .header.scrolled .logo-img {
@@ -134,12 +135,10 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
 }
 
-/* ---------------------------------------------------- */
-/* ESTILOS PARA PÁGINAS INTERNAS (CARRINHO, BUSCA, PRODUTOS, PAGAMENTOS) */
-/* ---------------------------------------------------- */
-.header.product-page-header {
+/* --- ESTILOS HEADER PÁGINAS INTERNAS (Fundo Branco) --- */
+.product-page-header {
     background-color: var(--color-background); /* Fundo branco fixo */
-    position: fixed; /* MANTÉM FIXO no topo */
+    position: fixed; 
     border-bottom: 1px solid var(--color-border);
 }
 .product-page-header .logo-img {
@@ -147,7 +146,8 @@
 }
 .product-page-header .nav-menu a, 
 .product-page-header .header-icons a,
-.product-page-header .search-icon {
+.product-page-header .search-icon,
+.product-page-header .menu-toggle { /* Adicionado .menu-toggle */
     color: var(--color-text); /* Ícones e links escuros */
 }
 .product-page-header .header-content {
@@ -161,13 +161,14 @@
     color: var(--color-text);
 }
 .product-page-header .search-input:focus {
-    border-bottom: 2px solid var(--color-accent); /* Fica verde neon ao digitar */
+    border-bottom: 2px solid var(--color-accent); 
+}
+.product-page-header .menu-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Hover escuro */
 }
 
 
-/* ---------------------------------------------------- */
-/* --- ESTILOS DO DROPDOWN MENU (CSS PURO) --- */
-/* ---------------------------------------------------- */
+/* --- DROPDOWN MENU (CSS PURO) --- */
 .nav-menu .nav-dropdown {
     position: relative;
     padding-bottom: 20px; 
@@ -223,7 +224,6 @@
     color: white !important;
 }
 
-
 .product-page-header .dropdown-menu {
     background-color: var(--color-background); 
     backdrop-filter: none; 
@@ -237,7 +237,7 @@
     background-color: var(--color-light-gray); 
 }
 
-/* Estilos para o dropdown de usuário */
+/* Dropdown de usuário */
 .user-dropdown {
     position: relative;
     padding-bottom: 20px; 
@@ -261,27 +261,30 @@
 .header-icons .search-icon:hover {
     color: var(--color-accent); 
 }
-
 .product-page-header .nav-menu a:hover,
 .product-page-header .header-icons a:hover,
 .product-page-header .search-icon:hover {
     color: var(--color-accent); 
 }
 
-/* ======================================================= */
-/* --- AJUSTES DE NAVEGAÇÃO MOBILE (MENU HAMBÚRGUER) --- */
-/* ======================================================= */
+/* === AJUSTE 1: Menu Hambúrguer (Base) === */
 .menu-toggle {
     display: none; 
     cursor: pointer;
-    font-size: 1.5em;
+    font-size: 1.7em; /* Aumentado */
     color: white; 
-    transition: color 0.3s;
+    transition: color 0.3s, background-color 0.3s;
+    padding: 5px 8px; /* Adicionado padding para área de toque */
+    border-radius: 5px; /* Leve arredondamento */
 }
 .menu-toggle:hover {
     color: var(--color-accent);
+    background-color: rgba(255, 255, 255, 0.1); /* Feedback de clique */
 }
+/* ======================================= */
 
+
+/* --- NAVEGAÇÃO MOBILE (Layout) --- */
 .mobile-menu {
     position: fixed;
     top: 0;
