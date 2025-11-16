@@ -19,11 +19,15 @@
 }
 
 /* Imagens Específicas */
+/* CORREÇÃO: Os caminhos 'background-image' foram removidos daqui.
+   Eles agora são definidos diretamente no HTML (ex: afiliados.html) 
+   para evitar problemas com o caminho relativo '../'.
+*/
 .afiliados-banner-bg {
-    background-image: url('../Imagens/Banners/heroafiliados.jpg');
+    /* background-image: url('../Imagens/Banners/heroafiliados.jpg'); */
 }
 .parcerias-banner-bg {
-    background-image: url('../Imagens/Banners/heroparceiros.jpg');
+    /* background-image: url('../Imagens/Banners/heroparceiros.jpg'); */
 }
 
 .construction-hero-banner::before {
