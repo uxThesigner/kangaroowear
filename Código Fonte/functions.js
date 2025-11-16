@@ -16,6 +16,27 @@ function setupHeaderLogic() {
     
     // CORREÇÃO CRÍTICA: Chama a atualização da contagem APÓS a injeção do Header.
     updateCartCount(); 
+
+    // === MELHORIA UX: Sincroniza o carrinho entre abas ===
+    window.addEventListener('storage', (event) => {
+        // Se o carrinho ou o cupom for alterado em outra aba...
+        if (event.key === 'kangarooCart' || event.key === 'appliedCouponCode') {
+            // Recarrega os dados do localStorage
+            loadCart(); 
+            // Atualiza o contador de ícones
+            updateCartCount();
+            
+            // Se o usuário estiver na página do carrinho, atualiza a UI
+            if (document.body.classList.contains('cart-page')) {
+                renderCartPage();
+            }
+            // Se o usuário estiver na página de checkout, atualiza a UI
+            if (document.body.classList.contains('checkout-page')) {
+                setupPaymentPage(); // Recarrega os dados do checkout
+            }
+        }
+    });
+    // =======================================================
 }
 
 // --- FUNÇÃO ADICIONADA: CARREGAMENTO DE COMPONENTES SIMPLES VIA JAVASCRIPT ---
@@ -312,8 +333,7 @@ function renderProductCard(product) {
  * Cria o HTML para um único card de parceiro.
  */
 function renderPartnerCard(partner) {
-    // === CORREÇÃO DE CAMINHO ===
-    // Removido o '../'
+    // === CORREÇÃO DE CAMINHO (Já estava correta no arquivo original) ===
     return `
         <a href="${partner.link}" target="_blank" class="partner-card-link">
             <div class="partner-card">
@@ -794,10 +814,16 @@ function setupPaymentPage() {
             const whatsappUrl = generateWhatsAppOrderLink(formData);
             window.open(whatsappUrl, '_blank'); // Abre o WhatsApp em nova aba
 
-            // AJUSTE 1: Limpa o carrinho e o cupom após enviar para o WhatsApp
+            // === CORREÇÃO CRÍTICA ===
+            // As linhas abaixo, que limpavam o carrinho, foram REMOVIDAS.
+            // O carrinho não deve ser limpo até que o pagamento seja
+            // confirmado por você no WhatsApp.
+            /*
             cartItems = [];
             appliedCoupon = null;
-            saveCart(); // Salva o estado vazio no localStorage
+            saveCart(); 
+            */
+            // =========================
         });
     }
 
