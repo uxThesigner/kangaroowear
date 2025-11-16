@@ -7,17 +7,14 @@
     <title>Coleção Love | KANGAROO WEAR</title>
     <meta name="description" content="Encontre camisetas para casais da cultura pop, animes e games. Perfeito para usar a dois.">
     
-    <link rel="icon" href="../Imagens/Banners/favicon.png" type="image/png">
+    <link rel="icon" href="Imagens/Banners/favicon.png" type="image/png">
 
-    <!-- === CSS MODULARIZADO === -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="page-love.css">
     <link rel="stylesheet" href="responsive.css">
-    <!-- ======================== -->
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="love-page">
@@ -26,11 +23,10 @@
 
     <main>
         
-        <!-- === SEÇÃO 1: HERO === -->
         <section class="hero-banner-video">
-            <video autoplay loop muted playsinline poster="../Imagens/Banners/hero-banner.jpg" class="hero-video">
-                <source src="../Imagens/Banners/herolove.webm" type="video/webm">
-                <source src="../Imagens/Banners/herolove.mp4" type="video/mp4">
+            <video autoplay loop muted playsinline poster="Imagens/Banners/hero-banner.jpg" class="hero-video">
+                <source src="Imagens/Banners/herolove.webm" type="video/webm">
+                <source src="Imagens/Banners/herolove.mp4" type="video/mp4">
             </video>
             
             <div class="container hero-content fade-in-text">
@@ -38,7 +34,6 @@
                 <p>O melhor da cultura pop para casais que compartilham o mesmo universo.</p>
             </div>
 
-            <!-- === CORREÇÃO: Marquee MOVIDO PARA DENTRO do Hero === -->
             <section class="offer-bar">
                 <div class="offer-bar-content">
                     <span>⚡ FRETE GRÁTIS ACIMA DE R$ 250,00</span>
@@ -49,12 +44,8 @@
                     <span>📦 TROCA GRÁTIS EM ATÉ 30 DIAS</span>
                 </div>
             </section>
-            <!-- ================================================ -->
-        </section>
+            </section>
 
-        <!-- O Marquee não está mais aqui -->
-
-        <!-- === SEÇÃO 3: CARROSSEL DE PRODUTOS "Lançamentos Love" === -->
         <section class="product-slider-section">
             <div class="container">
                 <h2>FEITOS UM PARA O OUTRO</h2>
@@ -66,8 +57,7 @@
                     
                     <div class="slider-wrapper"> 
                         <div class="product-slider" id="love-product-slider">
-                            <!-- JS insere cards com tags 'love' E 'lancamento' aqui -->
-                        </div>
+                            </div>
                     </div>
                     
                     <button class="partner-arrow next" onclick="scrollSlider('love-product-slider', 1)">
@@ -77,21 +67,19 @@
             </div>
         </section>
 
-        <!-- === SEÇÃO 4: BANNER ROTATIVO (Estreito) === -->
         <section class="love-banner-section">
             <div class="container">
                 <div class="love-banner-carousel-wrapper">
                     <div class="love-banner-carousel" id="love-banner-carousel">
-                        <div class="internal-banner-item active" style="background-image: url('../Imagens/Banners/bannerlove1.jpg');"></div>
-                        <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/bannerlove2.jpg');"></div>
-                        <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/bannerlove3.jpg');"></div>
-                        <div class="internal-banner-item" style="background-image: url('../Imagens/Banners/bannerlove4.jpg');"></div>
+                        <div class="internal-banner-item active" style="background-image: url('Imagens/Banners/bannerlove1.jpg');"></div>
+                        <div class="internal-banner-item" style="background-image: url('Imagens/Banners/bannerlove2.jpg');"></div>
+                        <div class="internal-banner-item" style="background-image: url('Imagens/Banners/bannerlove3.jpg');"></div>
+                        <div class="internal-banner-item" style="background-image: url('Imagens/Banners/bannerlove4.jpg');"></div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- === SEÇÃO 5: CARROSSEL DE TEMAS (Clicáveis) === -->
         <section class="theme-carousel-section">
             <div class="container">
                 <h2>ENCONTRE SEU LOVE</h2>
@@ -106,7 +94,7 @@
                             
                             <div class="theme-card-link" role="button" tabindex="0" data-theme="starwars">
                                 <div class="theme-card">
-                                    <img src="../Imagens/Fotos Camisas/placeholder-starwars.jpg" alt="Tema Star Wars" loading="lazy">
+                                    <img src="Imagens/Fotos Camisas/placeholder-starwars.jpg" alt="Tema Star Wars" loading="lazy">
                                     <div class="theme-card-overlay">
                                         <h3>Star Wars</h3>
                                     </div>
@@ -115,7 +103,7 @@
                             
                             <div class="theme-card-link" role="button" tabindex="0" data-theme="leagueoflegends">
                                 <div class="theme-card">
-                                    <img src="../Imagens/Fotos Camisas/placeholder-lol.jpg" alt="Tema League of Legends" loading="lazy">
+                                    <img src="Imagens/Fotos Camisas/placeholder-lol.jpg" alt="Tema League of Legends" loading="lazy">
                                     <div class="theme-card-overlay">
                                         <h3>League of Legends</h3>
                                     </div>
@@ -124,7 +112,7 @@
 
                             <div class="theme-card-link" role="button" tabindex="0" data-theme="naruto">
                                 <div class="theme-card">
-                                    <img src="../Imagens/Fotos Camisas/placeholder-naruto.jpg" alt="Tema Naruto" loading="lazy">
+                                    <img src="Imagens/Fotos Camisas/placeholder-naruto.jpg" alt="Tema Naruto" loading="lazy">
                                     <div class="theme-card-overlay">
                                         <h3>Naruto</h3>
                                     </div>
@@ -133,7 +121,7 @@
                             
                             <div class="theme-card-link" role="button" tabindex="0" data-theme="tema4">
                                 <div class="theme-card">
-                                    <img src="../Imagens/Fotos Camisas/placeholder-tema.jpg" alt="Tema 4" loading="lazy">
+                                    <img src="Imagens/Fotos Camisas/placeholder-tema.jpg" alt="Tema 4" loading="lazy">
                                     <div class="theme-card-overlay">
                                         <h3>Tema 4</h3>
                                     </div>
@@ -142,7 +130,7 @@
 
                             <div class="theme-card-link" role="button" tabindex="0" data-theme="tema5">
                                 <div class="theme-card">
-                                    <img src="../Imagens/Fotos Camisas/placeholder-tema.jpg" alt="Tema 5" loading="lazy">
+                                    <img src="Imagens/Fotos Camisas/placeholder-tema.jpg" alt="Tema 5" loading="lazy">
                                     <div class="theme-card-overlay">
                                         <h3>Tema 5</h3>
                                     </div>
@@ -151,7 +139,7 @@
 
                             <div class="theme-card-link" role="button" tabindex="0" data-theme="tema6">
                                 <div class="theme-card">
-                                    <img src="../Imagens/Fotos Camisas/placeholder-tema.jpg" alt="Tema 6" loading="lazy">
+                                    <img src="Imagens/Fotos Camisas/placeholder-tema.jpg" alt="Tema 6" loading="lazy">
                                     <div class="theme-card-overlay">
                                         <h3>Tema 6</h3>
                                     </div>
@@ -160,7 +148,7 @@
 
                             <div class="theme-card-link" role="button" tabindex="0" data-theme="tema7">
                                 <div class="theme-card">
-                                    <img src="../Imagens/Fotos Camisas/placeholder-tema.jpg" alt="Tema 7" loading="lazy">
+                                    <img src="Imagens/Fotos Camisas/placeholder-tema.jpg" alt="Tema 7" loading="lazy">
                                     <div class="theme-card-overlay">
                                         <h3>Tema 7</h3>
                                     </div>
@@ -176,10 +164,8 @@
             </div>
         </section>
 
-        <!-- === SEÇÃO 6: NOVA SEÇÃO DE RESULTADOS (Escondida) === -->
         <section id="love-theme-results" class="love-results-container">
-            <!-- O JS (main.js) vai preencher esta seção -->
-        </section>
+            </section>
 
     </main>
     
@@ -188,14 +174,9 @@
         </div>
     </footer>
 
-    <!-- ==== SESSÃO DE DADOS ==== -->
     <script src="products.js" defer></script>
     <script src="coupons.js" defer></script>
     <script src="partners.js" defer></script>
     
-    <!-- ==== SESSÃO DE LÓGICA MODULARIZADA ==== -->
-    <script src="functions.js" defer></script> <!-- A Biblioteca de Ferramentas -->
-    <script src="main.js" defer></script>      <!-- O Cérebro (Execução) -->
-    <!-- ======================================= -->
-</body>
+    <script src="functions.js" defer></script> <script src="main.js" defer></script>      </body>
 </html>
