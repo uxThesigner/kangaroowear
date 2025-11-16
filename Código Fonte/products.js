@@ -74,7 +74,6 @@ const PRODUCTS = [
         stock: 12,
         tags: ['t-shirt', 'hunter x hunter', 'killua', 'godspeed', 'camisas', 'anime', 'geek', 'preta']
     },
-    // --- PRODUTOS 6-30 (PLACEHOLDERS) ---
     {
         id: 'tshirt-6',
         image: 'Imagens/Fotos Camisas/tshirt-saitama.png', 
