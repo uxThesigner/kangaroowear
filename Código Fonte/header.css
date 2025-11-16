@@ -32,6 +32,8 @@
     display: flex;
     align-items: center;
     gap: 40px; 
+    /* Ocupa o espaço necessário */
+    flex-shrink: 0;
 }
 
 /* === LOGOS (Desktop vs Mobile) === */
@@ -59,56 +61,74 @@
     list-style: none;
     display: flex;
 }
-.nav-menu a {
+.nav-menu a,
+.nav-menu button.dropdown-toggle { /* CORREÇÃO: Aplicando estilo ao button também */
     color: white; 
     padding: 0 20px; 
     font-size: 0.85em;
     font-weight: 700; 
     letter-spacing: 0.5px;
     transition: color 0.3s; 
+    /* Estilo reset para o button */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Ícones (Busca, Usuário, Carrinho) */
-.header-icons {
+/* --- CORREÇÃO: Estilos para .header-right --- */
+.header-right {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
-    gap: 20px; 
+    justify-content: flex-end;
+    gap: 20px;
+    width: 100%; /* Faz o lado direito ocupar o espaço restante */
 }
-.header-icons a, .header-icons .search-icon {
+
+.header-main-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espaço entre a busca e o carrinho */
+}
+
+.header-main-icons a { /* Estilo para o link do carrinho */
     color: white; 
     font-size: 1.1em;
     position: relative;
-    margin-left: 0;
     transition: color 0.3s; 
+    flex-shrink: 0; /* Impede que o carrinho encolha */
 }
+.header-main-icons a:hover {
+    color: var(--color-accent);
+}
+/* --- Fim da Correção --- */
+
+
+/* Caixa de Busca Sutil */
 .search-box-container {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%; /* O container da busca ocupa o espaço */
+    max-width: 200px; /* Mas o input tem um max-width */
 }
 
-/* Caixa de Busca Sutil */
 .search-input {
-    width: 200px; /* Largura fixa da caixa */
+    width: 100%; /* Largura total do container */
     padding: 5px 10px;
     border: none;
     border-bottom: 2px solid rgba(255, 255, 255, 0.5); /* Borda branca mais suave */
     background: transparent;
     color: white;
     font-size: 0.9em; /* Leve ajuste de tamanho */
-    opacity: 1;
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
-    z-index: auto;
-    transition: border-color 0.3s, width 0.3s;
+    transition: border-color 0.3s, max-width 0.3s;
+    max-width: 200px;
 }
 
 .search-input:focus {
     outline: none;
     border-bottom: 2px solid var(--color-accent); /* Fica verde neon ao digitar */
+    max-width: 300px; /* Expande um pouco ao focar */
 }
 
 /* --- ESTILO SCROLLED (BASE FIXA) --- */
@@ -119,8 +139,8 @@
 }
 
 .header.scrolled .nav-menu a,
-.header.scrolled .header-icons a,
-.header.scrolled .header-icons .search-icon,
+.header.scrolled .nav-menu button.dropdown-toggle,
+.header.scrolled .header-main-icons a,
 .header.scrolled .search-input {
     color: white; 
 }
@@ -147,14 +167,13 @@
 .product-page-header .logo-img {
     filter: invert(1); /* Logo desktop escuro no fundo claro */
 }
-/* O logo mobile (SVG) deve ser escuro por natureza, então não precisa de filtro */
 .product-page-header .logo-img.mobile-logo {
     filter: none; 
 }
 
 .product-page-header .nav-menu a, 
-.product-page-header .header-icons a,
-.product-page-header .search-icon,
+.product-page-header .nav-menu button.dropdown-toggle,
+.product-page-header .header-main-icons a,
 .product-page-header .menu-toggle {
     color: var(--color-text); /* Ícones e links escuros */
 }
@@ -245,33 +264,18 @@
     background-color: var(--color-light-gray); 
 }
 
-/* Dropdown de usuário (Desktop) */
-.user-dropdown {
-    position: relative;
-    padding-bottom: 20px; 
-    margin-bottom: -20px;
-    display: flex; 
-    align-items: center;
-}
-.user-dropdown .dropdown-menu {
-    left: auto; /* Remove o alinhamento padrão da esquerda */
-    right: 0;   /* Alinha o menu à direita do ícone */
-    min-width: 160px;
-}
-.user-dropdown .user-icon-toggle {
-    padding: 0 5px; /* Adiciona um leve espaçamento para o clique */
-}
+/* (Estilos de User Dropdown removidos) */
 
 
 /* --- HOVER DO HEADER --- */
 .nav-menu a:hover,
-.header-icons a:hover,
-.header-icons .search-icon:hover {
+.nav-menu button.dropdown-toggle:hover,
+.header-main-icons a:hover {
     color: var(--color-accent); 
 }
 .product-page-header .nav-menu a:hover,
-.product-page-header .header-icons a:hover,
-.product-page-header .search-icon:hover {
+.product-page-header .nav-menu button.dropdown-toggle:hover,
+.product-page-header .header-main-icons a:hover {
     color: var(--color-accent); 
 }
 
@@ -382,15 +386,10 @@
     font-weight: 400;
 }
 
-/* === NOVOS ESTILOS: Links de Ícone Mobile === */
-.user-link-mobile a {
-    color: var(--color-accent);
-    font-weight: 700;
-}
+/* (Links de Ícone Mobile - Usuário removido) */
 .cart-link-mobile a {
     /* (Estilo padrão já é bom) */
 }
-/* ========================================= */
 
 .menu-footer {
     padding: 20px;
