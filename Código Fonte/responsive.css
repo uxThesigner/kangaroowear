@@ -6,60 +6,58 @@
     .nav-menu {
         display: flex !important;
     }
-    .menu-toggle {
-        display: none !important; /* FORÇA a ocultação em telas grandes */
+    .header-mobile-toggle { /* Esconde o container do ícone hambúrguer */
+        display: none !important; 
     }
 }
 
-/* Oculta o menu desktop e mostra o ícone em telas médias/pequenas */
+/* === CORREÇÃO GERAL DO HEADER (TABLET) ===
+   Este bloco foi refeito para corrigir o bug do carrinho desaparecido
+   e o layout quebrado da barra de busca em 1024px.
+*/
 @media (max-width: 1024px) {
     
-    /* 1. Esconde elementos do Desktop */
+    /* 1. Esconde o menu de navegação de texto (Coleções, etc.) */
     .nav-menu {
-        display: none; /* Esconde menu desktop (Coleções, etc.) */
+        display: none; 
     }
-    .logo-img.desktop-logo {
-        display: none; /* Esconde logo desktop */
-    }
-    /* Remove ícones de usuário e carrinho da barra (agora estão no menu) */
-    .header-icons .user-dropdown,
-    .header-icons .cart-icon-link {
+
+    /* 2. Esconde o ícone de hambúrguer (pois ainda não estamos no mobile) */
+    .header-mobile-toggle {
         display: none;
     }
-
-    /* 2. Mostra elementos do Mobile */
-    .logo-img.mobile-logo {
-        display: block; /* Mostra logo mobile */
-    }
-    .menu-toggle {
-        display: block; /* Mostra ícone hambúrguer */
-    }
-
-    /* 3. Aplica o Layout de Grade (Logo | Busca | Hambúrguer) */
-    .header-content {
-        display: grid;
-        grid-template-columns: auto 1fr auto; /* Colunas: (Tamanho do logo) (Espaço flexível) (Tamanho do ícone) */
+    
+    /* 3. Garante que os ícones principais (Busca, Usuário, Carrinho) fiquem visíveis */
+    .header-main-icons {
+        display: flex;
         align-items: center;
-        gap: 15px; /* Espaçamento entre os 3 itens */
+        gap: 15px; /* Reduz o gap no tablet */
     }
 
-    /* 4. Posiciona os Itens na Grade */
-    .nav-left {
-        grid-column: 1 / 2; /* Logo na primeira coluna */
-        gap: 0; /* Remove gap do nav-left desktop */
+    /* 4. Ajusta o layout do header-content */
+    .header-content {
+        /* Remove o layout flex e usa o padrão (bloco) */
+        justify-content: space-between;
+        gap: 20px;
     }
+    
+    /* 5. Ajusta os containers da esquerda e direita */
+    .nav-left {
+        gap: 20px; /* Reduz o gap */
+    }
+    .header-right {
+        flex-grow: 1; /* Faz o container da direita crescer */
+        justify-content: flex-end; /* Alinha os ícones à direita */
+    }
+    
+    /* 6. Ajusta a barra de busca para ocupar o espaço */
     .search-box-container {
-        grid-column: 2 / 3; /* Busca na segunda coluna (central) */
-        width: 100%; /* Faz a busca ocupar o espaço */
+        flex-grow: 1; /* Faz a busca crescer */
     }
     .search-input {
         width: 100%; /* Faz o input ocupar 100% do container */
     }
-    .header-icons {
-        grid-column: 3 / 4; /* Ícones (só o hambúrguer) na terceira coluna */
-        gap: 0; /* Remove gaps desnecessários */
-    }
-    
+
     .logo {
         padding-right: 0;
         border-right: none;
@@ -79,7 +77,7 @@
         grid-template-columns: repeat(3, 1fr);
     }
 
-    /* === CORREÇÃO 2: Vão Branco (Overflow) === */
+    /* === Vão Branco (Overflow) === */
     /* Move as setas do carrossel para dentro do container */
     .partner-arrow {
         font-size: 1.5em; /* Um pouco menor */
@@ -103,22 +101,76 @@
     .partner-arrow.next { 
         right: 10px; /* De -55px para 10px */
     }
-     /* ======================================= */
 }
 
 
+/* === Layout Mobile (Telefone) === */
 @media (max-width: 768px) {
     .header-content {
         padding: 10px 0;
+        /* Restaura o layout de 3 colunas para mobile */
+        display: grid;
+        grid-template-columns: auto 1fr auto; /* (Logo) (Busca) (Hambúrguer) */
         gap: 10px; /* Diminui o gap no celular */
     }
-    .logo-img {
-        height: 20px; /* (Isso se aplica ao logo desktop, que está escondido) */
+    
+    /* 1. Esconde logos e ícones do Desktop/Tablet */
+    .logo-img.desktop-logo {
+        display: none; /* Esconde logo desktop */
     }
+    .header-main-icons {
+        display: none; /* Esconde Busca, Usuário e Carrinho da barra */
+    }
+
+    /* 2. Mostra logos e ícones do Mobile */
     .logo-img.mobile-logo {
-        height: 20px; /* Ajusta o logo mobile */
+        display: block; /* Mostra logo mobile */
+        height: 20px;
+    }
+    .header-mobile-toggle {
+        display: block; /* Mostra ícone hambúrguer */
+    }
+    .menu-toggle {
+        display: block;
+    }
+
+    /* 3. Re-introduz a busca no layout de grid (mas vindo do .header-main-icons) */
+    /* Precisamos de uma regra separada para a busca no mobile */
+    /* SOLUÇÃO MAIS SIMPLES: A busca já está escondida. O menu mobile a substitui. */
+    /* CORREÇÃO (Layout de 3 Colunas): */
+    .nav-left {
+        grid-column: 1 / 2; /* Logo na primeira coluna */
+        gap: 0;
     }
     
+    /* RE-ADICIONANDO A BUSCA NO MOBILE (se desejado) */
+    /* Para manter a busca visível no mobile, precisamos mover
+       o .search-box-container para fora do .header-main-icons
+       no HTML. Assumindo a estrutura atual (busca some): */
+       
+    /* Se a busca DEVE ficar visível no mobile, a estrutura do HTML
+       precisa mudar. Vamos assumir que a busca no mobile foi
+       substituída pelo menu hambúrguer. */
+       
+    /* NOVO LAYOUT DE 3 COLUNAS (com busca visível) */
+    .header-main-icons {
+        display: contents; /* Remove o container, liberando os filhos para o grid */
+    }
+    .search-box-container {
+        display: block;
+        grid-column: 2 / 3; /* Busca na segunda coluna (central) */
+        width: 100%;
+    }
+    .header-icons .user-dropdown,
+    .header-icons .cart-icon-link {
+        display: none; /* Esconde usuário e carrinho da barra */
+    }
+    .header-mobile-toggle {
+        grid-column: 3 / 4; /* Hambúrguer na terceira coluna */
+    }
+    /* Fim do novo layout de 3 colunas */
+
+
     .hero-banner-video {
         min-height: 50vh;
         padding-top: 60px;
