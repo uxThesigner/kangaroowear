@@ -280,7 +280,7 @@ function createColorSwatches(colors) {
 function renderProductCard(product) {
     const priceString = formatPrice(product.price);
     const colorSwatchesHTML = createColorSwatches(product.colors);
-    const imagePath = product.image; 
+    const imagePath = product.image; // Caminho já vem correto de products.js
 
     return `
         <a href="produtos.html?id=${product.id}" class="product-card-link">
@@ -312,11 +312,13 @@ function renderProductCard(product) {
  * Cria o HTML para um único card de parceiro.
  */
 function renderPartnerCard(partner) {
+    // === CORREÇÃO DE CAMINHO ===
+    // Removido o '../'
     return `
         <a href="${partner.link}" target="_blank" class="partner-card-link">
             <div class="partner-card">
                 <div class="partner-image-container">
-                    <img src="../Imagens/Fotos Parceiros/${partner.image}" alt="${partner.name}" loading="lazy">
+                    <img src="Imagens/Fotos Parceiros/${partner.image}" alt="${partner.name}" loading="lazy">
                 </div>
                 <div class="partner-info">
                     <h3>${partner.name}</h3>
@@ -325,6 +327,7 @@ function renderPartnerCard(partner) {
             </div>
         </a>
     `;
+    // ===========================
 }
 
 /**
@@ -386,7 +389,7 @@ function renderCartPage() {
         let htmlContent = '';
         cartItems.forEach(item => {
             const itemTotal = item.price * item.quantity;
-            const imagePath = item.image; 
+            const imagePath = item.image; // Caminho já vem correto
             
             htmlContent += `
                 <tr>
