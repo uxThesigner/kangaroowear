@@ -2,8 +2,9 @@
     <div class="header-content">
         <div class="nav-left">
             <a href="index.html" class="logo">
-                <img src="../Imagens/Banners/logo.svg" alt="Kangaroo Logo" class="logo-img desktop-logo">
-                <img src="../Imagens/Banners/logomobile.svg" alt="Kangaroo Logo" class="logo-img mobile-logo">
+                <!-- AMBOS os logos estão aqui. O CSS vai mostrar o correto. -->
+                <img src="Imagens/Banners/logo.svg" alt="Kangaroo Logo" class="logo-img desktop-logo">
+                <img src="Imagens/Banners/logomobile.svg" alt="Kangaroo Logo" class="logo-img mobile-logo">
             </a>
             
             <nav class="nav-menu">
@@ -52,6 +53,11 @@
                 <input type="text" class="search-input" placeholder="Buscar produtos...">
             </div>
             
+            <!-- 
+              ÍCONE DE USUÁRIO E CARRINHO REMOVIDOS DAQUI
+              Eles agora vivem dentro do .mobile-menu
+            -->
+            
             <i class="fas fa-bars menu-toggle"></i>
         </div>
     </div>
@@ -61,7 +67,8 @@
     <div class="menu-header">
         <i class="fas fa-times close-menu"></i>
         <a href="index.html">
-            <img src="../Imagens/Banners/logomobile.svg" alt="Kangaroo Logo" class="logo-img-mobile">
+            <!-- Logo do menu interno (pode ser o mobile também) -->
+            <img src="Imagens/Banners/logomobile.svg" alt="Kangaroo Logo" class="logo-img-mobile">
         </a>
     </div>
     <nav class="mobile-nav">
@@ -91,9 +98,11 @@
                 </ul>
             </li>
 
+            <!-- === ÍCONES ADICIONADOS AQUI === -->
             <li class="user-link-mobile"><a href="#"><i class="fas fa-user"></i> MINHA CONTA</a></li>
             <li class="cart-link-mobile"><a href="carrinho.html"><i class="fas fa-shopping-cart"></i> MEU CARRINHO</a></li>
-            </ul>
+            <!-- ============================== -->
+        </ul>
     </nav>
     <div class="menu-footer">
         <p>Siga a KANGAROO WEAR</p>
