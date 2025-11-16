@@ -12,8 +12,8 @@
 }
 
 /* === CORREÇÃO GERAL DO HEADER (TABLET) ===
-   Este bloco foi refeito para corrigir o bug do carrinho desaparecido
-   e o layout quebrado da barra de busca em 1024px.
+   Este bloco garante que em 1024px, o menu de texto suma,
+   mas a barra de busca e o carrinho permaneçam visíveis.
 */
 @media (max-width: 1024px) {
     
@@ -27,23 +27,24 @@
         display: none;
     }
     
-    /* 3. Garante que os ícones principais (Busca, Usuário, Carrinho) fiquem visíveis */
+    /* 3. Garante que os ícones principais (Busca, Carrinho) fiquem visíveis */
     .header-main-icons {
         display: flex;
         align-items: center;
         gap: 15px; /* Reduz o gap no tablet */
+        flex-grow: 1; /* Faz o container crescer */
+        justify-content: flex-end; /* Alinha à direita */
     }
 
     /* 4. Ajusta o layout do header-content */
     .header-content {
-        /* Remove o layout flex e usa o padrão (bloco) */
-        justify-content: space-between;
         gap: 20px;
     }
     
-    /* 5. Ajusta os containers da esquerda e direita */
+    /* 5. Ajusta os containers */
     .nav-left {
         gap: 20px; /* Reduz o gap */
+        flex-shrink: 0;
     }
     .header-right {
         flex-grow: 1; /* Faz o container da direita crescer */
@@ -53,9 +54,14 @@
     /* 6. Ajusta a barra de busca para ocupar o espaço */
     .search-box-container {
         flex-grow: 1; /* Faz a busca crescer */
+        max-width: none; /* Remove o max-width do desktop */
     }
     .search-input {
         width: 100%; /* Faz o input ocupar 100% do container */
+        max-width: none; /* Remove o max-width do desktop */
+    }
+    .search-input:focus {
+        max-width: none;
     }
 
     .logo {
@@ -78,12 +84,9 @@
     }
 
     /* === Vão Branco (Overflow) === */
-    /* Move as setas do carrossel para dentro do container */
     .partner-arrow {
         font-size: 1.5em; /* Um pouco menor */
         opacity: 0.3;
-        
-        /* Corrigido para funcionar em páginas claras e escuras */
         background-color: rgba(255, 255, 255, 0.5);
         border-radius: 50%;
         width: 30px;
@@ -119,7 +122,10 @@
         display: none; /* Esconde logo desktop */
     }
     .header-main-icons {
-        display: none; /* Esconde Busca, Usuário e Carrinho da barra */
+        display: contents; /* Remove o container, liberando os filhos para o grid */
+    }
+    .header-main-icons .cart-icon-link {
+        display: none; /* Esconde o carrinho da barra (vai pro menu mobile) */
     }
 
     /* 2. Mostra logos e ícones do Mobile */
@@ -129,47 +135,27 @@
     }
     .header-mobile-toggle {
         display: block; /* Mostra ícone hambúrguer */
+        grid-column: 3 / 4; /* Hambúrguer na terceira coluna */
     }
     .menu-toggle {
         display: block;
     }
 
-    /* 3. Re-introduz a busca no layout de grid (mas vindo do .header-main-icons) */
-    /* Precisamos de uma regra separada para a busca no mobile */
-    /* SOLUÇÃO MAIS SIMPLES: A busca já está escondida. O menu mobile a substitui. */
-    /* CORREÇÃO (Layout de 3 Colunas): */
-    .nav-left {
-        grid-column: 1 / 2; /* Logo na primeira coluna */
-        gap: 0;
-    }
-    
-    /* RE-ADICIONANDO A BUSCA NO MOBILE (se desejado) */
-    /* Para manter a busca visível no mobile, precisamos mover
-       o .search-box-container para fora do .header-main-icons
-       no HTML. Assumindo a estrutura atual (busca some): */
-       
-    /* Se a busca DEVE ficar visível no mobile, a estrutura do HTML
-       precisa mudar. Vamos assumir que a busca no mobile foi
-       substituída pelo menu hambúrguer. */
-       
-    /* NOVO LAYOUT DE 3 COLUNAS (com busca visível) */
-    .header-main-icons {
-        display: contents; /* Remove o container, liberando os filhos para o grid */
-    }
+    /* 3. Posiciona a busca na grid */
     .search-box-container {
         display: block;
         grid-column: 2 / 3; /* Busca na segunda coluna (central) */
         width: 100%;
+        max-width: none;
     }
-    .header-icons .user-dropdown,
-    .header-icons .cart-icon-link {
-        display: none; /* Esconde usuário e carrinho da barra */
+    .search-input {
+        max-width: none;
     }
-    .header-mobile-toggle {
-        grid-column: 3 / 4; /* Hambúrguer na terceira coluna */
-    }
-    /* Fim do novo layout de 3 colunas */
 
+    .nav-left {
+        grid-column: 1 / 2; /* Logo na primeira coluna */
+        gap: 0;
+    }
 
     .hero-banner-video {
         min-height: 50vh;
