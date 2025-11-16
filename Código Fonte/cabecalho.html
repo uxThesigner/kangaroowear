@@ -2,7 +2,6 @@
     <div class="header-content">
         <div class="nav-left">
             <a href="index.html" class="logo">
-                <!-- AMBOS os logos estão aqui. O CSS vai mostrar o correto. -->
                 <img src="Imagens/Banners/logo.svg" alt="Kangaroo Logo" class="logo-img desktop-logo">
                 <img src="Imagens/Banners/logomobile.svg" alt="Kangaroo Logo" class="logo-img mobile-logo">
             </a>
@@ -53,11 +52,20 @@
                 <input type="text" class="search-input" placeholder="Buscar produtos...">
             </div>
             
-            <!-- 
-              ÍCONE DE USUÁRIO E CARRINHO REMOVIDOS DAQUI
-              Eles agora vivem dentro do .mobile-menu
-            -->
+            <div class="nav-dropdown user-dropdown">
+                <a href="#" class="dropdown-toggle user-icon-toggle">
+                    <i class="fas fa-user"></i>
+                </a>
+                <ul class="dropdown-menu"> 
+                    <li><a href="#">Fazer Login</a></li>
+                    <li><a href="#">Cadastre-se</a></li>
+                </ul>
+            </div>
             
+            <a href="carrinho.html" class="cart-icon-link">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </a>
             <i class="fas fa-bars menu-toggle"></i>
         </div>
     </div>
@@ -67,7 +75,6 @@
     <div class="menu-header">
         <i class="fas fa-times close-menu"></i>
         <a href="index.html">
-            <!-- Logo do menu interno (pode ser o mobile também) -->
             <img src="Imagens/Banners/logomobile.svg" alt="Kangaroo Logo" class="logo-img-mobile">
         </a>
     </div>
@@ -98,10 +105,8 @@
                 </ul>
             </li>
 
-            <!-- === ÍCONES ADICIONADOS AQUI === -->
             <li class="user-link-mobile"><a href="#"><i class="fas fa-user"></i> MINHA CONTA</a></li>
             <li class="cart-link-mobile"><a href="carrinho.html"><i class="fas fa-shopping-cart"></i> MEU CARRINHO</a></li>
-            <!-- ============================== -->
         </ul>
     </nav>
     <div class="menu-footer">
