@@ -7,13 +7,16 @@
     <title>Camisetas Nerds, Geek, Animes e Games Premium | Kangaroo Wear</title>
     <meta name="description" content="Encontre camisetas exclusivas de cultura pop, animes, jogos (games), filmes e séries. Qualidade premium em malha preta e branca. Frete Grátis!">
     
-    <link rel="icon" href="../Imagens/Banners/favicon.png" type="image/png">
+    <link rel="icon" href="Imagens/Banners/favicon.png" type="image/png">
     
+    <!-- === CSS MODULARIZADO === -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="responsive.css">
+    <!-- ======================== -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -23,9 +26,9 @@
     <main>
         
         <section class="hero-banner-video">
-            <video autoplay loop muted playsinline poster="../Imagens/Banners/hero-banner.jpg" class="hero-video">
-                <source src="../Imagens/Banners/hero.webm" type="video/webm">
-                <source src="../Imagens/Banners/hero.mp4" type="video/mp4">
+            <video autoplay loop muted playsinline poster="Imagens/Banners/hero-banner.jpg" class="hero-video">
+                <source src="Imagens/Banners/hero.webm" type="video/webm">
+                <source src="Imagens/Banners/hero.mp4" type="video/mp4">
             </video>
             
             <div class="container hero-content fade-in-text">
@@ -33,6 +36,7 @@
                 <p>O melhor do cinema, games e animes em camisetas exclusivas e limitadas.</p>
             </div>
 
+            <!-- === AJUSTE 2: Marquee MOVIDO PARA DENTRO do Hero === -->
             <section class="offer-bar">
                 <div class="offer-bar-content">
                     <span>⚡ FRETE GRÁTIS ACIMA DE R$ 250,00</span>
@@ -43,7 +47,10 @@
                     <span>📦 TROCA GRÁTIS EM ATÉ 30 DIAS</span>
                 </div>
             </section>
-            </section>
+            <!-- ================================================ -->
+        </section>
+
+        <!-- O Marquee não está mais aqui -->
 
         <section class="partner-slider-section">
             <div class="container">
@@ -74,9 +81,14 @@
             </div>
     </footer>
 
+    <!-- ==== SESSÃO DE DADOS ==== -->
     <script src="products.js" defer></script>
     <script src="coupons.js" defer></script>
     <script src="partners.js" defer></script>
     
-    <script src="functions.js" defer></script> <script src="main.js" defer></script>      </body>
+    <!-- ==== SESSÃO DE LÓGICA MODULARIZADA ==== -->
+    <script src="functions.js" defer></script> <!-- A Biblioteca de Ferramentas -->
+    <script src="main.js" defer></script>      <!-- O Cérebro (Execução) -->
+    <!-- ======================================= -->
+</body>
 </html>
