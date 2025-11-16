@@ -1,5 +1,6 @@
 <header class="header">
     <div class="header-content">
+        
         <div class="nav-left">
             <a href="index.html" class="logo">
                 <img src="Imagens/Banners/logo.svg" alt="Kangaroo Logo" class="logo-img desktop-logo">
@@ -9,12 +10,12 @@
             <nav class="nav-menu">
                 <ul>
                     <li class="nav-dropdown"> 
-                        <a href="#" class="dropdown-toggle"> 
+                        <button type="button" class="dropdown-toggle"> 
                             COLEÇÕES
-                        </a>
+                        </button>
                         <ul class="dropdown-menu"> 
                             <li><a href="love.html" class="highlight-link">LOVE</a></li>
-                            <li><a href="exclusivas.html" class="highlight-link">EXCLUSIVAS</a></li>
+                            <li><a href="exclusivas.html" class="highlight-link">EXCLUSIVAS</a></li> 
                             <li><a href="busca.html?q=anime">Animes</a></li>
                             <li><a href="busca.html?q=filmes">Filmes</a></li>
                             <li><a href="busca.html?q=series">Séries</a></li>
@@ -24,9 +25,9 @@
                     </li>
                     
                     <li class="nav-dropdown">
-                        <a href="#" class="dropdown-toggle">
+                        <button type="button" class="dropdown-toggle">
                             AFILIADOS
-                        </a>
+                        </button>
                         <ul class="dropdown-menu">
                             <li><a href="afiliados.html">Cadastre-se</a></li>
                             <li><a href="afiliados.html">Saiba mais</a></li>
@@ -34,9 +35,9 @@
                     </li>
                     
                     <li class="nav-dropdown">
-                        <a href="#" class="dropdown-toggle">
+                        <button type="button" class="dropdown-toggle">
                             PARCERIAS
-                        </a>
+                        </button>
                         <ul class="dropdown-menu">
                             <li><a href="parcerias.html">Sou loja física</a></li>
                             <li><a href="parcerias.html">Sou loja Virtual</a></li>
@@ -47,26 +48,31 @@
             </nav>
         </div>
         
-        <div class="header-icons">
-            <div class="search-box-container">
-                <input type="text" class="search-input" placeholder="Buscar produtos...">
-            </div>
-            
-            <div class="nav-dropdown user-dropdown">
-                <a href="#" class="dropdown-toggle user-icon-toggle">
-                    <i class="fas fa-user"></i>
+        <div class="header-right">
+            <div class="header-main-icons">
+                <div class="search-box-container">
+                    <input type="text" class="search-input" placeholder="Buscar produtos...">
+                </div>
+                
+                <div class="nav-dropdown user-dropdown">
+                     <button type="button" class="dropdown-toggle user-icon-toggle">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <ul class="dropdown-menu"> 
+                        <li><a href="#">Fazer Login</a></li>
+                        <li><a href="#">Cadastre-se</a></li>
+                    </ul>
+                </div>
+                
+                <a href="carrinho.html" class="cart-icon-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
                 </a>
-                <ul class="dropdown-menu"> 
-                    <li><a href="#">Fazer Login</a></li>
-                    <li><a href="#">Cadastre-se</a></li>
-                </ul>
             </div>
-            
-            <a href="carrinho.html" class="cart-icon-link">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
-            </a>
-            <i class="fas fa-bars menu-toggle"></i>
+
+            <div class="header-mobile-toggle">
+                 <i class="fas fa-bars menu-toggle"></i>
+            </div>
         </div>
     </div>
 </header>
