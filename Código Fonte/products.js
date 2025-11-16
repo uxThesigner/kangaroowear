@@ -1,7 +1,7 @@
 const PRODUCTS = [
     {
         id: 'tshirt-1',
-        image: '../Imagens/Fotos Camisas/tshirt-saitama.png',
+        image: 'Imagens/Fotos Camisas/tshirt-saitama.png',
         name: 'T-Shirt Saitama also Kicks',
         price: 89.90,
         rating: 4.8,
@@ -12,11 +12,11 @@ const PRODUCTS = [
         colors: ['Preto', 'Cinza', 'Branco'],
         coupon: 'KANGAR10',
         stock: 20,
-        tags: ['t-shirt', 'saitama', 'one punch man', 'camisas', 'anime', 'nerd', 'geek', 'preta', 'branca', 'tshirt']
+        tags: ['t-shirt', 'saitama', 'one punch man', 'camisas', 'anime', 'nerd', 'geek', 'preta', 'branca']
     },
     {
         id: 'tshirt-2',
-        image: '../Imagens/Fotos Camisas/tshirt-draken.png',
+        image: 'Imagens/Fotos Camisas/tshirt-draken.png',
         name: 'T-shirt Tokyo Revengers Draken',
         price: 89.90,
         rating: 4.5,
@@ -31,7 +31,7 @@ const PRODUCTS = [
     },
     {
         id: 'hoodie-3',
-        image: '../Imagens/Fotos Camisas/hoodie-akatsuki.png',
+        image: 'Imagens/Fotos Camisas/hoodie-akatsuki.png',
         name: 'Hoodie Naruto - Akatsuki Cloud',
         price: 179.90,
         rating: 4.9,
@@ -46,7 +46,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-4',
-        image: '../Imagens/Fotos Camisas/tshirt-guts.png',
+        image: 'Imagens/Fotos Camisas/tshirt-guts.png',
         name: 'T-shirt Berserk - Guts Minimal',
         price: 89.90,
         rating: 4.7,
@@ -61,7 +61,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-5',
-        image: '../Imagens/Fotos Camisas/tshirt-killua.png',
+        image: 'Imagens/Fotos Camisas/tshirt-killua.png',
         name: 'T-shirt Hunter x Hunter - Killua Godspeed',
         price: 99.90,
         rating: 4.9,
@@ -77,7 +77,7 @@ const PRODUCTS = [
     // --- PRODUTOS 6-30 (PLACEHOLDERS) ---
     {
         id: 'tshirt-6',
-        image: '../Imagens/Fotos Camisas/tshirt-saitama.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-saitama.png', 
         name: 'T-Shirt One Piece - Luffy Gear 5',
         price: 94.90,
         rating: 4.6,
@@ -92,7 +92,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-7',
-        image: '../Imagens/Fotos Camisas/tshirt-draken.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-draken.png', 
         name: 'T-Shirt Jujutsu Kaisen - Gojo',
         price: 89.90,
         rating: 4.8,
@@ -107,7 +107,7 @@ const PRODUCTS = [
     },
     {
         id: 'hoodie-8',
-        image: '../Imagens/Fotos Camisas/hoodie-akatsuki.png', 
+        image: 'Imagens/Fotos Camisas/hoodie-akatsuki.png', 
         name: 'Hoodie Attack on Titan - Tropa de Exploração',
         price: 189.90,
         rating: 4.7,
@@ -122,7 +122,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-9',
-        image: '../Imagens/Fotos Camisas/tshirt-guts.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-guts.png', 
         name: 'T-Shirt Demon Slayer - Rengoku',
         price: 89.90,
         rating: 4.6,
@@ -137,7 +137,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-10',
-        image: '../Imagens/Fotos Camisas/tshirt-killua.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-killua.png', 
         name: 'T-Shirt Evangelion - EVA-01',
         price: 99.90,
         rating: 4.5,
@@ -152,7 +152,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-11',
-        image: '../Imagens/Fotos Camisas/tshirt-saitama.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-saitama.png', 
         name: 'T-Shirt Dragon Ball - Goku Instinto Superior',
         price: 89.90,
         rating: 4.7,
@@ -167,7 +167,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-12',
-        image: '../Imagens/Fotos Camisas/tshirt-draken.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-draken.png', 
         name: 'T-Shirt Chainsaw Man - Pochita',
         price: 94.90,
         rating: 4.8,
@@ -182,7 +182,7 @@ const PRODUCTS = [
     },
     {
         id: 'hoodie-13',
-        image: '../Imagens/Fotos Camisas/hoodie-akatsuki.png', 
+        image: 'Imagens/Fotos Camisas/hoodie-akatsuki.png', 
         name: 'Hoodie Jujutsu Kaisen - Sukuna',
         price: 179.90,
         rating: 4.9,
@@ -197,7 +197,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-14',
-        image: '../Imagens/Fotos Camisas/tshirt-guts.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-guts.png', 
         name: 'T-Shirt Death Note - Ryuk',
         price: 89.90,
         rating: 4.6,
@@ -212,7 +212,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-15',
-        image: '../Imagens/Fotos Camisas/tshirt-killua.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-killua.png', 
         name: 'T-Shirt Cowboy Bebop - Spike',
         price: 99.90,
         rating: 4.7,
@@ -227,7 +227,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-16',
-        image: '../Imagens/Fotos Camisas/tshirt-saitama.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-saitama.png', 
         name: 'T-Shirt Cavaleiros do Zodíaco - Seiya',
         price: 89.90,
         rating: 4.5,
@@ -242,7 +242,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-17',
-        image: '../Imagens/Fotos Camisas/tshirt-draken.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-draken.png', 
         name: 'T-Shirt Yu Yu Hakusho - Yusuke',
         price: 89.90,
         rating: 4.6,
@@ -257,7 +257,7 @@ const PRODUCTS = [
     },
     {
         id: 'hoodie-18',
-        image: '../Imagens/Fotos Camisas/hoodie-akatsuki.png', 
+        image: 'Imagens/Fotos Camisas/hoodie-akatsuki.png', 
         name: 'Hoodie My Hero Academia - U.A.',
         price: 169.90,
         rating: 4.7,
@@ -266,13 +266,13 @@ const PRODUCTS = [
         sizes: ['P', 'M', 'G', 'GG'],
         material: 'Moletom 3 cabos (Algodão/Poliéster)',
         colors: ['Azul', 'Cinza'],
-        coupon: 'KANGAR1D0',
+        coupon: 'KANGAR10',
         stock: 10,
         tags: ['hoodie', 'moletom', 'boku no hero', 'my hero academia', 'ua', 'anime', 'geek']
     },
     {
         id: 'tshirt-19',
-        image: '../Imagens/Fotos Camisas/tshirt-guts.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-guts.png', 
         name: 'T-Shirt Bleach - Ichigo Hollow',
         price: 94.90,
         rating: 4.8,
@@ -287,7 +287,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-20',
-        image: '../Imagens/Fotos Camisas/tshirt-killua.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-killua.png', 
         name: 'T-Shirt Fullmetal Alchemist - Transmutação',
         price: 99.90,
         rating: 4.7,
@@ -302,7 +302,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-21',
-        image: '../Imagens/Fotos Camisas/tshirt-saitama.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-saitama.png', 
         name: 'T-Shirt Vagabond - Musashi',
         price: 99.90,
         rating: 4.9,
@@ -317,7 +317,7 @@ const PRODUCTS = [
     },
     {
         id: 'tshirt-22',
-        image: '../Imagens/Fotos Camisas/tshirt-draken.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-draken.png', 
         name: 'T-Shirt Mob Psycho 100 - ???%',
         price: 89.90,
         rating: 4.7,
@@ -328,11 +328,11 @@ const PRODUCTS = [
         colors: ['Preto', 'Azul'],
         coupon: 'KANGAR10',
         stock: 10,
-        tags: ['t-shirt', 'mob psycho 100', 'mob', 'camisas', 'anime', 'geek', 'preta', 'love', 'lancamento']
+        tags: ['t-shirt', 'mob psycho 100', 'mob', 'camisas', 'anime', 'geek', 'preta']
     },
     {
         id: 'hoodie-23',
-        image: '../Imagens/Fotos Camisas/hoodie-akatsuki.png', 
+        image: 'Imagens/Fotos Camisas/hoodie-akatsuki.png', 
         name: 'Hoodie One Piece - Barbanegra',
         price: 179.90,
         rating: 4.6,
@@ -343,11 +343,11 @@ const PRODUCTS = [
         colors: ['Preto'],
         coupon: 'KANGAR10',
         stock: 7,
-        tags: ['hoodie', 'moletom', 'one piece', 'barbanegra', 'teach', 'anime', 'nerd', 'preta', 'love', 'lancamento']
+        tags: ['hoodie', 'moletom', 'one piece', 'barbanegra', 'teach', 'anime', 'nerd', 'preta']
     },
     {
         id: 'tshirt-24',
-        image: '../Imagens/Fotos Camisas/tshirt-guts.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-guts.png', 
         name: 'T-Shirt Haikyuu!! - Karasuno',
         price: 89.90,
         rating: 4.5,
@@ -358,11 +358,11 @@ const PRODUCTS = [
         colors: ['Laranja', 'Preto'],
         coupon: 'KANGAR10',
         stock: 20,
-        tags: ['t-shirt', 'haikyuu', 'karasuno', 'volei', 'camisas', 'anime', 'geek', 'preta', 'love', 'lancamento']
+        tags: ['t-shirt', 'haikyuu', 'karasuno', 'volei', 'camisas', 'anime', 'geek', 'preta']
     },
     {
         id: 'tshirt-25',
-        image: '../Imagens/Fotos Camisas/tshirt-killua.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-killua.png', 
         name: 'T-Shirt Kaisen - Logo Simples',
         price: 79.90,
         rating: 4.3,
@@ -373,11 +373,11 @@ const PRODUCTS = [
         colors: ['Preto', 'Branco'],
         coupon: 'KANGAR10',
         stock: 30,
-        tags: ['t-shirt', 'jujutsu kaisen', 'logo', 'camisas', 'anime', 'nerd', 'preta', 'branca', 'love', 'leagueoflegends']
+        tags: ['t-shirt', 'jujutsu kaisen', 'logo', 'camisas', 'anime', 'nerd', 'preta', 'branca']
     },
     {
         id: 'tshirt-26',
-        image: '../Imagens/Fotos Camisas/tshirt-saitama.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-saitama.png', 
         name: 'T-Shirt Naruto - Ichiraku Ramen',
         price: 94.90,
         rating: 4.8,
@@ -386,13 +386,13 @@ const PRODUCTS = [
         sizes: ['P', 'M', 'G', 'GG'],
         material: 'Algodão fio 40.1',
         colors: ['Branco', 'Preto', 'Bege'],
-        coupon: 'KANGAR1D0',
+        coupon: 'KANGAR10',
         stock: 22,
-        tags: ['t-shirt', 'naruto', 'ramen', 'ichiraku', 'camisas', 'anime', 'geek', 'branca', 'preta', 'love', 'leagueoflegends']
+        tags: ['t-shirt', 'naruto', 'ramen', 'ichiraku', 'camisas', 'anime', 'geek', 'branca', 'preta']
     },
     {
         id: 'tshirt-27',
-        image: '../Imagens/Fotos Camisas/tshirt-draken.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-draken.png', 
         name: 'T-Shirt Spy x Family - Anya',
         price: 89.90,
         rating: 4.7,
@@ -403,11 +403,11 @@ const PRODUCTS = [
         colors: ['Rosa', 'Branco', 'Preto'],
         coupon: 'KANGAR10',
         stock: 15,
-        tags: ['t-shirt', 'spy x family', 'anya', 'camisas', 'anime', 'nerd', 'branca', 'preta', 'series', 'love', 'leagueoflegends']
+        tags: ['t-shirt', 'spy x family', 'anya', 'camisas', 'anime', 'nerd', 'branca', 'preta']
     },
     {
         id: 'hoodie-28',
-        image: '../Imagens/Fotos Camisas/hoodie-akatsuki.png', 
+        image: 'Imagens/Fotos Camisas/hoodie-akatsuki.png', 
         name: 'Hoodie Bleach - Divisões Gotei 13',
         price: 189.90,
         rating: 4.8,
@@ -418,11 +418,11 @@ const PRODUCTS = [
         colors: ['Preto', 'Branco'],
         coupon: 'KANGAR10',
         stock: 10,
-        tags: ['hoodie', 'moletom', 'bleach', 'gotei 13', 'anime', 'geek', 'preta', 'branca', 'bandas', 'love', 'leagueoflegends']
+        tags: ['hoodie', 'moletom', 'bleach', 'gotei 13', 'anime', 'geek', 'preta', 'branca']
     },
     {
         id: 'tshirt-29',
-        image: '../Imagens/Fotos Camisas/tshirt-guts.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-guts.png', 
         name: 'T-Shirt One Piece - Zoro',
         price: 94.90,
         rating: 4.9,
@@ -433,11 +433,11 @@ const PRODUCTS = [
         colors: ['Verde', 'Preto', 'Branco'],
         coupon: 'KANGAR10',
         stock: 30,
-        tags: ['t-shirt', 'one piece', 'zoro', 'roronoa', 'camisas', 'anime', 'nerd', 'preta', 'branca', 'filmes', 'love', 'leagueoflegends']
+        tags: ['t-shirt', 'one piece', 'zoro', 'roronoa', 'camisas', 'anime', 'nerd', 'preta', 'branca']
     },
     {
         id: 'tshirt-30',
-        image: '../Imagens/Fotos Camisas/tshirt-killua.png', 
+        image: 'Imagens/Fotos Camisas/tshirt-killua.png', 
         name: 'T-Shirt Samurai Champloo - Mugen',
         price: 99.90,
         rating: 4.7,
@@ -448,6 +448,6 @@ const PRODUCTS = [
         colors: ['Preto', 'Bege'],
         coupon: 'KANGAR10',
         stock: 12,
-        tags: ['t-shirt', 'samurai champloo', 'mugen', 'jin', 'camisas', 'vintage', 'anime', 'geek', 'preta', 'games', 'love', 'leagueoflegends']
+        tags: ['t-shirt', 'samurai champloo', 'mugen', 'jin', 'camisas', 'vintage', 'anime', 'geek', 'preta']
     }
 ];
