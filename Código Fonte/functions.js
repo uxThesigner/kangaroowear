@@ -126,6 +126,34 @@ function addItemToCart(productId, color, size, quantity = 1) {
     }
 }
 
+// --- NOVA FUNÇÃO (para Camisa Exclusiva) ---
+/**
+ * Adiciona um item customizado (Camisa Exclusiva) ao carrinho.
+ * Como não é um produto do products.js, ele tem sua própria lógica.
+ */
+function addCustomItemToCart(itemData) {
+    // Cria um identificador único baseado nos dados
+    const itemIdentifier = `custom-${Date.now()}`;
+    
+    cartItems.push({
+        identifier: itemIdentifier,
+        id: 'custom-exclusive', // ID Fixo para itens customizados
+        name: itemData.name, // Ex: "Camisa Exclusiva - Estilo Anime"
+        image: itemData.image, // Imagem do estilo de traço
+        price: itemData.price, // Preço total calculado
+        color: itemData.color, // Cor da camisa
+        size: itemData.size, // Tamanho da camisa
+        quantity: 1,
+        // (Opcional) Adiciona os detalhes para o checkout
+        customDetails: itemData.description 
+    });
+
+    saveCart();
+    updateCartCount();
+}
+// --- FIM DA NOVA FUNÇÃO ---
+
+
 function removeItem(identifier) {
     cartItems = cartItems.filter(item => item.identifier !== identifier);
     saveCart();
@@ -227,6 +255,9 @@ function handleCouponInput() {
     // Validação 2: Cupom é para uma coleção específica?
     if (coupon.target_collection && cartItems.length > 0) {
         const hasTargetProduct = cartItems.some(item => {
+            // Ignora itens customizados na validação de cupom
+            if (item.id === 'custom-exclusive') return false; 
+            
             const productData = PRODUCTS.find(p => p.id === item.id);
             return productData && productData.collection === coupon.target_collection;
         });
@@ -309,7 +340,7 @@ function renderProductCard(product) {
                 <div class="product-image-container">
                     <img src="${imagePath}" alt="${product.name}" class="product-main-img" loading="lazy">
                 </div>
-                <div class="product-info">
+                <div class.product-info">
                     <div class="product-meta">
                         <span class="rating"><i class="fas fa-star"></i> ${product.rating}</span>
                         <span class="reviews-count">${product.reviews} reviews</span>
@@ -333,7 +364,6 @@ function renderProductCard(product) {
  * Cria o HTML para um único card de parceiro.
  */
 function renderPartnerCard(partner) {
-    // === CORREÇÃO DE CAMINHO (Já estava correta no arquivo original) ===
     return `
         <a href="${partner.link}" target="_blank" class="partner-card-link">
             <div class="partner-card">
@@ -347,7 +377,6 @@ function renderPartnerCard(partner) {
             </div>
         </a>
     `;
-    // ===========================
 }
 
 /**
@@ -409,7 +438,8 @@ function renderCartPage() {
         let htmlContent = '';
         cartItems.forEach(item => {
             const itemTotal = item.price * item.quantity;
-            const imagePath = item.image; // Caminho já vem correto
+            // Usa a imagem do item (seja do product.js ou a customizada)
+            const imagePath = item.image; 
             
             htmlContent += `
                 <tr>
@@ -555,7 +585,8 @@ function setupCartListeners() {
     });
 
     document.querySelectorAll('.cart-quantity-input').forEach(input => {
-        input.addEventListener('change', (e) => {
+        // Altera para 'input' para atualizar em tempo real (caso o usuário digite)
+        input.addEventListener('input', (e) => { 
             const identifier = e.currentTarget.dataset.identifier;
             updateCartItemQuantity(identifier, e.target.value); // Função de 'cart.js'
         });
@@ -709,7 +740,13 @@ function generateWhatsAppOrderLink(formData) {
     
     let cartBlock = `Em meu Kangaroo Cart, tem:%0A`;
     cartItems.forEach((item) => {
-        cartBlock += `* ${item.name} | Qtd: ${item.quantity} | Tam: ${item.size} | Cor: ${item.color}%0A`;
+        // Adiciona detalhes extras se for um item customizado
+        if (item.id === 'custom-exclusive') {
+            cartBlock += `* ${item.name} | Qtd: ${item.quantity} | Tam: ${item.size} | Cor: ${item.color}%0A`;
+            cartBlock += `   -> (Detalhes: ${item.customDetails})%0A`;
+        } else {
+            cartBlock += `* ${item.name} | Qtd: ${item.quantity} | Tam: ${item.size} | Cor: ${item.color}%0A`;
+        }
     });
     
     let totalsBlock = `Cupom Utilizado: ${appliedCoupon ? appliedCoupon.code : 'Nenhum'}%0A`;
@@ -834,12 +871,6 @@ function setupPaymentPage() {
 
             // === CORREÇÃO CRÍTICA (Já aplicada) ===
             // As linhas abaixo, que limpavam o carrinho, foram REMOVIDAS.
-            /*
-            cartItems = [];
-            appliedCoupon = null;
-            saveCart(); 
-            */
-            // =========================
         });
     }
 
@@ -1178,3 +1209,151 @@ function setupShareCartButton() {
     });
 }
 // ===================================================
+
+
+// === NOVA FUNÇÃO (Ajuste 6): SETUP DA PÁGINA EXCLUSIVAS ===
+/**
+ * Configura a calculadora de preço e os listeners da página exclusivas.html
+ */
+function setupExclusivasPage() {
+    
+    // Referências aos elementos do formulário
+    const form = document.getElementById('exclusiva-form');
+    if (!form) return; // Sai se não estiver na página correta
+
+    const priceEl = document.getElementById('exclusiva-total-price');
+    const algodaoGroup = document.querySelectorAll('input[name="algodao"]');
+    const tamanhoSelect = document.getElementById('tamanho-select');
+    const coresInput = document.getElementById('cores-input');
+    const styleCards = document.querySelectorAll('.style-card');
+    const styleInput = document.getElementById('estilo-traco-input');
+    const styleGallery = document.getElementById('style-gallery');
+    
+    // --- Regras de Preço (baseadas no seu briefing) ---
+    const PRECOS = {
+        ARTE_UNICA: 80.00,
+        ALGODAO: {
+            padrao: 45.00,
+            premium: 65.00
+        },
+        TAMANHO: {
+            PP: 0.00,
+            P: 0.00,
+            M: 10.00,
+            G: 15.00,
+            GG: 18.00,
+            XG: 25.00,
+            XXG: 50.00
+        },
+        POR_COR: 8.00
+    };
+
+    /**
+     * A Calculadora: Pega os valores do formulário e calcula o total
+     */
+    function calcularPrecoTotal() {
+        // 1. Pegar valores selecionados
+        const algodaoSelecionado = document.querySelector('input[name="algodao"]:checked').value;
+        const tamanhoSelecionado = tamanhoSelect.value;
+        const numCores = parseInt(coresInput.value) || 1; // Garante que é no mínimo 1
+        
+        // 2. Calcular cada parte
+        const precoBaseArte = PRECOS.ARTE_UNICA;
+        const precoAlgodao = PRECOS.ALGODAO[algodaoSelecionado];
+        const precoTamanho = PRECOS.TAMANHO[tamanhoSelecionado];
+        const precoCores = numCores * PRECOS.POR_COR;
+        
+        // 3. Somar tudo
+        const total = precoBaseArte + precoAlgodao + precoTamanho + precoCores;
+        
+        // 4. Exibir na tela
+        priceEl.textContent = formatPrice(total);
+        
+        return total; // Retorna o número para ser usado no carrinho
+    }
+
+    /**
+     * Adiciona os "ouvintes" de evento
+     */
+    function setupListeners() {
+        // Recalcula o preço se mudar algodão, tamanho ou cores
+        algodaoGroup.forEach(radio => radio.addEventListener('change', calcularPrecoTotal));
+        tamanhoSelect.addEventListener('change', calcularPrecoTotal);
+        coresInput.addEventListener('input', calcularPrecoTotal); // 'input' é melhor que 'change' para números
+        
+        // Lógica para selecionar o Estilo de Traço
+        styleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Remove 'active' de todos
+                styleCards.forEach(c => c.classList.remove('active'));
+                // Adiciona 'active' no clicado
+                card.classList.add('active');
+                // Atualiza o input escondido
+                const estilo = card.dataset.style;
+                styleInput.value = estilo;
+            });
+            // Permite seleção com a tecla Enter (Acessibilidade)
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
+        });
+        
+        // Lógica do botão "Adicionar ao Carrinho"
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const messageEl = document.getElementById('add-to-cart-message');
+            
+            // 1. Coletar todos os dados
+            const descricao = document.getElementById('arte-descricao').value;
+            if (!descricao) {
+                messageEl.textContent = 'Por favor, descreva sua ideia primeiro.';
+                messageEl.style.color = 'var(--color-highlight)';
+                setTimeout(() => { messageEl.textContent = ''; }, 3000);
+                return;
+            }
+
+            const estilo = styleInput.value;
+            const algodao = document.querySelector('input[name="algodao"]:checked').value;
+            const tamanho = tamanhoSelect.value;
+            const corCamisa = document.getElementById('cor-camisa-select').value;
+            const numCores = coresInput.value;
+            
+            // Pega a imagem do estilo selecionado para usar no carrinho
+            const imagemEstilo = styleGallery.querySelector('.style-card.active img').src;
+
+            // 2. Montar o nome e a descrição para o carrinho
+            const nomeItem = `Camisa Exclusiva - ${estilo}`;
+            const detalhesItem = `Algodão ${algodao}, ${numCores} cor(es). Descrição: "${descricao}"`;
+
+            // 3. Calcular o preço final (só para garantir)
+            const precoFinal = calcularPrecoTotal();
+            
+            // 4. Criar o objeto do item
+            const itemParaCarrinho = {
+                name: nomeItem,
+                image: imagemEstilo,
+                price: precoFinal,
+                color: corCamisa,
+                size: tamanho,
+                description: detalhesItem
+            };
+
+            // 5. Adicionar ao carrinho
+            addCustomItemToCart(itemParaCarrinho);
+            
+            // 6. Mostrar feedback
+            messageEl.textContent = 'Camisa Exclusiva adicionada! 🎉';
+            messageEl.style.color = 'var(--color-accent)';
+            setTimeout(() => { messageEl.textContent = ''; }, 2000);
+        });
+    }
+
+    // --- Inicialização ---
+    calcularPrecoTotal(); // Calcula o preço inicial ao carregar a página
+    setupListeners();     // Configura todos os botões e inputs
+}
+// =========================================================
