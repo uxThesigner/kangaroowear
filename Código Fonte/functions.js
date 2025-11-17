@@ -335,7 +335,7 @@ function renderProductCard(product) {
     const imagePath = product.image; // Caminho já vem correto de products.js
 
     // === CORREÇÃO DO BUG (Ajuste 9) ===
-    // Troquei 'class.product-info' por 'class="product-info"'
+    // (Este erro foi corrigido na versão anterior)
     return `
         <a href="produtos.html?id=${product.id}" class="product-card-link">
             <div class="product-card">
@@ -1234,9 +1234,7 @@ function setupExclusivasPage() {
     
     // --- Regras de Preço ---
     const PRECOS = {
-        // === ATUALIZAÇÃO (Ajuste 7) ===
-        ARTE_UNICA: 120.00, // Preço base da arte mudou de 80 para 120
-        // ==============================
+        ARTE_UNICA: 120.00, // Ajuste 7: Preço base da arte
         ALGODAO: {
             padrao: 45.00,
             premium: 65.00
@@ -1381,18 +1379,17 @@ function setupExclusivasPage() {
             case "material":
                 setKangaroo('exkangaroo4');
                 wizardTitle.textContent = "Qual material você prefere?";
+                // === ATUALIZAÇÃO (Ajuste 8) ===
+                // Troca os botões quadrados pelos "balões"
                 wizardBody.innerHTML = `
-                    <div class="wizard-options-grid">
-                        <button class="wizard-btn-option ${wizardData.material === 'padrao' ? 'selected' : ''}" data-value="padrao">
-                            <h4>Algodão Padrão</h4>
-                            <p>(R$ 45,00)</p>
-                        </button>
-                        <button class="wizard-btn-option ${wizardData.material === 'premium' ? 'selected' : ''}" data-value="premium">
-                            <h4>Algodão Premium</h4>
-                            <p>(R$ 65,00)</p>
-                        </button>
+                    <p>Escolha o tipo de algodão para sua camisa.</p>
+                    <div class="wizard-balloons-group" id="wizard-material-group">
+                        <button class="wizard-btn-balloon" data-value="padrao">Algodão Padrão (R$ 45,00)</button>
+                        <button class="wizard-btn-balloon" data-value="premium">Algodão Premium (R$ 65,00)</button>
                     </div>
                 `;
+                // Marca o botão 'selected'
+                wizardBody.querySelector(`.wizard-btn-balloon[data-value="${wizardData.material}"]`).classList.add('selected');
                 navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
                 break;
                 
@@ -1459,12 +1456,13 @@ function setupExclusivasPage() {
      * (Otimizado para não adicionar/remover listeners toda hora)
      */
     wizardBody.addEventListener('click', (e) => {
+        // === ATUALIZAÇÃO (Ajuste 8) ===
         // --- Lógica dos botões de Material (Etapa 3) ---
-        if (e.target.closest('.wizard-btn-option')) {
-            const btn = e.target.closest('.wizard-btn-option');
+        if (e.target.closest('#wizard-material-group .wizard-btn-balloon')) {
+            const btn = e.target.closest('#wizard-material-group .wizard-btn-balloon');
             wizardData.material = btn.dataset.value;
             // Atualiza visual
-            wizardBody.querySelectorAll('.wizard-btn-option').forEach(b => b.classList.remove('selected'));
+            wizardBody.querySelectorAll('#wizard-material-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
         }
         
