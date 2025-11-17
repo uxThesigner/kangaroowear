@@ -632,21 +632,15 @@ function setupProductPage() {
     const imagePath = product.image; 
 
     // === CORREÇÃO SEO (Ajuste 3) ===
-    // Preenche o Título, o Alt da Imagem e a Meta Descrição dinamicamente
-    
-    // 1. Atualiza o Título da Página (Aba do Navegador)
     document.title = `${product.name} | KANGAROO WEAR`;
     
-    // 2. Atualiza o Alt da imagem principal
     const mainImage = document.getElementById('main-product-image');
     if (mainImage) {
         mainImage.alt = product.name;
     }
     
-    // 3. Atualiza a Meta Descrição (para o Google)
     const metaDescription = document.getElementById('product-description');
     if (metaDescription) {
-        // Cria uma descrição simples baseada nos dados do produto
         metaDescription.setAttribute('content', `Compre sua ${product.name} em ${product.material}. Qualidade premium em até 6x sem juros.`);
     }
     // ===============================
@@ -1231,7 +1225,9 @@ function setupExclusivasPage() {
     
     // --- Regras de Preço (baseadas no seu briefing) ---
     const PRECOS = {
-        ARTE_UNICA: 80.00,
+        // === ATUALIZAÇÃO (Ajuste 7) ===
+        ARTE_UNICA: 120.00, // Preço base da arte mudou de 80 para 120
+        // ==============================
         ALGODAO: {
             padrao: 45.00,
             premium: 65.00
