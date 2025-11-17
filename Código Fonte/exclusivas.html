@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crie sua Camisa Exclusiva | KANGAROO WEAR</title>
+    
+    <meta name="description" content="Crie sua camiseta 100% exclusiva. Escolha o algodão, tamanho, e estilo da arte. Nós criamos para você. Orçamento online.">
+    
+    <link rel="icon" href="Imagens/Banners/favicon.png" type="image/png">
+    
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="components.css">
+    
+    <link rel="stylesheet" href="page-product.css">
+    <link rel="stylesheet" href="page-exclusivas.css">
+
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="exclusivas-page page-with-fixed-header"> 
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        
+        <div class="container product-detail-main">
+            <div class="product-detail-grid">
+                
+                <div class="exclusiva-gallery">
+                    <h2 class="gallery-title">1. Escolha o Estilo do Traço</h2>
+                    <div class="style-grid" id="style-gallery">
+                        
+                        <div class="style-card active" data-style="Anime" tabindex="0">
+                            <img src="Imagens/Estilos/anime.jpg" alt="Estilo Anime">
+                            <h3>Anime</h3>
+                        </div>
+                        
+                        <div class="style-card" data-style="Realista" tabindex="0">
+                            <img src="Imagens/Estilos/realista.jpg" alt="Estilo Realista">
+                            <h3>Realista</h3>
+                        </div>
+                        
+                        <div class="style-card" data-style="Cartoon" tabindex="0">
+                            <img src="Imagens/Estilos/cartoon.jpg" alt="Estilo Cartoon">
+                            <h3>Cartoon</h3>
+                        </div>
+
+                        </div>
+                </div>
+
+                <div class="product-info-details">
+                    <form id="exclusiva-form">
+                        <h1>Crie sua Camisa Exclusiva</h1>
+                        
+                        <p class="fabrication-notice">
+                            <i class="fas fa-clock"></i> Prazo de fabricação: 4 a 10 dias úteis.
+                        </p>
+
+                        <h2 class="form-step-title">2. Descreva sua Ideia</h2>
+                        <div class="form-group">
+                            <label for="arte-descricao">Descreva sua arte (Personagens, o que quiser):</label>
+                            <textarea id="arte-descricao" rows="4" placeholder="Ex: Quero meu gato, o 'Frajola', com óculos escuros e uma jaqueta de couro..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="arte-referencia">Envie uma imagem de referência (opcional)</label>
+                            <input type="file" id="arte-referencia" accept="image/*">
+                        </div>
+
+                        <h2 class="form-step-title">3. Configure sua Camisa</h2>
+                        
+                        <div class="form-group">
+                            <label>Tipo de Algodão</label>
+                            <div class="radio-group" id="algodao-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="algodao" value="padrao" checked> Padrão
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="algodao" value="premium"> Premium
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tamanho-select">Tamanho</label>
+                            <select id="tamanho-select" name="tamanho">
+                                <option value="PP">PP</option>
+                                <option value="P">P</option>
+                                <option value="M">M</option>
+                                <option value="G">G</option>
+                                <option value="GG">GG</option>
+                                <option value="XG">XG</option>
+                                <option value="XXG">XXG</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cor-camisa-select">Cor da Camisa</label>
+                            <select id="cor-camisa-select" name="cor">
+                                <option value="Preto">Preto</option>
+                                <option value="Branco">Branco</option>
+                                <option value="Cinza">Cinza</option>
+                                <option value="Azul Marinho">Azul Marinho</option>
+                                <option value="Vermelho">Vermelho</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cores-input">Número de Cores na Arte (mín. 1)</label>
+                            <input type="number" id="cores-input" name="num_cores" value="1" min="1">
+                        </div>
+                        
+                        <input type="hidden" id="estilo-traco-input" name="estilo" value="Anime">
+                        
+                        <div class="price-box-detail">
+                            <span class="price-tag-detail">Preço Total (Arte Única R$ 80,00 Inclusa)</span>
+                            <span class="current-price-detail" id="exclusiva-total-price">R$ 0,00</span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> ADICIONAR AO CARRINHO
+                        </button>
+                        <p id="add-to-cart-message" class="form-message-success"></p>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+    
+    <footer class="footer">
+        <div id="footer-placeholder">
+            </div>
+    </footer>
+
+    <script src="products.js" defer></script>
+    <script src="coupons.js" defer></script>
+    <script src="partners.js" defer></script>
+    
+    <script src="functions.js" defer></script> <script src="main.js" defer></script>      </body>
+</html>
