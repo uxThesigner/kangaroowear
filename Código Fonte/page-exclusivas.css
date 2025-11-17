@@ -1,85 +1,206 @@
-/* --- ESTILOS DA PÁGINA DE EXCLUSIVAS (exclusivas.html) --- */
+/* --- ESTILOS DA PÁGINA DE EXCLUSIVAS (Assistente Interativo) --- */
 
-/* Título para os passos do formulário */
-.form-step-title {
-    font-size: 1.5em;
-    font-weight: 800;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--color-accent);
+/* === PARTE 1: PÁGINA DE POUSO (LANDING) === */
+
+/* Ajusta o hero banner (que vem do page-construction.css) */
+.exclusivas-page .construction-hero-banner {
+    min-height: 40vh;
+    max-height: 300px;
 }
-
-/* Aviso de prazo de fabricação */
-.fabrication-notice {
-    font-size: 0.95em;
-    color: var(--color-highlight);
-    background-color: #fdf0f0;
-    border: 1px solid #f9c9c9;
-    border-radius: 4px;
-    padding: 10px 15px;
-    margin-bottom: 20px;
+.exclusivas-page .construction-hero-banner h1 {
+    font-size: 1.8em;
     font-weight: 600;
+    border: 2px solid var(--color-accent);
+    padding: 10px 30px;
+    background-color: rgba(0, 0, 0, 0.3);
+    text-shadow: none;
 }
-.fabrication-notice i {
-    margin-right: 8px;
-}
-
-/* Estilo do formulário (sobrescreve page-product.css) */
-.exclusivas-page #add-to-cart-form {
-    display: block; /* Muda de flex para bloco */
-    flex-wrap: nowrap;
-    gap: 0;
-}
-
-.exclusivas-page .form-group {
-    margin-bottom: 20px;
-    min-width: 100%;
+/* Remove o ícone de "em construção" */
+.exclusivas-page .construction-hero-banner h1::before {
+    content: none;
+    margin-right: 0;
 }
 
-.exclusivas-page .form-group label {
-    font-size: 0.9em;
-    font-weight: 700;
-    margin-bottom: 8px;
+/* Seção de Introdução (Título e Botão) */
+.landing-intro {
+    padding: 60px 0;
+    text-align: center;
+}
+.landing-intro h2 {
+    font-size: 2.5em;
+    font-weight: 900;
+    margin-bottom: 15px;
+    color: var(--color-primary);
+}
+.landing-intro .content-text {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    font-size: 1.1em;
+    color: #444;
+}
+.landing-intro #start-wizard-btn {
+    font-size: 1.2em;
+    padding: 15px 40px;
 }
 
-/* === ATUALIZAÇÃO (Ajuste 7): Refinamento de Layout === */
+/* Ajusta o carrossel de "Trabalhos Recentes" */
+.exclusivas-page .partner-slider-section {
+    padding-top: 0;
+}
+.exclusivas-page .partner-slider-section h2 {
+    color: var(--color-primary);
+    font-size: 2em;
+    font-weight: 900;
+}
 
-/* Estilo para Textarea */
-.exclusivas-page .form-group textarea {
+
+/* === PARTE 2: O ASSISTENTE (WIZARD) === */
+
+/* Animação de Fade (será controlada pelo JS) */
+#landing-section, #wizard-section {
+    transition: opacity 0.5s ease-out;
+}
+
+.wizard-container {
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+
+.wizard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Coluna da Imagem | Coluna do Conteúdo */
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* Coluna da Imagem (Esquerda) */
+.wizard-image-col {
+    position: sticky; /* Fica presa na tela enquanto rola */
+    top: 100px; /* (padding do header + 30px) */
+    text-align: center;
+}
+.wizard-image-col img {
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-out;
+}
+/* Efeito de "zoom-in" suave quando a imagem troca */
+.wizard-image-col img.in {
+    transform: scale(1.05);
+}
+
+
+/* Coluna de Conteúdo (Direita) */
+.wizard-content-col h1 {
+    font-size: 2.2em;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 30px;
+    color: var(--color-primary);
+}
+
+#wizard-step-body p {
+    font-size: 1.1em;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+/* --- Estilos dos Controles do Assistente --- */
+
+/* Botões de Opção (Ex: Algodão Padrão / Premium) */
+.wizard-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.wizard-btn-option {
+    display: block;
     width: 100%;
+    background: #f9f9f9;
+    border: 2px solid var(--color-border);
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.wizard-btn-option:hover {
+    border-color: var(--color-primary);
+}
+.wizard-btn-option.selected {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+    background-color: #fafffa;
+}
+.wizard-btn-option h4 {
+    font-size: 1.1em;
+    margin: 0 0 5px 0;
+    color: var(--color-primary);
+}
+.wizard-btn-option p {
+    font-size: 0.9em !important;
+    color: #555;
+    margin: 0;
+}
+
+/* Botões de Tamanho e Cor (Balões) */
+.wizard-balloons-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.wizard-btn-balloon {
+    background: #f9f9f9;
+    border: 2px solid var(--color-border);
+    border-radius: 20px; /* Arredondado */
+    padding: 8px 18px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+.wizard-btn-balloon:hover {
+    border-color: var(--color-primary);
+}
+.wizard-btn-balloon.selected {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+/* Caixa de Texto (Descrição) */
+.wizard-textarea {
+    width: 100%;
+    min-height: 120px;
     padding: 12px 10px;
     border: 1px solid var(--color-border);
     font-size: 1em;
     font-family: 'Poppins', sans-serif;
     resize: vertical;
-    min-height: 80px;
-    border-radius: 4px; /* Adiciona leve arredondamento */
+    border-radius: 4px;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
-.exclusivas-page .form-group textarea:focus {
+.wizard-textarea:focus {
     outline: none;
     border-color: var(--color-accent);
     box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
 }
 
-/* Estilo para Input de Arquivo */
-.exclusivas-page .form-group input[type="file"] {
+/* Input de Arquivo (Referência) */
+.wizard-upload {
     font-family: 'Poppins', sans-serif;
     font-size: 0.9em;
     width: 100%;
-    
-    /* Estilização customizada do botão */
     padding: 8px;
     border: 1px dashed var(--color-border);
     border-radius: 4px;
     transition: border-color 0.2s;
 }
-.exclusivas-page .form-group input[type="file"]:hover {
+.wizard-upload:hover {
     border-color: var(--color-accent);
 }
-/* Estilo do texto do botão (varia por navegador) */
-.exclusivas-page .form-group input[type="file"]::file-selector-button {
+.wizard-upload::file-selector-button {
     background-color: var(--color-light-gray);
     border: 1px solid var(--color-border);
     border-radius: 4px;
@@ -90,97 +211,106 @@
     cursor: pointer;
     transition: background-color 0.2s;
 }
-.exclusivas-page .form-group input[type="file"]::file-selector-button:hover {
+.wizard-upload::file-selector-button:hover {
     background-color: var(--color-border);
 }
-/* === Fim da Atualização === */
 
-
-/* Estilo para Radio Buttons (Algodão) */
-.radio-group {
-    display: flex;
-    gap: 15px;
-}
-.radio-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1em;
-    font-weight: 600;
-    padding: 10px 15px;
+/* Input de Número (Cores) */
+.wizard-input-number {
+    width: 80px;
+    padding: 12px 10px;
     border: 1px solid var(--color-border);
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
     border-radius: 4px;
-    cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-.radio-label input[type="radio"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--color-accent);
-}
-.radio-label:hover {
-    border-color: var(--color-primary);
-}
-.radio-label input[type="radio"]:checked + span {
-    /* (Se você quiser estilizar o texto ao lado) */
 }
 
-
-/* --- Coluna da Esquerda: Galeria de Estilos --- */
-.exclusiva-gallery {
+/* Navegação (Voltar/Continuar) */
+#wizard-navigation {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    border-top: 1px solid var(--color-light-gray);
+    padding-top: 20px;
+}
+.wizard-btn-nav {
+    /* (Estilo vem do .btn) */
+}
+.wizard-btn-back {
+    /* (Estilo vem do .btn-secondary) */
+}
+.wizard-btn-add-cart {
+    /* (Estilo vem do .btn-primary) */
 }
 
-.gallery-title {
-    font-size: 1.5em;
+
+/* Resumo do Preço (Última Etapa) */
+#wizard-price-summary {
+    background-color: #fdfdfd;
+    border: 1px solid var(--color-light-gray);
+    padding: 20px;
+    margin-top: 30px;
+}
+#wizard-price-summary h3 {
+    font-size: 1.3em;
     font-weight: 800;
-    margin-bottom: 0;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--color-accent);
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-border);
 }
-
-.style-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+#wizard-price-summary .summary-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1em;
+    margin-bottom: 10px;
 }
-
-.style-card {
-    position: relative;
-    border: 2px solid var(--color-border);
-    overflow: hidden;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s, border-color 0.2s, box-shadow 0.2s;
+#wizard-price-summary .summary-line span:first-child {
+    color: #444;
 }
-.style-card:hover {
-    opacity: 1;
-    border-color: var(--color-primary);
+#wizard-price-summary .summary-line span:last-child {
+    font-weight: 600;
 }
-.style-card.active {
-    opacity: 1;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
-}
-
-.style-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.style-card h3 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-    color: white;
-    padding: 20px 10px 10px 10px;
-    text-align: center;
+#wizard-price-summary .summary-line.total-line {
     font-size: 1.2em;
-    margin: 0;
+    font-weight: 700;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--color-border);
+}
+#wizard-price-summary .summary-line.total-line strong:last-child {
+    font-size: 1.3em;
+    color: var(--color-highlight);
+}
+
+
+/* === PARTE 3: RESPONSIVO DO ASSISTENTE === */
+
+@media (max-width: 768px) {
+    .landing-intro h2 {
+        font-size: 2em;
+    }
+
+    .wizard-grid {
+        grid-template-columns: 1fr; /* Coluna única */
+        gap: 30px;
+    }
+    
+    .wizard-image-col {
+        position: static; /* Remove o 'sticky' */
+        top: 0;
+    }
+    .wizard-image-col img {
+        max-width: 250px; /* Limita o tamanho do canguru */
+    }
+
+    .wizard-content-col h1 {
+        font-size: 1.8em;
+        text-align: center;
+    }
+
+    .wizard-options-grid {
+        grid-template-columns: 1fr; /* Botões de algodão empilhados */
+    }
 }
