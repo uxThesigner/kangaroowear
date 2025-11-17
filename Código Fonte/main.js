@@ -92,4 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Banner rotativo
         setupInternalBannerCarousel('love-banner-carousel');
     }
+
+    // === ADIÇÃO (Ajuste 6): Lógica da Página Exclusivas ===
+    if (document.body.classList.contains('exclusivas-page')) {
+        setupExclusivasPage();
+    }
+    // =====================================================
 });
