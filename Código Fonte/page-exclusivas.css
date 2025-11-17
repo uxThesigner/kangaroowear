@@ -1,0 +1,150 @@
+/* --- ESTILOS DA PÁGINA DE EXCLUSIVAS (exclusivas.html) --- */
+
+/* Título para os passos do formulário */
+.form-step-title {
+    font-size: 1.5em;
+    font-weight: 800;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-accent);
+}
+
+/* Aviso de prazo de fabricação */
+.fabrication-notice {
+    font-size: 0.95em;
+    color: var(--color-highlight);
+    background-color: #fdf0f0;
+    border: 1px solid #f9c9c9;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+.fabrication-notice i {
+    margin-right: 8px;
+}
+
+/* Estilo do formulário (sobrescreve page-product.css) */
+.exclusivas-page #add-to-cart-form {
+    display: block; /* Muda de flex para bloco */
+    flex-wrap: nowrap;
+    gap: 0;
+}
+
+.exclusivas-page .form-group {
+    margin-bottom: 20px;
+    min-width: 100%;
+}
+
+.exclusivas-page .form-group label {
+    font-size: 0.9em;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Estilo para Textarea */
+.exclusivas-page .form-group textarea {
+    width: 100%;
+    padding: 12px 10px;
+    border: 1px solid var(--color-border);
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Estilo para Input de Arquivo */
+.exclusivas-page .form-group input[type="file"] {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9em;
+}
+
+/* Estilo para Radio Buttons (Algodão) */
+.radio-group {
+    display: flex;
+    gap: 15px;
+}
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    padding: 10px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.radio-label input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-accent);
+}
+.radio-label:hover {
+    border-color: var(--color-primary);
+}
+.radio-label input[type="radio"]:checked + span {
+    /* (Se você quiser estilizar o texto ao lado) */
+}
+
+
+/* --- Coluna da Esquerda: Galeria de Estilos --- */
+.exclusiva-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.gallery-title {
+    font-size: 1.5em;
+    font-weight: 800;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-accent);
+}
+
+.style-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.style-card {
+    position: relative;
+    border: 2px solid var(--color-border);
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.style-card:hover {
+    opacity: 1;
+    border-color: var(--color-primary);
+}
+.style-card.active {
+    opacity: 1;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+}
+
+.style-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.style-card h3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    color: white;
+    padding: 20px 10px 10px 10px;
+    text-align: center;
+    font-size: 1.2em;
+    margin: 0;
+}
