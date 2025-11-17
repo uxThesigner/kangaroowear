@@ -600,10 +600,28 @@ function setupProductPage() {
 
     const imagePath = product.image; 
 
+    // === CORREÇÃO SEO (Ajuste 3) ===
+    // Preenche o Título, o Alt da Imagem e a Meta Descrição dinamicamente
+    
+    // 1. Atualiza o Título da Página (Aba do Navegador)
     document.title = `${product.name} | KANGAROO WEAR`;
     
+    // 2. Atualiza o Alt da imagem principal
+    const mainImage = document.getElementById('main-product-image');
+    if (mainImage) {
+        mainImage.alt = product.name;
+    }
+    
+    // 3. Atualiza a Meta Descrição (para o Google)
+    const metaDescription = document.getElementById('product-description');
+    if (metaDescription) {
+        // Cria uma descrição simples baseada nos dados do produto
+        metaDescription.setAttribute('content', `Compre sua ${product.name} em ${product.material}. Qualidade premium em até 6x sem juros.`);
+    }
+    // ===============================
+
+    
     document.getElementById('main-product-image').src = imagePath;
-    document.getElementById('main-product-image').alt = product.name;
     document.getElementById('product-name').textContent = product.name;
     document.getElementById('product-rating').innerHTML = `<i class="fas fa-star"></i> ${product.rating}`;
     document.getElementById('product-reviews').textContent = `(${product.reviews} reviews)`;
@@ -814,10 +832,8 @@ function setupPaymentPage() {
             const whatsappUrl = generateWhatsAppOrderLink(formData);
             window.open(whatsappUrl, '_blank'); // Abre o WhatsApp em nova aba
 
-            // === CORREÇÃO CRÍTICA ===
+            // === CORREÇÃO CRÍTICA (Já aplicada) ===
             // As linhas abaixo, que limpavam o carrinho, foram REMOVIDAS.
-            // O carrinho não deve ser limpo até que o pagamento seja
-            // confirmado por você no WhatsApp.
             /*
             cartItems = [];
             appliedCoupon = null;
