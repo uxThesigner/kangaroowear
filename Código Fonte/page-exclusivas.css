@@ -43,6 +43,8 @@
     margin-bottom: 8px;
 }
 
+/* === ATUALIZAÇÃO (Ajuste 7): Refinamento de Layout === */
+
 /* Estilo para Textarea */
 .exclusivas-page .form-group textarea {
     width: 100%;
@@ -52,13 +54,47 @@
     font-family: 'Poppins', sans-serif;
     resize: vertical;
     min-height: 80px;
+    border-radius: 4px; /* Adiciona leve arredondamento */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.exclusivas-page .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
 }
 
 /* Estilo para Input de Arquivo */
 .exclusivas-page .form-group input[type="file"] {
     font-family: 'Poppins', sans-serif;
     font-size: 0.9em;
+    width: 100%;
+    
+    /* Estilização customizada do botão */
+    padding: 8px;
+    border: 1px dashed var(--color-border);
+    border-radius: 4px;
+    transition: border-color 0.2s;
 }
+.exclusivas-page .form-group input[type="file"]:hover {
+    border-color: var(--color-accent);
+}
+/* Estilo do texto do botão (varia por navegador) */
+.exclusivas-page .form-group input[type="file"]::file-selector-button {
+    background-color: var(--color-light-gray);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.exclusivas-page .form-group input[type="file"]::file-selector-button:hover {
+    background-color: var(--color-border);
+}
+/* === Fim da Atualização === */
+
 
 /* Estilo para Radio Buttons (Algodão) */
 .radio-group {
