@@ -1281,7 +1281,9 @@ function setupExclusivasPage() {
         kangarooImg.style.opacity = '0.7';
         
         setTimeout(() => {
-            kangarooImg.src = `Imagens/Kangaroo/${imageName}.png`;
+            // === ATUALIZAÇÃO (Ajuste 9) ===
+            // Corrigido o caminho da pasta de 'Kangaroo/' para 'Banners/'
+            kangarooImg.src = `Imagens/Banners/${imageName}.png`;
             kangarooImg.style.transform = 'scale(1)';
             kangarooImg.style.opacity = '1';
         }, 200); // 200ms para a transição
@@ -1532,9 +1534,11 @@ function setupExclusivasPage() {
         if (e.target.id === 'wizard-add-btn') {
             const precoFinal = updatePriceSummary();
             
+            // === ATUALIZAÇÃO (Ajuste 9) ===
+            // Corrigido o caminho da imagem placeholder do carrinho
             const itemParaCarrinho = {
                 name: "Camisa Exclusiva (Customizada)",
-                image: "Imagens/Kangaroo/exkangaroo1.png", // Imagem placeholder
+                image: "Imagens/Banners/exkangaroo1.png", // Imagem placeholder
                 price: precoFinal,
                 color: wizardData.cor,
                 size: wizardData.tamanho,
