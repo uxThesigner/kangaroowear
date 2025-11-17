@@ -340,7 +340,7 @@ function renderProductCard(product) {
                 <div class="product-image-container">
                     <img src="${imagePath}" alt="${product.name}" class="product-main-img" loading="lazy">
                 </div>
-                <div class.product-info">
+                <div class."product-info">
                     <div class="product-meta">
                         <span class="rating"><i class="fas fa-star"></i> ${product.rating}</span>
                         <span class="reviews-count">${product.reviews} reviews</span>
@@ -1582,3 +1582,4 @@ function setupExclusivasPage() {
     setupPartnerContent('exclusivas-slider');
 }
 // =========================================================
+
