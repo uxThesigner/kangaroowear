@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setupInternalBannerCarousel('love-banner-carousel');
     }
 
-    // === ADIÇÃO (Ajuste 6): Lógica da Página Exclusivas ===
+    // === ADIÇÃO (Ajuste 8): Lógica da Página Exclusivas (Assistente) ===
     if (document.body.classList.contains('exclusivas-page')) {
         setupExclusivasPage();
     }
