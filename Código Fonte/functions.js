@@ -334,13 +334,15 @@ function renderProductCard(product) {
     const colorSwatchesHTML = createColorSwatches(product.colors);
     const imagePath = product.image; // Caminho já vem correto de products.js
 
+    // === CORREÇÃO DO BUG (Ajuste 9) ===
+    // Troquei 'class.product-info' por 'class="product-info"'
     return `
         <a href="produtos.html?id=${product.id}" class="product-card-link">
             <div class="product-card">
                 <div class="product-image-container">
                     <img src="${imagePath}" alt="${product.name}" class="product-main-img" loading="lazy">
                 </div>
-                <div class."product-info">
+                <div class="product-info">
                     <div class="product-meta">
                         <span class="rating"><i class="fas fa-star"></i> ${product.rating}</span>
                         <span class="reviews-count">${product.reviews} reviews</span>
@@ -1232,7 +1234,9 @@ function setupExclusivasPage() {
     
     // --- Regras de Preço ---
     const PRECOS = {
-        ARTE_UNICA: 120.00, // Ajuste 7: Preço base da arte
+        // === ATUALIZAÇÃO (Ajuste 7) ===
+        ARTE_UNICA: 120.00, // Preço base da arte mudou de 80 para 120
+        // ==============================
         ALGODAO: {
             padrao: 45.00,
             premium: 65.00
@@ -1486,7 +1490,7 @@ function setupExclusivasPage() {
     /**
      * Atualiza o número de cores e o preço na etapa final
      */
-    wizardBody.addEventListener('input', (e) {
+    wizardBody.addEventListener('input', (e) => {
         if (e.target.id === 'wizard-cores-input') {
             wizardData.numCores = parseInt(e.target.value) || 1;
             updatePriceSummary();
@@ -1582,4 +1586,3 @@ function setupExclusivasPage() {
     setupPartnerContent('exclusivas-slider');
 }
 // =========================================================
-
