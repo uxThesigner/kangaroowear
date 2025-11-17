@@ -1205,29 +1205,34 @@ function setupShareCartButton() {
 // ===================================================
 
 
-// === NOVA FUNÇÃO (Ajuste 6): SETUP DA PÁGINA EXCLUSIVAS ===
+// === NOVA FUNÇÃO (Ajuste 8): SETUP DA PÁGINA EXCLUSIVAS (ASSISTENTE) ===
 /**
- * Configura a calculadora de preço e os listeners da página exclusivas.html
+ * Configura o assistente interativo da página exclusivas.html
  */
 function setupExclusivasPage() {
     
-    // Referências aos elementos do formulário
-    const form = document.getElementById('exclusiva-form');
-    if (!form) return; // Sai se não estiver na página correta
-
-    const priceEl = document.getElementById('exclusiva-total-price');
-    const algodaoGroup = document.querySelectorAll('input[name="algodao"]');
-    const tamanhoSelect = document.getElementById('tamanho-select');
-    const coresInput = document.getElementById('cores-input');
-    const styleCards = document.querySelectorAll('.style-card');
-    const styleInput = document.getElementById('estilo-traco-input');
-    const styleGallery = document.getElementById('style-gallery');
+    // --- Elementos Globais da Página ---
+    const landingSection = document.getElementById('landing-section');
+    const wizardSection = document.getElementById('wizard-section');
+    const startBtn = document.getElementById('start-wizard-btn');
     
-    // --- Regras de Preço (baseadas no seu briefing) ---
+    if (!landingSection || !wizardSection || !startBtn) {
+        // Se os elementos principais não existirem, não faz nada.
+        // Carrega o carrossel de "trabalhos" (placeholder)
+        setupPartnerContent('exclusivas-slider');
+        return;
+    }
+    
+    // --- Elementos do Assistente ---
+    const wizardTitle = document.getElementById('wizard-title');
+    const wizardBody = document.getElementById('wizard-step-body');
+    const wizardNav = document.getElementById('wizard-navigation');
+    const wizardSummary = document.getElementById('wizard-price-summary');
+    const kangarooImg = document.getElementById('kangaroo-image');
+    
+    // --- Regras de Preço ---
     const PRECOS = {
-        // === ATUALIZAÇÃO (Ajuste 7) ===
-        ARTE_UNICA: 120.00, // Preço base da arte mudou de 80 para 120
-        // ==============================
+        ARTE_UNICA: 120.00, // Ajuste 7: Preço base da arte
         ALGODAO: {
             padrao: 45.00,
             premium: 65.00
@@ -1243,113 +1248,337 @@ function setupExclusivasPage() {
         },
         POR_COR: 8.00
     };
-
+    
+    // --- Objeto para guardar os dados do assistente ---
+    let wizardData = {
+        step: 0,
+        description: "",
+        referenceFile: null,
+        material: "padrao", // 'padrao' ou 'premium'
+        tamanho: "M",
+        cor: "Preto",
+        numCores: 1
+    };
+    
+    // --- Definições das Etapas ---
+    const STEPS = [
+        "welcome", 
+        "description", 
+        "reference", 
+        "material", 
+        "size",
+        "color",
+        "final"
+    ];
+    
     /**
-     * A Calculadora: Pega os valores do formulário e calcula o total
+     * Troca a imagem do canguru com uma animação
      */
-    function calcularPrecoTotal() {
-        // 1. Pegar valores selecionados
-        const algodaoSelecionado = document.querySelector('input[name="algodao"]:checked').value;
-        const tamanhoSelecionado = tamanhoSelect.value;
-        const numCores = parseInt(coresInput.value) || 1; // Garante que é no mínimo 1
+    function setKangaroo(imageName) {
+        kangarooImg.style.transform = 'scale(0.95)';
+        kangarooImg.style.opacity = '0.7';
         
-        // 2. Calcular cada parte
-        const precoBaseArte = PRECOS.ARTE_UNICA;
-        const precoAlgodao = PRECOS.ALGODAO[algodaoSelecionado];
-        const precoTamanho = PRECOS.TAMANHO[tamanhoSelecionado];
-        const precoCores = numCores * PRECOS.POR_COR;
-        
-        // 3. Somar tudo
-        const total = precoBaseArte + precoAlgodao + precoTamanho + precoCores;
-        
-        // 4. Exibir na tela
-        priceEl.textContent = formatPrice(total);
-        
-        return total; // Retorna o número para ser usado no carrinho
+        setTimeout(() => {
+            kangarooImg.src = `Imagens/Kangaroo/${imageName}.png`;
+            kangarooImg.style.transform = 'scale(1)';
+            kangarooImg.style.opacity = '1';
+        }, 200); // 200ms para a transição
+    }
+    
+    /**
+     * Rola para o topo do assistente (útil em celulares)
+     */
+    function scrollTop() {
+        wizardSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     /**
-     * Adiciona os "ouvintes" de evento
+     * Atualiza o Resumo de Preços
      */
-    function setupListeners() {
-        // Recalcula o preço se mudar algodão, tamanho ou cores
-        algodaoGroup.forEach(radio => radio.addEventListener('change', calcularPrecoTotal));
-        tamanhoSelect.addEventListener('change', calcularPrecoTotal);
-        coresInput.addEventListener('input', calcularPrecoTotal); // 'input' é melhor que 'change' para números
+    function updatePriceSummary() {
+        const precoArte = PRECOS.ARTE_UNICA;
+        const precoAlgodao = PRECOS.ALGODAO[wizardData.material];
+        const precoTamanho = PRECOS.TAMANHO[wizardData.tamanho];
+        const precoCores = wizardData.numCores * PRECOS.POR_COR;
+        const total = precoArte + precoAlgodao + precoTamanho + precoCores;
+
+        document.getElementById('price-arte').textContent = formatPrice(precoArte);
+        document.getElementById('price-algodao').textContent = formatPrice(precoAlgodao);
+        document.getElementById('price-tamanho').textContent = formatPrice(precoTamanho);
+        document.getElementById('price-cores').textContent = formatPrice(precoCores);
+        document.getElementById('price-total').textContent = formatPrice(total);
         
-        // Lógica para selecionar o Estilo de Traço
-        styleCards.forEach(card => {
-            card.addEventListener('click', () => {
-                // Remove 'active' de todos
-                styleCards.forEach(c => c.classList.remove('active'));
-                // Adiciona 'active' no clicado
-                card.classList.add('active');
-                // Atualiza o input escondido
-                const estilo = card.dataset.style;
-                styleInput.value = estilo;
-            });
-            // Permite seleção com a tecla Enter (Acessibilidade)
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    card.click();
+        return total; // Retorna o total para o carrinho
+    }
+
+    /**
+     * Função Mestra: Renderiza a etapa atual
+     */
+    function renderStep(stepIndex) {
+        wizardData.step = stepIndex;
+        const stepName = STEPS[stepIndex];
+        
+        wizardBody.innerHTML = ''; // Limpa o conteúdo anterior
+        wizardNav.innerHTML = '';  // Limpa a navegação anterior
+        wizardSummary.style.display = 'none'; // Esconde o resumo por padrão
+        
+        let navHTML = '';
+        
+        // Botão "Voltar" (não existe na primeira etapa)
+        if (stepIndex > 0) {
+            navHTML += `<button id="wizard-back-btn" class="btn btn-secondary wizard-btn-back">← Voltar</button>`;
+        } else {
+            navHTML += `<div></div>`; // Espaçador
+        }
+        
+        // Lógica de cada etapa
+        switch(stepName) {
+            
+            // --- ETAPA 0: BOAS-VINDAS ---
+            case "welcome":
+                setKangaroo('exkangaroo1');
+                wizardTitle.textContent = "Vamos criar sua camisa exclusiva!";
+                wizardBody.innerHTML = `
+                    <p>Este é um processo de criação conjunta! Você nos diz sua ideia, e nossos artistas a transformarão em uma estampa única.</p>
+                    <p>O processo leva alguns minutos e, ao final, você verá o orçamento completo. Lembre-se que o prazo de fabricação desta peça é de <strong>4 a 10 dias úteis</strong>.</p>
+                    <p>Vamos começar?</p>
+                `;
+                navHTML += `
+                    <div style="display: flex; gap: 10px;">
+                        <button id="wizard-cancel-btn" class="btn btn-secondary">Não, obrigado</button>
+                        <button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Concordo, vamos lá!</button>
+                    </div>
+                `;
+                break;
+                
+            // --- ETAPA 1: DESCRIÇÃO ---
+            case "description":
+                setKangaroo('exkangaroo2');
+                wizardTitle.textContent = "Como quer sua estampa?";
+                wizardBody.innerHTML = `
+                    <p>Me diga de forma detalhada, especificando cenário, personagens, cores, posturas e afins.</p>
+                    <textarea id="wizard-desc-input" class="wizard-textarea" placeholder="Ex: Quero meu gato, o 'Frajola', com óculos escuros e uma jaqueta de couro...">${wizardData.description}</textarea>
+                `;
+                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
+                break;
+            
+            // --- ETAPA 2: REFERÊNCIA ---
+            case "reference":
+                setKangaroo('exkangaroo3');
+                wizardTitle.textContent = "Você tem alguma referência?";
+                wizardBody.innerHTML = `
+                    <p>Envie uma ou mais imagens que ajudem nossos artistas a entender sua ideia (opcional).</p>
+                    <input type="file" id="wizard-ref-input" class="wizard-upload" multiple>
+                `;
+                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
+                break;
+                
+            // --- ETAPA 3: MATERIAL ---
+            case "material":
+                setKangaroo('exkangaroo4');
+                wizardTitle.textContent = "Qual material você prefere?";
+                wizardBody.innerHTML = `
+                    <div class="wizard-options-grid">
+                        <button class="wizard-btn-option ${wizardData.material === 'padrao' ? 'selected' : ''}" data-value="padrao">
+                            <h4>Algodão Padrão</h4>
+                            <p>(R$ 45,00)</p>
+                        </button>
+                        <button class="wizard-btn-option ${wizardData.material === 'premium' ? 'selected' : ''}" data-value="premium">
+                            <h4>Algodão Premium</h4>
+                            <p>(R$ 65,00)</p>
+                        </button>
+                    </div>
+                `;
+                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
+                break;
+                
+            // --- ETAPA 4: TAMANHO ---
+            case "size":
+                setKangaroo('exkangaroo5');
+                wizardTitle.textContent = "Qual o tamanho da camisa?";
+                wizardBody.innerHTML = `
+                    <p>O preço varia para tamanhos maiores.</p>
+                    <div class="wizard-balloons-group" id="wizard-size-group">
+                        <button class="wizard-btn-balloon" data-value="PP">PP</button>
+                        <button class="wizard-btn-balloon" data-value="P">P</button>
+                        <button class="wizard-btn-balloon" data-value="M">M</button>
+                        <button class="wizard-btn-balloon" data-value="G">G</button>
+                        <button class="wizard-btn-balloon" data-value="GG">GG</button>
+                        <button class="wizard-btn-balloon" data-value="XG">XG</button>
+                        <button class="wizard-btn-balloon" data-value="XXG">XXG</button>
+                    </div>
+                `;
+                // Marca o botão 'selected'
+                wizardBody.querySelector(`.wizard-btn-balloon[data-value="${wizardData.tamanho}"]`).classList.add('selected');
+                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
+                break;
+            
+            // --- ETAPA 5: COR ---
+            case "color":
+                setKangaroo('exkangaroo5'); // Mesma imagem
+                wizardTitle.textContent = "E a cor da camisa?";
+                wizardBody.innerHTML = `
+                    <p>Escolha a cor de fundo para sua arte.</p>
+                    <div class="wizard-balloons-group" id="wizard-color-group">
+                        <button class="wizard-btn-balloon" data-value="Preto">Preto</button>
+                        <button class="wizard-btn-balloon" data-value="Branco">Branco</button>
+                        <button class="wizard-btn-balloon" data-value="Cinza">Cinza</button>
+                    </div>
+                `;
+                // Marca o botão 'selected'
+                wizardBody.querySelector(`.wizard-btn-balloon[data-value="${wizardData.cor}"]`).classList.add('selected');
+                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
+                break;
+                
+            // --- ETAPA 6: CORES DA ARTE / FINAL ---
+            case "final":
+                setKangaroo('exkangaroo4'); // Mesma imagem
+                wizardTitle.textContent = "Estamos quase acabando!";
+                wizardBody.innerHTML = `
+                    <p>Quantas cores você estima que sua arte terá? (Cada cor adiciona R$ 8,00).</p>
+                    <input type="number" id="wizard-cores-input" class="wizard-input-number" value="${wizardData.numCores}" min="1">
+                `;
+                // Mostra o resumo do preço
+                wizardSummary.style.display = 'block';
+                updatePriceSummary();
+                
+                navHTML += `<button id="wizard-add-btn" class="btn btn-primary wizard-btn-add-cart"><i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho</button>`;
+                break;
+        }
+        
+        wizardNav.innerHTML = navHTML;
+        scrollTop();
+    }
+    
+    /**
+     * Delegação de eventos para o corpo do assistente
+     * (Otimizado para não adicionar/remover listeners toda hora)
+     */
+    wizardBody.addEventListener('click', (e) => {
+        // --- Lógica dos botões de Material (Etapa 3) ---
+        if (e.target.closest('.wizard-btn-option')) {
+            const btn = e.target.closest('.wizard-btn-option');
+            wizardData.material = btn.dataset.value;
+            // Atualiza visual
+            wizardBody.querySelectorAll('.wizard-btn-option').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+        
+        // --- Lógica dos botões de Tamanho (Etapa 4) ---
+        if (e.target.closest('#wizard-size-group .wizard-btn-balloon')) {
+            const btn = e.target.closest('#wizard-size-group .wizard-btn-balloon');
+            wizardData.tamanho = btn.dataset.value;
+            // Atualiza visual
+            wizardBody.querySelectorAll('#wizard-size-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+        
+        // --- Lógica dos botões de Cor (Etapa 5) ---
+        if (e.target.closest('#wizard-color-group .wizard-btn-balloon')) {
+            const btn = e.target.closest('#wizard-color-group .wizard-btn-balloon');
+            wizardData.cor = btn.dataset.value;
+            // Atualiza visual
+            wizardBody.querySelectorAll('#wizard-color-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+    });
+
+    /**
+     * Atualiza o número de cores e o preço na etapa final
+     */
+    wizardBody.addEventListener('input', (e) {
+        if (e.target.id === 'wizard-cores-input') {
+            wizardData.numCores = parseInt(e.target.value) || 1;
+            updatePriceSummary();
+        }
+    });
+
+    /**
+     * Delegação de eventos para a Navegação do assistente
+     */
+    wizardNav.addEventListener('click', (e) => {
+        // --- Botão "Continuar" ---
+        if (e.target.id === 'wizard-next-btn') {
+            // Salva os dados da etapa atual antes de avançar
+            if (STEPS[wizardData.step] === 'description') {
+                const desc = document.getElementById('wizard-desc-input').value;
+                if (!desc) {
+                    alert('Por favor, descreva sua ideia para continuarmos.');
+                    return;
                 }
-            });
-        });
-        
-        // Lógica do botão "Adicionar ao Carrinho"
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const messageEl = document.getElementById('add-to-cart-message');
-            
-            // 1. Coletar todos os dados
-            const descricao = document.getElementById('arte-descricao').value;
-            if (!descricao) {
-                messageEl.textContent = 'Por favor, descreva sua ideia primeiro.';
-                messageEl.style.color = 'var(--color-highlight)';
-                setTimeout(() => { messageEl.textContent = ''; }, 3000);
-                return;
+                wizardData.description = desc;
             }
-
-            const estilo = styleInput.value;
-            const algodao = document.querySelector('input[name="algodao"]:checked').value;
-            const tamanho = tamanhoSelect.value;
-            const corCamisa = document.getElementById('cor-camisa-select').value;
-            const numCores = coresInput.value;
+            if (STEPS[wizardData.step] === 'reference') {
+                const fileInput = document.getElementById('wizard-ref-input');
+                wizardData.referenceFile = fileInput.files.length > 0 ? fileInput.files[0].name : null;
+            }
             
-            // Pega a imagem do estilo selecionado para usar no carrinho
-            const imagemEstilo = styleGallery.querySelector('.style-card.active img').src;
-
-            // 2. Montar o nome e a descrição para o carrinho
-            const nomeItem = `Camisa Exclusiva - ${estilo}`;
-            const detalhesItem = `Algodão ${algodao}, ${numCores} cor(es). Descrição: "${descricao}"`;
-
-            // 3. Calcular o preço final (só para garantir)
-            const precoFinal = calcularPrecoTotal();
+            renderStep(wizardData.step + 1); // Avança
+        }
+        
+        // --- Botão "Voltar" ---
+        if (e.target.id === 'wizard-back-btn') {
+            renderStep(wizardData.step - 1); // Volta
+        }
+        
+        // --- Botão "Não, obrigado" (Etapa 0) ---
+        if (e.target.id === 'wizard-cancel-btn') {
+            window.location.href = 'index.html'; // Volta para a home
+        }
+        
+        // --- Botão "Adicionar ao Carrinho" (Etapa Final) ---
+        if (e.target.id === 'wizard-add-btn') {
+            const precoFinal = updatePriceSummary();
             
-            // 4. Criar o objeto do item
             const itemParaCarrinho = {
-                name: nomeItem,
-                image: imagemEstilo,
+                name: "Camisa Exclusiva (Customizada)",
+                image: "Imagens/Kangaroo/exkangaroo1.png", // Imagem placeholder
                 price: precoFinal,
-                color: corCamisa,
-                size: tamanho,
-                description: detalhesItem
+                color: wizardData.cor,
+                size: wizardData.tamanho,
+                description: `Material: ${wizardData.material}, Cores: ${wizardData.numCores}, Descrição: "${wizardData.description}" ${wizardData.referenceFile ? `(Ref: ${wizardData.referenceFile})` : ''}`
             };
-
-            // 5. Adicionar ao carrinho
+            
             addCustomItemToCart(itemParaCarrinho);
             
-            // 6. Mostrar feedback
-            messageEl.textContent = 'Camisa Exclusiva adicionada! 🎉';
-            messageEl.style.color = 'var(--color-accent)';
-            setTimeout(() => { messageEl.textContent = ''; }, 2000);
-        });
-    }
+            // Feedback e redirecionamento
+            wizardTitle.textContent = "Adicionado! 🎉";
+            wizardBody.innerHTML = `<p>Sua camisa exclusiva foi adicionada ao carrinho. Você será redirecionado em 3 segundos...</p>`;
+            wizardNav.innerHTML = '';
+            wizardSummary.style.display = 'none';
+            
+            setTimeout(() => {
+                window.location.href = 'carrinho.html';
+            }, 3000);
+        }
+    });
 
+    /**
+     * Listener do Botão "Criar minha camisa"
+     */
+    startBtn.addEventListener('click', () => {
+        // 1. Animação de Fade Out da "Página de Pouso"
+        landingSection.style.opacity = '0';
+        
+        setTimeout(() => {
+            landingSection.style.display = 'none'; // Esconde
+            
+            // 2. Mostra o Assistente
+            wizardSection.style.display = 'block';
+            
+            // 3. Renderiza a primeira etapa (Boas-vindas)
+            renderStep(0); 
+            
+            // 4. Animação de Fade In do Assistente
+            setTimeout(() => {
+                wizardSection.style.opacity = '1';
+            }, 50); // Pequeno delay
+            
+        }, 500); // 500ms = tempo da transição no CSS
+    });
+    
     // --- Inicialização ---
-    calcularPrecoTotal(); // Calcula o preço inicial ao carregar a página
-    setupListeners();     // Configura todos os botões e inputs
+    // Carrega o carrossel da página de pouso
+    setupPartnerContent('exclusivas-slider');
 }
 // =========================================================
