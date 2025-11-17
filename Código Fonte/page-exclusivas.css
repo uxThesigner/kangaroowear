@@ -107,42 +107,12 @@
 
 /* --- Estilos dos Controles do Assistente --- */
 
+/* === ATUALIZAÇÃO (Ajuste 8) === */
 /* Botões de Opção (Ex: Algodão Padrão / Premium) */
-.wizard-options-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.wizard-btn-option {
-    display: block;
-    width: 100%;
-    background: #f9f9f9;
-    border: 2px solid var(--color-border);
-    border-radius: 5px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-.wizard-btn-option:hover {
-    border-color: var(--color-primary);
-}
-.wizard-btn-option.selected {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
-    background-color: #fafffa;
-}
-.wizard-btn-option h4 {
-    font-size: 1.1em;
-    margin: 0 0 5px 0;
-    color: var(--color-primary);
-}
-.wizard-btn-option p {
-    font-size: 0.9em !important;
-    color: #555;
-    margin: 0;
-}
+/* Os estilos .wizard-options-grid e .wizard-btn-option
+   foram REMOVIDOS, pois agora usaremos o .wizard-balloons-group
+   para a seleção de material.
+*/
 
 /* Botões de Tamanho e Cor (Balões) */
 .wizard-balloons-group {
@@ -309,8 +279,6 @@
         font-size: 1.8em;
         text-align: center;
     }
-
-    .wizard-options-grid {
-        grid-template-columns: 1fr; /* Botões de algodão empilhados */
-    }
+    
+    /* (Removido o .wizard-options-grid responsivo) */
 }
