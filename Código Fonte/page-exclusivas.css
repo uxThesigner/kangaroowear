@@ -134,23 +134,28 @@
     color: white;
 }
 
+/* === ATUALIZAÇÃO (Ajuste 12) === */
 /* Caixa de Texto (Descrição) */
 .wizard-textarea {
     width: 100%;
     min-height: 120px;
-    padding: 12px 10px;
-    border: 1px solid var(--color-border);
-    font-size: 1em;
+    padding: 12px 15px; /* Mais padding interno */
+    border: 2px solid var(--color-border); /* Borda mais "robusta" */
+    font-size: 1.1em; /* Texto um pouco maior */
     font-family: 'Poppins', sans-serif;
     resize: vertical;
-    border-radius: 4px;
+    border-radius: 5px; /* Canto arredondado */
     transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #fcfcfc; /* Fundo muito leve */
 }
 .wizard-textarea:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4); /* Sombra neon mais forte */
+    background-color: #fff;
 }
+/* === Fim da Atualização === */
+
 
 /* Input de Arquivo (Referência) */
 .wizard-upload {
@@ -208,9 +213,6 @@
 .wizard-btn-add-cart {
     /* (Estilo vem do .btn-primary) */
 }
-
-
-/* === ATUALIZAÇÃO (Ajuste 11) === */
 
 /* Resumo da Etapa Final (a lista de escolhas) */
 .wizard-final-summary {
@@ -273,7 +275,6 @@
     font-size: 1.3em;
     color: var(--color-highlight);
 }
-/* === Fim da Atualização === */
 
 
 /* === PARTE 3: RESPONSIVO DO ASSISTENTE === */
