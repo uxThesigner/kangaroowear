@@ -1232,8 +1232,9 @@ function setupExclusivasPage() {
     const kangarooImg = document.getElementById('kangaroo-image');
     
     // --- Regras de Preço ---
+    // === ATUALIZAÇÃO (Ajuste 11) ===
     const PRECOS = {
-        ARTE_UNICA: 120.00, // Ajuste 7: Preço base da arte
+        ARTE_UNICA: 150.00, // Preço base da arte mudou para 150
         ALGODAO: {
             padrao: 45.00,
             premium: 65.00
@@ -1246,29 +1247,30 @@ function setupExclusivasPage() {
             GG: 18.00,
             XG: 25.00,
             XXG: 50.00
-        },
-        POR_COR: 8.00
+        }
+        // Custo por cor foi REMOVIDO
     };
     
     // --- Objeto para guardar os dados do assistente ---
     let wizardData = {
         step: 0,
         description: "",
-        temReferencia: false, // <-- ATUALIZAÇÃO (Ajuste 10)
+        temReferencia: false, // (Ajuste 10)
         material: "padrao",
         tamanho: "M",
-        cor: "Preto",
-        numCores: 1
+        cor: "Preto"
+        // numCores foi REMOVIDO
     };
     
     // --- Definições das Etapas ---
+    // === ATUALIZAÇÃO (Ajuste 11) ===
+    // Removida a etapa de "cores", a etapa "size" e "color" foram combinadas
     const STEPS = [
         "welcome", 
         "description", 
         "reference", 
         "material", 
-        "size",
-        "color",
+        "size-color", // Nova etapa combinada
         "final"
     ];
     
@@ -1280,7 +1282,7 @@ function setupExclusivasPage() {
         kangarooImg.style.opacity = '0.7';
         
         setTimeout(() => {
-            // === ATUALIZAÇÃO (Ajuste 9) ===
+            // (Ajuste 9: Caminho da imagem corrigido)
             kangarooImg.src = `Imagens/Banners/${imageName}.png`;
             kangarooImg.style.transform = 'scale(1)';
             kangarooImg.style.opacity = '1';
@@ -1298,16 +1300,20 @@ function setupExclusivasPage() {
      * Atualiza o Resumo de Preços
      */
     function updatePriceSummary() {
+        // === ATUALIZAÇÃO (Ajuste 11) ===
+        // Removido o cálculo de cores
         const precoArte = PRECOS.ARTE_UNICA;
         const precoAlgodao = PRECOS.ALGODAO[wizardData.material];
         const precoTamanho = PRECOS.TAMANHO[wizardData.tamanho];
-        const precoCores = wizardData.numCores * PRECOS.POR_COR;
-        const total = precoArte + precoAlgodao + precoTamanho + precoCores;
+        const total = precoArte + precoAlgodao + precoTamanho;
 
+        // O CSS vai esconder estas linhas, mas é bom mantê-las
         document.getElementById('price-arte').textContent = formatPrice(precoArte);
         document.getElementById('price-algodao').textContent = formatPrice(precoAlgodao);
         document.getElementById('price-tamanho').textContent = formatPrice(precoTamanho);
-        document.getElementById('price-cores').textContent = formatPrice(precoCores);
+        document.getElementById('price-cores').textContent = formatPrice(0); // Custo de cor agora é 0
+        
+        // Esta é a única linha visível
         document.getElementById('price-total').textContent = formatPrice(total);
         
         return total; // Retorna o total para o carrinho
@@ -1368,8 +1374,7 @@ function setupExclusivasPage() {
             case "reference":
                 setKangaroo('exkangaroo3');
                 wizardTitle.textContent = "Você tem alguma referência?";
-                // === ATUALIZAÇÃO (Ajuste 10) ===
-                // Troca o input[file] pelos botões Sim/Não
+                // (Ajuste 10: Botões Sim/Não)
                 wizardBody.innerHTML = `
                     <p>Se você tiver imagens de referência (fotos, desenhos, etc.), nos avise. Você poderá enviá-las diretamente pelo WhatsApp após fechar o pedido.</p>
                     <div class="wizard-balloons-group" id="wizard-ref-group">
@@ -1387,8 +1392,7 @@ function setupExclusivasPage() {
             case "material":
                 setKangaroo('exkangaroo4');
                 wizardTitle.textContent = "Qual material você prefere?";
-                // === ATUALIZAÇÃO (Ajuste 8) ===
-                // Troca os botões quadrados pelos "balões"
+                // (Ajuste 8: Botões "balão")
                 wizardBody.innerHTML = `
                     <p>Escolha o tipo de algodão para sua camisa.</p>
                     <div class="wizard-balloons-group" id="wizard-material-group">
@@ -1401,10 +1405,11 @@ function setupExclusivasPage() {
                 navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
                 break;
                 
-            // --- ETAPA 4: TAMANHO ---
-            case "size":
+            // --- ETAPA 4: TAMANHO E COR ---
+            // === ATUALIZAÇÃO (Ajuste 11) ===
+            case "size-color":
                 setKangaroo('exkangaroo5');
-                wizardTitle.textContent = "Qual o tamanho da camisa?";
+                wizardTitle.textContent = "Qual o tamanho e cor da camisa?";
                 wizardBody.innerHTML = `
                     <p>O preço varia para tamanhos maiores.</p>
                     <div class="wizard-balloons-group" id="wizard-size-group">
@@ -1416,38 +1421,49 @@ function setupExclusivasPage() {
                         <button class="wizard-btn-balloon" data-value="XG">XG</button>
                         <button class="wizard-btn-balloon" data-value="XXG">XXG</button>
                     </div>
-                `;
-                // Marca o botão 'selected'
-                wizardBody.querySelector(`.wizard-btn-balloon[data-value="${wizardData.tamanho}"]`).classList.add('selected');
-                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
-                break;
-            
-            // --- ETAPA 5: COR ---
-            case "color":
-                setKangaroo('exkangaroo5'); // Mesma imagem
-                wizardTitle.textContent = "E a cor da camisa?";
-                wizardBody.innerHTML = `
-                    <p>Escolha a cor de fundo para sua arte.</p>
+                    
+                    <p style="margin-top: 25px;">Escolha a cor de fundo para sua arte.</p>
                     <div class="wizard-balloons-group" id="wizard-color-group">
                         <button class="wizard-btn-balloon" data-value="Preto">Preto</button>
                         <button class="wizard-btn-balloon" data-value="Branco">Branco</button>
                         <button class="wizard-btn-balloon" data-value="Cinza">Cinza</button>
                     </div>
                 `;
-                // Marca o botão 'selected'
-                wizardBody.querySelector(`.wizard-btn-balloon[data-value="${wizardData.cor}"]`).classList.add('selected');
+                // Marca os botões 'selected'
+                wizardBody.querySelector(`#wizard-size-group .wizard-btn-balloon[data-value="${wizardData.tamanho}"]`).classList.add('selected');
+                wizardBody.querySelector(`#wizard-color-group .wizard-btn-balloon[data-value="${wizardData.cor}"]`).classList.add('selected');
+                
                 navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
                 break;
-                
-            // --- ETAPA 6: CORES DA ARTE / FINAL ---
+            
+            // --- ETAPA 5: FINAL (Resumo) ---
+            // === ATUALIZAÇÃO (Ajuste 11) ===
             case "final":
                 setKangaroo('exkangaroo4'); // Mesma imagem
                 wizardTitle.textContent = "Estamos quase acabando!";
+                
+                // Gera o resumo das escolhas
                 wizardBody.innerHTML = `
-                    <p>Quantas cores você estima que sua arte terá? (Cada cor adiciona R$ 8,00).</p>
-                    <input type="number" id="wizard-cores-input" class="wizard-input-number" value="${wizardData.numCores}" min="1">
+                    <p>Confira seu pedido antes de adicionar ao carrinho. O valor total será exibido abaixo.</p>
+                    <div class="wizard-final-summary">
+                        <strong>Descrição da Arte:</strong>
+                        <p class="summary-description">"${wizardData.description}"</p>
+                        <hr>
+                        <strong>Tem Referências?</strong>
+                        <p>${wizardData.temReferencia ? 'Sim' : 'Não'}</p>
+                        <hr>
+                        <strong>Tipo de Algodão:</strong>
+                        <p>${wizardData.material === 'padrao' ? 'Algodão Padrão' : 'Algodão Premium'}</p>
+                        <hr>
+                        <strong>Tamanho:</strong>
+                        <p>${wizardData.tamanho}</p>
+                        <hr>
+                        <strong>Cor da Camisa:</strong>
+                        <p>${wizardData.cor}</p>
+                    </div>
                 `;
-                // Mostra o resumo do preço
+                
+                // Mostra o resumo do preço (o CSS vai esconder os detalhes)
                 wizardSummary.style.display = 'block';
                 updatePriceSummary();
                 
@@ -1492,7 +1508,7 @@ function setupExclusivasPage() {
             btn.classList.add('selected');
         }
         
-        // --- Lógica dos botões de Cor (Etapa 5) ---
+        // --- Lógica dos botões de Cor (Etapa 4 - combinada) ---
         if (e.target.closest('#wizard-color-group .wizard-btn-balloon')) {
             const btn = e.target.closest('#wizard-color-group .wizard-btn-balloon');
             wizardData.cor = btn.dataset.value;
@@ -1503,14 +1519,8 @@ function setupExclusivasPage() {
     });
 
     /**
-     * Atualiza o número de cores e o preço na etapa final
+     * (Removido o listener de input de cores)
      */
-    wizardBody.addEventListener('input', (e) => {
-        if (e.target.id === 'wizard-cores-input') {
-            wizardData.numCores = parseInt(e.target.value) || 1;
-            updatePriceSummary();
-        }
-    });
 
     /**
      * Delegação de eventos para a Navegação do assistente
@@ -1527,7 +1537,6 @@ function setupExclusivasPage() {
                 }
                 wizardData.description = desc;
             }
-            // (Removida a lógica de salvar o 'referenceFile')
             
             renderStep(wizardData.step + 1); // Avança
         }
@@ -1546,9 +1555,9 @@ function setupExclusivasPage() {
         if (e.target.id === 'wizard-add-btn') {
             const precoFinal = updatePriceSummary();
             
-            // === ATUALIZAÇÃO (Ajuste 10) ===
-            // Adiciona o aviso do WhatsApp se o cliente tiver referências
-            let detalhesItem = `Material: ${wizardData.material}, Cores: ${wizardData.numCores}, Descrição: "${wizardData.description}"`;
+            // === ATUALIZAÇÃO (Ajuste 11) ===
+            // Monta a descrição final sem o número de cores
+            let detalhesItem = `Material: ${wizardData.material}, Descrição: "${wizardData.description}"`;
             if (wizardData.temReferencia) {
                 detalhesItem += " (AVISO: Cliente tem referências! Pedir o envio no WhatsApp)";
             }
