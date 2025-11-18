@@ -1232,7 +1232,7 @@ function setupExclusivasPage() {
     const kangarooImg = document.getElementById('kangaroo-image');
     
     // --- Regras de Preço ---
-    // === ATUALIZAÇÃO (Ajuste 11) ===
+    // === ATUALIZAÇÃO (Ajuste 12) ===
     const PRECOS = {
         ARTE_UNICA: 150.00, // Preço base da arte mudou para 150
         ALGODAO: {
@@ -1263,8 +1263,7 @@ function setupExclusivasPage() {
     };
     
     // --- Definições das Etapas ---
-    // === ATUALIZAÇÃO (Ajuste 11) ===
-    // Removida a etapa de "cores", a etapa "size" e "color" foram combinadas
+    // (Ajuste 11: Etapas combinadas)
     const STEPS = [
         "welcome", 
         "description", 
@@ -1300,8 +1299,7 @@ function setupExclusivasPage() {
      * Atualiza o Resumo de Preços
      */
     function updatePriceSummary() {
-        // === ATUALIZAÇÃO (Ajuste 11) ===
-        // Removido o cálculo de cores
+        // (Ajuste 11: Removido o cálculo de cores)
         const precoArte = PRECOS.ARTE_UNICA;
         const precoAlgodao = PRECOS.ALGODAO[wizardData.material];
         const precoTamanho = PRECOS.TAMANHO[wizardData.tamanho];
@@ -1392,12 +1390,13 @@ function setupExclusivasPage() {
             case "material":
                 setKangaroo('exkangaroo4');
                 wizardTitle.textContent = "Qual material você prefere?";
-                // (Ajuste 8: Botões "balão")
+                // === ATUALIZAÇÃO (Ajuste 12) ===
+                // Remove o preço dos botões
                 wizardBody.innerHTML = `
                     <p>Escolha o tipo de algodão para sua camisa.</p>
                     <div class="wizard-balloons-group" id="wizard-material-group">
-                        <button class="wizard-btn-balloon" data-value="padrao">Algodão Padrão (R$ 45,00)</button>
-                        <button class="wizard-btn-balloon" data-value="premium">Algodão Premium (R$ 65,00)</button>
+                        <button class="wizard-btn-balloon" data-value="padrao">Algodão Padrão</button>
+                        <button class="wizard-btn-balloon" data-value="premium">Algodão Premium</button>
                     </div>
                 `;
                 // Marca o botão 'selected'
@@ -1406,7 +1405,7 @@ function setupExclusivasPage() {
                 break;
                 
             // --- ETAPA 4: TAMANHO E COR ---
-            // === ATUALIZAÇÃO (Ajuste 11) ===
+            // (Ajuste 11: Etapas combinadas)
             case "size-color":
                 setKangaroo('exkangaroo5');
                 wizardTitle.textContent = "Qual o tamanho e cor da camisa?";
@@ -1422,7 +1421,7 @@ function setupExclusivasPage() {
                         <button class="wizard-btn-balloon" data-value="XXG">XXG</button>
                     </div>
                     
-                    <p style="margin-top: 25px;">Escolha a cor de fundo para sua arte.</p>
+                    <p style="margin-top: 25px;">Cor da camisa:</p>
                     <div class="wizard-balloons-group" id="wizard-color-group">
                         <button class="wizard-btn-balloon" data-value="Preto">Preto</button>
                         <button class="wizard-btn-balloon" data-value="Branco">Branco</button>
@@ -1437,7 +1436,7 @@ function setupExclusivasPage() {
                 break;
             
             // --- ETAPA 5: FINAL (Resumo) ---
-            // === ATUALIZAÇÃO (Ajuste 11) ===
+            // (Ajuste 11: Mostra o resumo das escolhas)
             case "final":
                 setKangaroo('exkangaroo4'); // Mesma imagem
                 wizardTitle.textContent = "Estamos quase acabando!";
