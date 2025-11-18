@@ -43,24 +43,15 @@
                 <button id="start-wizard-btn" class="btn btn-primary">Criar minha camisa</button>
             </div>
             
-            <section class="partner-slider-section">
+            <section class="recent-works-section">
                 <div class="container">
                     <h2>TRABALHOS RECENTES</h2>
-                    <div class="partner-slider-wrapper-centralized" style="max-width: 1200px;">
-                        
-                        <button class="partner-arrow prev" onclick="scrollSlider('exclusivas-slider', -1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        
-                        <div class="slider-wrapper"> 
-                            <div class="partner-slider" id="exclusivas-slider">
-                                </div>
-                        </div>
-                        
-                        <button class="partner-arrow next" onclick="scrollSlider('exclusivas-slider', 1)">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
+                    
+                    <div class="slider-wrapper"> 
+                        <div class="recent-works-slider" id="recent-works-slider">
+                            </div>
                     </div>
+                    
                 </div>
             </section>
             
@@ -81,11 +72,9 @@
                     <div class="wizard-content-col">
                         <h1 id="wizard-title">Título da Etapa</h1>
                         
-                        <div id="wizard-step-body">
-                            </div>
+                        <div id="wizard-step-body"></div>
                         
-                        <div id="wizard-navigation">
-                            </div>
+                        <div id="wizard-navigation"></div>
                         
                         <div id="wizard-price-summary" style="display: none;">
                             <h3>Resumo do Pedido</h3>
@@ -128,5 +117,7 @@
     <script src="coupons.js" defer></script>
     <script src="partners.js" defer></script> 
     
-    <script src="functions.js" defer></script> <script src="main.js" defer></script>      </body>
+    <script src="functions.js" defer></script>
+    <script src="main.js" defer></script>
+</body>
 </html>
