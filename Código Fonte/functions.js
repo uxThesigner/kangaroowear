@@ -334,8 +334,7 @@ function renderProductCard(product) {
     const colorSwatchesHTML = createColorSwatches(product.colors);
     const imagePath = product.image; // Caminho já vem correto de products.js
 
-    // === CORREÇÃO DO BUG (Ajuste 9) ===
-    // (Este erro foi corrigido na versão anterior)
+    // (Correção de bug de digitação já aplicada)
     return `
         <a href="produtos.html?id=${product.id}" class="product-card-link">
             <div class="product-card">
@@ -1255,8 +1254,8 @@ function setupExclusivasPage() {
     let wizardData = {
         step: 0,
         description: "",
-        referenceFile: null,
-        material: "padrao", // 'padrao' ou 'premium'
+        temReferencia: false, // <-- ATUALIZAÇÃO (Ajuste 10)
+        material: "padrao",
         tamanho: "M",
         cor: "Preto",
         numCores: 1
@@ -1282,7 +1281,6 @@ function setupExclusivasPage() {
         
         setTimeout(() => {
             // === ATUALIZAÇÃO (Ajuste 9) ===
-            // Corrigido o caminho da pasta de 'Kangaroo/' para 'Banners/'
             kangarooImg.src = `Imagens/Banners/${imageName}.png`;
             kangarooImg.style.transform = 'scale(1)';
             kangarooImg.style.opacity = '1';
@@ -1370,10 +1368,18 @@ function setupExclusivasPage() {
             case "reference":
                 setKangaroo('exkangaroo3');
                 wizardTitle.textContent = "Você tem alguma referência?";
+                // === ATUALIZAÇÃO (Ajuste 10) ===
+                // Troca o input[file] pelos botões Sim/Não
                 wizardBody.innerHTML = `
-                    <p>Envie uma ou mais imagens que ajudem nossos artistas a entender sua ideia (opcional).</p>
-                    <input type="file" id="wizard-ref-input" class="wizard-upload" multiple>
+                    <p>Se você tiver imagens de referência (fotos, desenhos, etc.), nos avise. Você poderá enviá-las diretamente pelo WhatsApp após fechar o pedido.</p>
+                    <div class="wizard-balloons-group" id="wizard-ref-group">
+                        <button class="wizard-btn-balloon" data-value="true">Sim, tenho referências</button>
+                        <button class="wizard-btn-balloon" data-value="false">Não, só a descrição</button>
+                    </div>
                 `;
+                // Marca o botão 'selected'
+                const refValue = wizardData.temReferencia ? 'true' : 'false';
+                wizardBody.querySelector(`.wizard-btn-balloon[data-value="${refValue}"]`).classList.add('selected');
                 navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
                 break;
                 
@@ -1458,7 +1464,16 @@ function setupExclusivasPage() {
      * (Otimizado para não adicionar/remover listeners toda hora)
      */
     wizardBody.addEventListener('click', (e) => {
-        // === ATUALIZAÇÃO (Ajuste 8) ===
+        
+        // --- Lógica dos botões de Referência (Etapa 2) ---
+        if (e.target.closest('#wizard-ref-group .wizard-btn-balloon')) {
+            const btn = e.target.closest('#wizard-ref-group .wizard-btn-balloon');
+            wizardData.temReferencia = (btn.dataset.value === 'true'); // Converte string "true" para booleano true
+            // Atualiza visual
+            wizardBody.querySelectorAll('#wizard-ref-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
         // --- Lógica dos botões de Material (Etapa 3) ---
         if (e.target.closest('#wizard-material-group .wizard-btn-balloon')) {
             const btn = e.target.closest('#wizard-material-group .wizard-btn-balloon');
@@ -1512,10 +1527,7 @@ function setupExclusivasPage() {
                 }
                 wizardData.description = desc;
             }
-            if (STEPS[wizardData.step] === 'reference') {
-                const fileInput = document.getElementById('wizard-ref-input');
-                wizardData.referenceFile = fileInput.files.length > 0 ? fileInput.files[0].name : null;
-            }
+            // (Removida a lógica de salvar o 'referenceFile')
             
             renderStep(wizardData.step + 1); // Avança
         }
@@ -1534,15 +1546,20 @@ function setupExclusivasPage() {
         if (e.target.id === 'wizard-add-btn') {
             const precoFinal = updatePriceSummary();
             
-            // === ATUALIZAÇÃO (Ajuste 9) ===
-            // Corrigido o caminho da imagem placeholder do carrinho
+            // === ATUALIZAÇÃO (Ajuste 10) ===
+            // Adiciona o aviso do WhatsApp se o cliente tiver referências
+            let detalhesItem = `Material: ${wizardData.material}, Cores: ${wizardData.numCores}, Descrição: "${wizardData.description}"`;
+            if (wizardData.temReferencia) {
+                detalhesItem += " (AVISO: Cliente tem referências! Pedir o envio no WhatsApp)";
+            }
+            
             const itemParaCarrinho = {
                 name: "Camisa Exclusiva (Customizada)",
                 image: "Imagens/Banners/exkangaroo1.png", // Imagem placeholder
                 price: precoFinal,
                 color: wizardData.cor,
                 size: wizardData.tamanho,
-                description: `Material: ${wizardData.material}, Cores: ${wizardData.numCores}, Descrição: "${wizardData.description}" ${wizardData.referenceFile ? `(Ref: ${wizardData.referenceFile})` : ''}`
+                description: detalhesItem // Descrição atualizada
             };
             
             addCustomItemToCart(itemParaCarrinho);
