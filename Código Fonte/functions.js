@@ -127,38 +127,28 @@ function addItemToCart(productId, color, size, quantity = 1) {
 }
 
 // --- NOVA FUNÇÃO (para Camisa Exclusiva) ---
-/**
- * Adiciona um item customizado (Camisa Exclusiva) ao carrinho.
- * Como não é um produto do products.js, ele tem sua própria lógica.
- */
 function addCustomItemToCart(itemData) {
-    // Cria um identificador único baseado nos dados
     const itemIdentifier = `custom-${Date.now()}`;
     
     cartItems.push({
         identifier: itemIdentifier,
-        id: 'custom-exclusive', // ID Fixo para itens customizados
-        name: itemData.name, // Ex: "Camisa Exclusiva - Estilo Anime"
-        image: itemData.image, // Imagem do estilo de traço
-        price: itemData.price, // Preço total calculado
-        color: itemData.color, // Cor da camisa
-        size: itemData.size, // Tamanho da camisa
+        id: 'custom-exclusive', 
+        name: itemData.name, 
+        image: itemData.image, 
+        price: itemData.price, 
+        color: itemData.color, 
+        size: itemData.size, 
         quantity: 1,
-        // (Opcional) Adiciona os detalhes para o checkout
         customDetails: itemData.description 
     });
 
     saveCart();
     updateCartCount();
 }
-// --- FIM DA NOVA FUNÇÃO ---
-
 
 function removeItem(identifier) {
     cartItems = cartItems.filter(item => item.identifier !== identifier);
     saveCart();
-    
-    // Funções de UI
     updateCartCount();
     renderCartPage();
 }
@@ -168,11 +158,9 @@ function updateCartItemQuantity(identifier, newQuantity) {
     if (item) {
         item.quantity = parseInt(newQuantity);
         if (item.quantity <= 0) {
-            // Se a quantidade for 0 ou menos, remove o item
             removeItem(identifier);
         } else {
             saveCart();
-            // Função de UI
             renderCartPage();
         }
     }
@@ -180,8 +168,6 @@ function updateCartItemQuantity(identifier, newQuantity) {
 
 function calculateTotals() {
     const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-    
-    // Regra de Frete
     const SHIPPING_THRESHOLD = 250.00; 
     const SHIPPING_COST = 25.00; 
     
@@ -189,7 +175,6 @@ function calculateTotals() {
         ? 0.00
         : (subtotal > 0 ? SHIPPING_COST : 0.00); 
 
-    // Cálculo de Desconto
     let discount = 0;
     if (appliedCoupon) {
         discount = subtotal * appliedCoupon.discount_percent;
@@ -207,9 +192,6 @@ function calculateTotals() {
     };
 }
 
-
-// --- LÓGICA DO CUPOM ---
-
 function handleCouponInput() {
     const input = document.getElementById('cupom-input');
     const messageEl = document.getElementById('cupom-status-message'); 
@@ -219,14 +201,12 @@ function handleCouponInput() {
     const code = input.value.toUpperCase().trim();
 
     if (!code) {
-        // Se o campo estiver vazio, remove o cupom aplicado (se houver)
         if (appliedCoupon) {
-            const removedCode = appliedCoupon.code;
             appliedCoupon = null;
             localStorage.removeItem('appliedCouponCode');
-            messageEl.textContent = `Cupom ${removedCode} removido.`;
+            messageEl.textContent = `Cupom removido.`;
             messageEl.style.color = 'var(--color-primary)';
-            updateCartSummary(); // Função de UI
+            updateCartSummary(); 
         } else {
             messageEl.textContent = "Digite um código.";
             messageEl.style.color = 'var(--color-primary)';
@@ -234,7 +214,6 @@ function handleCouponInput() {
         return;
     }
     
-    // AJUSTE: Lógica de Substituição de Cupom
     if (appliedCoupon) {
         appliedCoupon = null;
         localStorage.removeItem('appliedCouponCode');
@@ -242,22 +221,18 @@ function handleCouponInput() {
     
     const coupon = COUPONS.find(c => c.code === code);
 
-    // Validação 1: Cupom existe?
     if (!coupon) {
         messageEl.textContent = "❌ Cupom inválido ou expirado.";
         messageEl.style.color = 'var(--color-highlight)';
         appliedCoupon = null;
         localStorage.removeItem('appliedCouponCode');
-        updateCartSummary(); // Função de UI
+        updateCartSummary(); 
         return;
     }
     
-    // Validação 2: Cupom é para uma coleção específica?
     if (coupon.target_collection && cartItems.length > 0) {
         const hasTargetProduct = cartItems.some(item => {
-            // Ignora itens customizados na validação de cupom
             if (item.id === 'custom-exclusive') return false; 
-            
             const productData = PRODUCTS.find(p => p.id === item.id);
             return productData && productData.collection === coupon.target_collection;
         });
@@ -267,27 +242,22 @@ function handleCouponInput() {
              messageEl.style.color = 'var(--color-highlight)';
              appliedCoupon = null;
              localStorage.removeItem('appliedCouponCode');
-             updateCartSummary(); // Função de UI
+             updateCartSummary(); 
              return;
         }
     }
     
-    // Sucesso! Aplica o cupom
     appliedCoupon = coupon;
     localStorage.setItem('appliedCouponCode', code);
     messageEl.textContent = `✅ Cupom ${code} aplicado! ${Math.round(coupon.discount_percent * 100)}% de desconto.`;
     messageEl.style.color = 'var(--color-accent)';
-    updateCartSummary(); // Função de UI
+    updateCartSummary(); 
 }
-
-// --- FUNÇÕES DE UTILIDADE DE UI ---
 
 function formatPrice(priceValue) {
     if (typeof priceValue === 'string') {
-        // Converte string (ex: 'R$ 89,90') para número
         priceValue = parseFloat(priceValue.replace('R$', '').replace('.', '').replace(',', '.').trim());
     }
-    // Formata o número de volta para a string (R$ 89,90)
     return `R$ ${priceValue.toFixed(2).replace('.', ',')}`;
 }
 
@@ -296,11 +266,6 @@ function getSearchQuery() {
     return urlParams.get('q') ? urlParams.get('q').toLowerCase() : null;
 }
 
-// --- FUNÇÕES DE RENDERIZAÇÃO (GERAÇÃO DE HTML) ---
-
-/**
- * Atualiza o contador de itens no ícone do carrinho no header.
- */
 function updateCartCount() {
     const cartCountElement = document.getElementById('cart-count');
     if (cartCountElement) { 
@@ -309,9 +274,6 @@ function updateCartCount() {
     }
 }
 
-/**
- * Cria os pequenos quadrados de amostra de cor para os cards.
- */
 function createColorSwatches(colors) {
     let swatchesHTML = '';
     const colorMap = {
@@ -326,15 +288,11 @@ function createColorSwatches(colors) {
     return swatchesHTML;
 }
 
-/**
- * Cria o HTML para um único card de produto.
- */
 function renderProductCard(product) {
     const priceString = formatPrice(product.price);
     const colorSwatchesHTML = createColorSwatches(product.colors);
-    const imagePath = product.image; // Caminho já vem correto de products.js
+    const imagePath = product.image; 
 
-    // (Correção de bug de digitação já aplicada)
     return `
         <a href="produtos.html?id=${product.id}" class="product-card-link">
             <div class="product-card">
@@ -361,9 +319,6 @@ function renderProductCard(product) {
     `;
 }
 
-/**
- * Cria o HTML para um único card de parceiro.
- */
 function renderPartnerCard(partner) {
     return `
         <a href="${partner.link}" target="_blank" class="partner-card-link">
@@ -380,9 +335,6 @@ function renderPartnerCard(partner) {
     `;
 }
 
-/**
- * Renderiza a página de resultados de busca (busca.html).
- */
 function renderSearchPage() {
     const resultsGridEl = document.getElementById('search-results');
     const searchTitleEl = document.getElementById('search-title');
@@ -401,7 +353,7 @@ function renderSearchPage() {
     }
 
     const decodedQuery = decodeURIComponent(query);
-    const results = searchProducts(decodedQuery); // Função de 'main.js'
+    const results = searchProducts(decodedQuery); 
 
     if (results.length > 0) {
         searchTitleEl.textContent = `Resultados para "${decodedQuery}" (${results.length} itens)`;
@@ -420,9 +372,6 @@ function renderSearchPage() {
     }
 }
 
-/**
- * Renderiza a lista de itens na página do carrinho (carrinho.html).
- */
 function renderCartPage() {
     const cartBody = document.getElementById('cart-list-body');
     if (!cartBody) return;
@@ -439,7 +388,6 @@ function renderCartPage() {
         let htmlContent = '';
         cartItems.forEach(item => {
             const itemTotal = item.price * item.quantity;
-            // Usa a imagem do item (seja do product.js ou a customizada)
             const imagePath = item.image; 
             
             htmlContent += `
@@ -470,9 +418,6 @@ function renderCartPage() {
     setupCartListeners(); 
 }
 
-/**
- * Atualiza o bloco de Resumo do Pedido (em carrinho.html e pagamento.html).
- */
 function updateCartSummary() {
     const { subtotal, shipping, discount, total } = calculateTotals(); 
     
@@ -508,9 +453,6 @@ function updateCartSummary() {
     }
 }
 
-/**
- * Renderiza a grade de produtos na seção de expansão da página Love.
- */
 function renderThemeResults(container, products, themeName) {
     if (!container) return;
     
@@ -538,8 +480,6 @@ function renderThemeResults(container, products, themeName) {
     container.innerHTML = htmlContent;
 }
 
-// --- FUNÇÕES DE BUSCA E FILTRO ---
-
 function searchProducts(query) {
     if (!query || typeof PRODUCTS === 'undefined') {
         return [];
@@ -555,9 +495,6 @@ function searchProducts(query) {
     });
 }
 
-/**
- * Encontra produtos que tenham TODAS as tags especificadas.
- */
 function findProductsByTags(requiredTags = []) {
     if (typeof PRODUCTS === 'undefined' || requiredTags.length === 0) {
         return [];
@@ -571,32 +508,22 @@ function findProductsByTags(requiredTags = []) {
     });
 }
 
-
-// --- FUNÇÕES DE SETUP (Configuradores de Página) ---
-
-/**
- * Adiciona os listeners de clique para remoção e mudança de quantidade no carrinho.
- */
 function setupCartListeners() {
     document.querySelectorAll('.btn-remove-item').forEach(button => {
         button.addEventListener('click', (e) => {
             const identifier = e.currentTarget.dataset.identifier;
-            removeItem(identifier); // Função de 'cart.js'
+            removeItem(identifier); 
         });
     });
 
     document.querySelectorAll('.cart-quantity-input').forEach(input => {
-        // Altera para 'input' para atualizar em tempo real (caso o usuário digite)
         input.addEventListener('input', (e) => { 
             const identifier = e.currentTarget.dataset.identifier;
-            updateCartItemQuantity(identifier, e.target.value); // Função de 'cart.js'
+            updateCartItemQuantity(identifier, e.target.value); 
         });
     });
 }
 
-/**
- * Configura o botão "Finalizar Compra" na página do carrinho.
- */
 function setupCheckoutButton() {
     const checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn) {
@@ -605,15 +532,12 @@ function setupCheckoutButton() {
                 saveCart();
                 window.location.href = 'pagamento.html';
             } else {
-                alert('Seu carrinho está vazio!'); // TODO: Substituir por modal
+                alert('Seu carrinho está vazio!'); 
             }
         });
     }
 }
 
-/**
- * Preenche a página de detalhes do produto (produtos.html) com dados.
- */
 function setupProductPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
@@ -632,7 +556,6 @@ function setupProductPage() {
 
     const imagePath = product.image; 
 
-    // === CORREÇÃO SEO (Ajuste 3) ===
     document.title = `${product.name} | KANGAROO WEAR`;
     
     const mainImage = document.getElementById('main-product-image');
@@ -644,8 +567,6 @@ function setupProductPage() {
     if (metaDescription) {
         metaDescription.setAttribute('content', `Compre sua ${product.name} em ${product.material}. Qualidade premium em até 6x sem juros.`);
     }
-    // ===============================
-
     
     document.getElementById('main-product-image').src = imagePath;
     document.getElementById('product-name').textContent = product.name;
@@ -686,7 +607,7 @@ function setupProductPage() {
         const selectedSize = document.getElementById('size-select').value;
         const quantity = parseInt(document.getElementById('quantity-input').value);
         
-        addItemToCart(product.id, selectedColor, selectedSize, quantity); // Função de 'cart.js'
+        addItemToCart(product.id, selectedColor, selectedSize, quantity); 
 
         messageEl.textContent = 'Adicionado ao carrinho! 🎉';
         setTimeout(() => {
@@ -711,11 +632,8 @@ function setupProductPage() {
     setupInternalBannerCarousel('internal-banner-carousel-produto'); 
 }
 
-/**
- * Gera o link de pedido para o WhatsApp com todos os dados.
- */
 function generateWhatsAppOrderLink(formData) {
-    const totals = calculateTotals(); // Função de 'cart.js'
+    const totals = calculateTotals(); 
     
     const normalize = (str) => String(str).toUpperCase().replace(/\s/g, '');
     
@@ -735,7 +653,6 @@ function generateWhatsAppOrderLink(formData) {
     
     let cartBlock = `Em meu Kangaroo Cart, tem:%0A`;
     cartItems.forEach((item) => {
-        // Adiciona detalhes extras se for um item customizado
         if (item.id === 'custom-exclusive') {
             cartBlock += `* ${item.name} | Qtd: ${item.quantity} | Tam: ${item.size} | Cor: ${item.color}%0A`;
             cartBlock += `   -> (Detalhes: ${item.customDetails})%0A`;
@@ -772,13 +689,7 @@ function generateWhatsAppOrderLink(formData) {
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
 }
 
-
-/**
- * Configura os listeners e renderiza os itens na página de pagamento (pagamento.html).
- */
 function setupPaymentPage() {
-    
-    // Função interna para renderizar o resumo
     function renderSummaryItems() {
         const itemsContainer = document.getElementById('checkout-summary-items');
         if (!itemsContainer) return;
@@ -808,7 +719,6 @@ function setupPaymentPage() {
         }
     }
     
-    // Listener para o checkbox "Mesmos dados"
     const payerCheckbox = document.getElementById('mesmos-dados-check');
     if (payerCheckbox) {
         payerCheckbox.addEventListener('change', function() {
@@ -817,7 +727,6 @@ function setupPaymentPage() {
         });
     }
 
-    // Listeners para o Modal de Cancelamento
     const cancelBtn = document.getElementById('cancel-order-btn');
     const modal = document.getElementById('cancel-modal');
     const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -840,13 +749,11 @@ function setupPaymentPage() {
         });
     }
     
-    // Listener do formulário de envio
     const contactForm = document.getElementById('contact-info-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Coleta os dados do formulário
             const formData = {
                 nome_cliente: document.getElementById('nome-completo').value,
                 cpf_cliente: document.getElementById('cpf-cnpj').value,
@@ -862,23 +769,13 @@ function setupPaymentPage() {
             };
             
             const whatsappUrl = generateWhatsAppOrderLink(formData);
-            window.open(whatsappUrl, '_blank'); // Abre o WhatsApp em nova aba
-
-            // === CORREÇÃO CRÍTICA (Já aplicada) ===
-            // As linhas abaixo, que limpavam o carrinho, foram REMOVIDAS.
+            window.open(whatsappUrl, '_blank'); 
         });
     }
 
-    // Renderiza o resumo ao carregar a página
     renderSummaryItems();
 }
 
-
-// --- FUNÇÕES DE SETUP (Componentes e Utilitários) ---
-
-/**
- * Inicia um carrossel de banner simples (fade-in/fade-out).
- */
 function setupInternalBannerCarousel(carouselId) {
     const carousel = document.getElementById(carouselId);
     if (!carousel) return;
@@ -887,7 +784,7 @@ function setupInternalBannerCarousel(carouselId) {
     if (items.length <= 1) return;
 
     let currentIndex = 0;
-    const rotationTime = 4000; // 4 segundos
+    const rotationTime = 4000; 
 
     setInterval(() => {
         const nextIndex = (currentIndex + 1) % items.length;
@@ -900,9 +797,6 @@ function setupInternalBannerCarousel(carouselId) {
     }, rotationTime);
 }
 
-/**
- * Preenche e anima a faixa (marquee) de "Em Construção".
- */
 function setupConstructionMarquee(elementId, message) {
     const marqueeEl = document.getElementById(elementId);
     if (!marqueeEl) return;
@@ -911,9 +805,6 @@ function setupConstructionMarquee(elementId, message) {
     marqueeEl.innerHTML = `<span>${fullMessage}</span><span>${fullMessage}</span>`;
 }
 
-/**
- * Renderiza o carrossel de parceiros.
- */
 function setupPartnerContent(sliderId) {
     const targetSlider = document.getElementById(sliderId);
     
@@ -926,15 +817,11 @@ function setupPartnerContent(sliderId) {
 
     targetSlider.innerHTML = htmlContent;
     
-    // Adiciona um leve delay para garantir que o HTML foi renderizado
     setTimeout(() => {
         scrollSlider(sliderId, 0);
     }, 100); 
 }
 
-/**
- * Renderiza um carrossel de produtos filtrados por tags.
- */
 function setupProductSlider(sliderId, requiredTags = []) {
     const targetSlider = document.getElementById(sliderId);
     
@@ -958,9 +845,6 @@ function setupProductSlider(sliderId, requiredTags = []) {
     }, 100);
 }
 
-/**
- * Adiciona os listeners de clique nos cards de tema (página Love).
- */
 function setupThemeCarouselActions() {
     const themeLinks = document.querySelectorAll('#theme-carousel-slider .theme-card-link');
     const resultsContainer = document.getElementById('love-theme-results');
@@ -1013,9 +897,6 @@ function setupThemeCarouselActions() {
     });
 }
 
-/**
- * Configura o menu mobile (abrir/fechar/dropdowns).
- */
 function setupMobileMenu() { 
     const menuToggle = document.querySelector('.header .menu-toggle');
     const mobileMenu = document.querySelector('.mobile-menu'); 
@@ -1048,9 +929,6 @@ function setupMobileMenu() {
     });
 }
 
-/**
- * Adiciona o efeito de "scrolled" ao header.
- */
 function setupScrolledHeader() { 
     const header = document.querySelector('.header');
     if (!header) {
@@ -1068,9 +946,6 @@ function setupScrolledHeader() {
     toggleScrolledClass(); 
 }
 
-/**
- * Adiciona o listener de 'Enter' na barra de busca.
- */
 function setupSearch() { 
     const searchInput = document.querySelector('.header .search-input'); 
     if (!searchInput) return;
@@ -1083,9 +958,6 @@ function setupSearch() {
     });
 }
 
-/**
- * Configura os listeners da página do carrinho (carrinho.html).
- */
 function setupCartPage() {
     if (document.body.classList.contains('cart-page')) {
         renderCartPage();
@@ -1096,15 +968,10 @@ function setupCartPage() {
             cupomBtn.addEventListener('click', handleCouponInput);
         }
 
-        // === NOVO: Chama o setup do botão compartilhar ===
         setupShareCartButton();
-        // =============================================
     }
 }
 
-/**
- * Função de scroll horizontal para os carrosséis.
- */
 function scrollSlider(sliderId, direction) {
     const slider = document.getElementById(sliderId);
     if (!slider) return;
@@ -1124,22 +991,11 @@ function scrollSlider(sliderId, direction) {
     });
 }
 
-
-// === NOVA FUNÇÃO: Copiar para Área de Transferência ===
-/**
- * Copia um texto para a área de transferência do usuário.
- * @param {string} text - O texto a ser copiado.
- */
 function copyToClipboard(text) {
-    // Cria um textarea temporário
     const textArea = document.createElement('textarea');
     textArea.value = text;
-    
-    // Adiciona a classe para torná-lo invisível (de base.css)
     textArea.classList.add('clipboard-helper');
     document.body.appendChild(textArea);
-    
-    // Seleciona e copia o texto
     textArea.focus();
     textArea.select();
     
@@ -1149,16 +1005,9 @@ function copyToClipboard(text) {
         console.error('Falha ao copiar texto: ', err);
     }
     
-    // Remove o textarea temporário
     document.body.removeChild(textArea);
 }
-// =================================================
 
-
-// === NOVA FUNÇÃO: Configurar Botão de Compartilhar ===
-/**
- * Adiciona o listener de clique ao botão "Compartilhar Carrinho".
- */
 function setupShareCartButton() {
     const shareBtn = document.getElementById('share-cart-btn');
     const successMsg = document.getElementById('share-cart-success');
@@ -1168,7 +1017,6 @@ function setupShareCartButton() {
         e.preventDefault();
 
         if (cartItems.length === 0) {
-            // Se o carrinho estiver vazio, avisa
             shareBtn.style.display = 'none';
             successMsg.textContent = 'Carrinho vazio!';
             successMsg.style.display = 'inline';
@@ -1180,47 +1028,83 @@ function setupShareCartButton() {
             return;
         }
 
-        // 1. Converte o carrinho (array) para JSON (string)
         const jsonString = JSON.stringify(cartItems);
-        // 2. Codifica a string JSON para Base64 (para ser segura na URL)
         const base64String = btoa(jsonString);
-
-        // 3. Monta a URL (caminho atual + ?cart=DADOS)
         const shareUrl = `${window.location.origin}${window.location.pathname}?cart=${base64String}`;
         
-        // 4. Copia para a área de transferência
         copyToClipboard(shareUrl);
 
-        // 5. Mostra a mensagem de sucesso
         shareBtn.style.display = 'none';
         successMsg.textContent = 'Link copiado!';
         successMsg.style.display = 'inline';
 
-        // 6. Reseta o botão após 2 segundos
         setTimeout(() => {
             shareBtn.style.display = 'inline';
             successMsg.style.display = 'none';
         }, 2000);
     });
 }
-// ===================================================
 
 
-// === NOVA FUNÇÃO (Ajuste 8): SETUP DA PÁGINA EXCLUSIVAS (ASSISTENTE) ===
-/**
- * Configura o assistente interativo da página exclusivas.html
- */
+// === SETUP DA PÁGINA EXCLUSIVAS (ASSISTENTE) ===
 function setupExclusivasPage() {
     
-    // --- Elementos Globais da Página ---
     const landingSection = document.getElementById('landing-section');
     const wizardSection = document.getElementById('wizard-section');
     const startBtn = document.getElementById('start-wizard-btn');
     
+    // --- AJUSTE: Dados para o carrossel de "Trabalhos Recentes" ---
+    // (Como não temos um arquivo separado, definimos aqui)
+    const RECENT_WORKS_DATA = [
+        { title: "Arte Anime", desc: "Design exclusivo", image: "work1.jpg" },
+        { title: "Estilo Realista", desc: "Cliente Satisfeito", image: "work2.jpg" },
+        { title: "Cartoon Fun", desc: "Personalizado", image: "work3.jpg" },
+        { title: "Minimalista", desc: "Arte clean", image: "work4.jpg" },
+        { title: "Tipografia", desc: "Letras únicas", image: "work5.jpg" },
+        { title: "Geek Retro", desc: "Estilo 80s", image: "work6.jpg" }
+    ];
+    
+    function setupRecentWorks() {
+        const slider = document.getElementById('recent-works-slider');
+        if (!slider) return;
+        
+        // 1. Preencher o HTML
+        let htmlContent = '';
+        RECENT_WORKS_DATA.forEach(work => {
+            // Nota: Você deve criar as imagens em Imagens/Trabalhos/
+            htmlContent += `
+                <div class="recent-work-card">
+                    <img src="Imagens/Trabalhos/${work.image}" alt="${work.title}" loading="lazy">
+                    <div class="recent-work-overlay">
+                        <h3>${work.title}</h3>
+                        <p>${work.desc}</p>
+                    </div>
+                </div>
+            `;
+        });
+        slider.innerHTML = htmlContent;
+        
+        // 2. Automação (Auto-Scroll)
+        let scrollAmount = 0;
+        const speed = 1; // Velocidade do scroll (pixels por frame)
+        
+        // Vamos usar setInterval para um scroll "passo a passo" (mais fácil de controlar)
+        setInterval(() => {
+            // Rola 265px (largura do card + gap) a cada 3 segundos
+            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+                // Se chegou no fim, volta pro começo suavemente
+                slider.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                slider.scrollBy({ left: 265, behavior: 'smooth' });
+            }
+        }, 3000); // 3000ms = 3 segundos
+    }
+    
+    // Chama a função para iniciar o carrossel
+    setupRecentWorks();
+
+
     if (!landingSection || !wizardSection || !startBtn) {
-        // Se os elementos principais não existirem, não faz nada.
-        // Carrega o carrossel de "trabalhos" (placeholder)
-        setupPartnerContent('exclusivas-slider');
         return;
     }
     
@@ -1232,9 +1116,8 @@ function setupExclusivasPage() {
     const kangarooImg = document.getElementById('kangaroo-image');
     
     // --- Regras de Preço ---
-    // === ATUALIZAÇÃO (Ajuste 12) ===
     const PRECOS = {
-        ARTE_UNICA: 150.00, // Preço base da arte mudou para 150
+        ARTE_UNICA: 150.00, 
         ALGODAO: {
             padrao: 45.00,
             premium: 65.00
@@ -1247,29 +1130,27 @@ function setupExclusivasPage() {
             GG: 18.00,
             XG: 25.00,
             XXG: 50.00
-        }
-        // Custo por cor foi REMOVIDO
+        },
+        POR_COR: 8.00
     };
     
     // --- Objeto para guardar os dados do assistente ---
     let wizardData = {
         step: 0,
         description: "",
-        temReferencia: false, // (Ajuste 10)
+        temReferencia: false, 
         material: "padrao",
         tamanho: "M",
         cor: "Preto"
-        // numCores foi REMOVIDO
     };
     
     // --- Definições das Etapas ---
-    // (Ajuste 11: Etapas combinadas)
     const STEPS = [
         "welcome", 
         "description", 
         "reference", 
         "material", 
-        "size-color", // Nova etapa combinada
+        "size-color", 
         "final"
     ];
     
@@ -1281,40 +1162,30 @@ function setupExclusivasPage() {
         kangarooImg.style.opacity = '0.7';
         
         setTimeout(() => {
-            // (Ajuste 9: Caminho da imagem corrigido)
             kangarooImg.src = `Imagens/Banners/${imageName}.png`;
             kangarooImg.style.transform = 'scale(1)';
             kangarooImg.style.opacity = '1';
-        }, 200); // 200ms para a transição
+        }, 200); 
     }
     
-    /**
-     * Rola para o topo do assistente (útil em celulares)
-     */
     function scrollTop() {
         wizardSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    /**
-     * Atualiza o Resumo de Preços
-     */
     function updatePriceSummary() {
-        // (Ajuste 11: Removido o cálculo de cores)
         const precoArte = PRECOS.ARTE_UNICA;
         const precoAlgodao = PRECOS.ALGODAO[wizardData.material];
         const precoTamanho = PRECOS.TAMANHO[wizardData.tamanho];
         const total = precoArte + precoAlgodao + precoTamanho;
 
-        // O CSS vai esconder estas linhas, mas é bom mantê-las
         document.getElementById('price-arte').textContent = formatPrice(precoArte);
         document.getElementById('price-algodao').textContent = formatPrice(precoAlgodao);
         document.getElementById('price-tamanho').textContent = formatPrice(precoTamanho);
-        document.getElementById('price-cores').textContent = formatPrice(0); // Custo de cor agora é 0
+        document.getElementById('price-cores').textContent = formatPrice(0); 
         
-        // Esta é a única linha visível
         document.getElementById('price-total').textContent = formatPrice(total);
         
-        return total; // Retorna o total para o carrinho
+        return total; 
     }
 
     /**
@@ -1324,23 +1195,20 @@ function setupExclusivasPage() {
         wizardData.step = stepIndex;
         const stepName = STEPS[stepIndex];
         
-        wizardBody.innerHTML = ''; // Limpa o conteúdo anterior
-        wizardNav.innerHTML = '';  // Limpa a navegação anterior
-        wizardSummary.style.display = 'none'; // Esconde o resumo por padrão
+        wizardBody.innerHTML = ''; 
+        wizardNav.innerHTML = '';  
+        wizardSummary.style.display = 'none'; 
         
         let navHTML = '';
         
-        // Botão "Voltar" (não existe na primeira etapa)
         if (stepIndex > 0) {
             navHTML += `<button id="wizard-back-btn" class="btn btn-secondary wizard-btn-back">← Voltar</button>`;
         } else {
-            navHTML += `<div></div>`; // Espaçador
+            navHTML += `<div></div>`; 
         }
         
-        // Lógica de cada etapa
         switch(stepName) {
             
-            // --- ETAPA 0: BOAS-VINDAS ---
             case "welcome":
                 setKangaroo('exkangaroo1');
                 wizardTitle.textContent = "Vamos criar sua camisa exclusiva!";
@@ -1357,7 +1225,6 @@ function setupExclusivasPage() {
                 `;
                 break;
                 
-            // --- ETAPA 1: DESCRIÇÃO ---
             case "description":
                 setKangaroo('exkangaroo2');
                 wizardTitle.textContent = "Como quer sua estampa?";
@@ -1368,11 +1235,9 @@ function setupExclusivasPage() {
                 navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
                 break;
             
-            // --- ETAPA 2: REFERÊNCIA ---
             case "reference":
                 setKangaroo('exkangaroo3');
                 wizardTitle.textContent = "Você tem alguma referência?";
-                // (Ajuste 10: Botões Sim/Não)
                 wizardBody.innerHTML = `
                     <p>Se você tiver imagens de referência (fotos, desenhos, etc.), nos avise. Você poderá enviá-las diretamente pelo WhatsApp após fechar o pedido.</p>
                     <div class="wizard-balloons-group" id="wizard-ref-group">
@@ -1380,18 +1245,14 @@ function setupExclusivasPage() {
                         <button class="wizard-btn-balloon" data-value="false">Não, só a descrição</button>
                     </div>
                 `;
-                // Marca o botão 'selected'
                 const refValue = wizardData.temReferencia ? 'true' : 'false';
                 wizardBody.querySelector(`.wizard-btn-balloon[data-value="${refValue}"]`).classList.add('selected');
                 navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
                 break;
                 
-            // --- ETAPA 3: MATERIAL ---
             case "material":
                 setKangaroo('exkangaroo4');
                 wizardTitle.textContent = "Qual material você prefere?";
-                // === ATUALIZAÇÃO (Ajuste 12) ===
-                // Remove o preço dos botões
                 wizardBody.innerHTML = `
                     <p>Escolha o tipo de algodão para sua camisa.</p>
                     <div class="wizard-balloons-group" id="wizard-material-group">
@@ -1399,217 +1260,5 @@ function setupExclusivasPage() {
                         <button class="wizard-btn-balloon" data-value="premium">Algodão Premium</button>
                     </div>
                 `;
-                // Marca o botão 'selected'
                 wizardBody.querySelector(`.wizard-btn-balloon[data-value="${wizardData.material}"]`).classList.add('selected');
-                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
-                break;
-                
-            // --- ETAPA 4: TAMANHO E COR ---
-            // (Ajuste 11: Etapas combinadas)
-            case "size-color":
-                setKangaroo('exkangaroo5');
-                wizardTitle.textContent = "Qual o tamanho e cor da camisa?";
-                wizardBody.innerHTML = `
-                    <p>O preço varia para tamanhos maiores.</p>
-                    <div class="wizard-balloons-group" id="wizard-size-group">
-                        <button class="wizard-btn-balloon" data-value="PP">PP</button>
-                        <button class="wizard-btn-balloon" data-value="P">P</button>
-                        <button class="wizard-btn-balloon" data-value="M">M</button>
-                        <button class="wizard-btn-balloon" data-value="G">G</button>
-                        <button class="wizard-btn-balloon" data-value="GG">GG</button>
-                        <button class="wizard-btn-balloon" data-value="XG">XG</button>
-                        <button class="wizard-btn-balloon" data-value="XXG">XXG</button>
-                    </div>
-                    
-                    <p style="margin-top: 25px;">Cor da camisa:</p>
-                    <div class="wizard-balloons-group" id="wizard-color-group">
-                        <button class="wizard-btn-balloon" data-value="Preto">Preto</button>
-                        <button class="wizard-btn-balloon" data-value="Branco">Branco</button>
-                        <button class="wizard-btn-balloon" data-value="Cinza">Cinza</button>
-                    </div>
-                `;
-                // Marca os botões 'selected'
-                wizardBody.querySelector(`#wizard-size-group .wizard-btn-balloon[data-value="${wizardData.tamanho}"]`).classList.add('selected');
-                wizardBody.querySelector(`#wizard-color-group .wizard-btn-balloon[data-value="${wizardData.cor}"]`).classList.add('selected');
-                
-                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
-                break;
-            
-            // --- ETAPA 5: FINAL (Resumo) ---
-            // (Ajuste 11: Mostra o resumo das escolhas)
-            case "final":
-                setKangaroo('exkangaroo4'); // Mesma imagem
-                wizardTitle.textContent = "Estamos quase acabando!";
-                
-                // Gera o resumo das escolhas
-                wizardBody.innerHTML = `
-                    <p>Confira seu pedido antes de adicionar ao carrinho. O valor total será exibido abaixo.</p>
-                    <div class="wizard-final-summary">
-                        <strong>Descrição da Arte:</strong>
-                        <p class="summary-description">"${wizardData.description}"</p>
-                        <hr>
-                        <strong>Tem Referências?</strong>
-                        <p>${wizardData.temReferencia ? 'Sim' : 'Não'}</p>
-                        <hr>
-                        <strong>Tipo de Algodão:</strong>
-                        <p>${wizardData.material === 'padrao' ? 'Algodão Padrão' : 'Algodão Premium'}</p>
-                        <hr>
-                        <strong>Tamanho:</strong>
-                        <p>${wizardData.tamanho}</p>
-                        <hr>
-                        <strong>Cor da Camisa:</strong>
-                        <p>${wizardData.cor}</p>
-                    </div>
-                `;
-                
-                // Mostra o resumo do preço (o CSS vai esconder os detalhes)
-                wizardSummary.style.display = 'block';
-                updatePriceSummary();
-                
-                navHTML += `<button id="wizard-add-btn" class="btn btn-primary wizard-btn-add-cart"><i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho</button>`;
-                break;
-        }
-        
-        wizardNav.innerHTML = navHTML;
-        scrollTop();
-    }
-    
-    /**
-     * Delegação de eventos para o corpo do assistente
-     * (Otimizado para não adicionar/remover listeners toda hora)
-     */
-    wizardBody.addEventListener('click', (e) => {
-        
-        // --- Lógica dos botões de Referência (Etapa 2) ---
-        if (e.target.closest('#wizard-ref-group .wizard-btn-balloon')) {
-            const btn = e.target.closest('#wizard-ref-group .wizard-btn-balloon');
-            wizardData.temReferencia = (btn.dataset.value === 'true'); // Converte string "true" para booleano true
-            // Atualiza visual
-            wizardBody.querySelectorAll('#wizard-ref-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-        }
-
-        // --- Lógica dos botões de Material (Etapa 3) ---
-        if (e.target.closest('#wizard-material-group .wizard-btn-balloon')) {
-            const btn = e.target.closest('#wizard-material-group .wizard-btn-balloon');
-            wizardData.material = btn.dataset.value;
-            // Atualiza visual
-            wizardBody.querySelectorAll('#wizard-material-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-        }
-        
-        // --- Lógica dos botões de Tamanho (Etapa 4) ---
-        if (e.target.closest('#wizard-size-group .wizard-btn-balloon')) {
-            const btn = e.target.closest('#wizard-size-group .wizard-btn-balloon');
-            wizardData.tamanho = btn.dataset.value;
-            // Atualiza visual
-            wizardBody.querySelectorAll('#wizard-size-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-        }
-        
-        // --- Lógica dos botões de Cor (Etapa 4 - combinada) ---
-        if (e.target.closest('#wizard-color-group .wizard-btn-balloon')) {
-            const btn = e.target.closest('#wizard-color-group .wizard-btn-balloon');
-            wizardData.cor = btn.dataset.value;
-            // Atualiza visual
-            wizardBody.querySelectorAll('#wizard-color-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-        }
-    });
-
-    /**
-     * (Removido o listener de input de cores)
-     */
-
-    /**
-     * Delegação de eventos para a Navegação do assistente
-     */
-    wizardNav.addEventListener('click', (e) => {
-        // --- Botão "Continuar" ---
-        if (e.target.id === 'wizard-next-btn') {
-            // Salva os dados da etapa atual antes de avançar
-            if (STEPS[wizardData.step] === 'description') {
-                const desc = document.getElementById('wizard-desc-input').value;
-                if (!desc) {
-                    alert('Por favor, descreva sua ideia para continuarmos.');
-                    return;
-                }
-                wizardData.description = desc;
-            }
-            
-            renderStep(wizardData.step + 1); // Avança
-        }
-        
-        // --- Botão "Voltar" ---
-        if (e.target.id === 'wizard-back-btn') {
-            renderStep(wizardData.step - 1); // Volta
-        }
-        
-        // --- Botão "Não, obrigado" (Etapa 0) ---
-        if (e.target.id === 'wizard-cancel-btn') {
-            window.location.href = 'index.html'; // Volta para a home
-        }
-        
-        // --- Botão "Adicionar ao Carrinho" (Etapa Final) ---
-        if (e.target.id === 'wizard-add-btn') {
-            const precoFinal = updatePriceSummary();
-            
-            // === ATUALIZAÇÃO (Ajuste 11) ===
-            // Monta a descrição final sem o número de cores
-            let detalhesItem = `Material: ${wizardData.material}, Descrição: "${wizardData.description}"`;
-            if (wizardData.temReferencia) {
-                detalhesItem += " (AVISO: Cliente tem referências! Pedir o envio no WhatsApp)";
-            }
-            
-            const itemParaCarrinho = {
-                name: "Camisa Exclusiva (Customizada)",
-                image: "Imagens/Banners/exkangaroo1.png", // Imagem placeholder
-                price: precoFinal,
-                color: wizardData.cor,
-                size: wizardData.tamanho,
-                description: detalhesItem // Descrição atualizada
-            };
-            
-            addCustomItemToCart(itemParaCarrinho);
-            
-            // Feedback e redirecionamento
-            wizardTitle.textContent = "Adicionado! 🎉";
-            wizardBody.innerHTML = `<p>Sua camisa exclusiva foi adicionada ao carrinho. Você será redirecionado em 3 segundos...</p>`;
-            wizardNav.innerHTML = '';
-            wizardSummary.style.display = 'none';
-            
-            setTimeout(() => {
-                window.location.href = 'carrinho.html';
-            }, 3000);
-        }
-    });
-
-    /**
-     * Listener do Botão "Criar minha camisa"
-     */
-    startBtn.addEventListener('click', () => {
-        // 1. Animação de Fade Out da "Página de Pouso"
-        landingSection.style.opacity = '0';
-        
-        setTimeout(() => {
-            landingSection.style.display = 'none'; // Esconde
-            
-            // 2. Mostra o Assistente
-            wizardSection.style.display = 'block';
-            
-            // 3. Renderiza a primeira etapa (Boas-vindas)
-            renderStep(0); 
-            
-            // 4. Animação de Fade In do Assistente
-            setTimeout(() => {
-                wizardSection.style.opacity = '1';
-            }, 50); // Pequeno delay
-            
-        }, 500); // 500ms = tempo da transição no CSS
-    });
-    
-    // --- Inicialização ---
-    // Carrega o carrossel da página de pouso
-    setupPartnerContent('exclusivas-slider');
-}
-// =========================================================
+                navHTML
