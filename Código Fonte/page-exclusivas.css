@@ -107,12 +107,7 @@
 
 /* --- Estilos dos Controles do Assistente --- */
 
-/* === ATUALIZAÇÃO (Ajuste 8) === */
-/* Botões de Opção (Ex: Algodão Padrão / Premium) */
-/* Os estilos .wizard-options-grid e .wizard-btn-option
-   foram REMOVIDOS, pois agora usaremos o .wizard-balloons-group
-   para a seleção de material.
-*/
+/* (Estilos dos botões quadrados de opção foram removidos) */
 
 /* Botões de Tamanho e Cor (Balões) */
 .wizard-balloons-group {
@@ -185,7 +180,7 @@
     background-color: var(--color-border);
 }
 
-/* Input de Número (Cores) */
+/* Input de Número (Cores) - (Não é mais usado, mas deixado para o futuro) */
 .wizard-input-number {
     width: 80px;
     padding: 12px 10px;
@@ -215,6 +210,41 @@
 }
 
 
+/* === ATUALIZAÇÃO (Ajuste 11) === */
+
+/* Resumo da Etapa Final (a lista de escolhas) */
+.wizard-final-summary {
+    background-color: #f9f9f9;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 20px;
+}
+.wizard-final-summary hr {
+    border: none;
+    border-top: 1px solid var(--color-light-gray);
+    margin: 15px 0;
+}
+.wizard-final-summary strong {
+    font-size: 0.9em;
+    color: #555;
+    text-transform: uppercase;
+}
+.wizard-final-summary p {
+    font-size: 1.1em !important;
+    font-weight: 600;
+    margin: 5px 0 0 0;
+    color: var(--color-primary);
+    line-height: 1.4 !important;
+}
+/* Para a descrição, que pode ser longa */
+.wizard-final-summary p.summary-description {
+    font-size: 1em !important;
+    font-weight: 400;
+    font-style: italic;
+    color: #333;
+}
+
+
 /* Resumo do Preço (Última Etapa) */
 #wizard-price-summary {
     background-color: #fdfdfd;
@@ -222,37 +252,28 @@
     padding: 20px;
     margin-top: 30px;
 }
+
+/* Esconde o título "Resumo do Pedido" */
 #wizard-price-summary h3 {
-    font-size: 1.3em;
-    font-weight: 800;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--color-border);
+    display: none;
 }
-#wizard-price-summary .summary-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1em;
-    margin-bottom: 10px;
+/* Esconde todas as linhas de preço, exceto a do total */
+#wizard-price-summary .summary-line:not(.total-line) {
+    display: none;
 }
-#wizard-price-summary .summary-line span:first-child {
-    color: #444;
-}
-#wizard-price-summary .summary-line span:last-child {
-    font-weight: 600;
-}
+/* Ajusta a linha de total, já que ela agora é a primeira */
 #wizard-price-summary .summary-line.total-line {
     font-size: 1.2em;
     font-weight: 700;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid var(--color-border);
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
 }
 #wizard-price-summary .summary-line.total-line strong:last-child {
     font-size: 1.3em;
     color: var(--color-highlight);
 }
+/* === Fim da Atualização === */
 
 
 /* === PARTE 3: RESPONSIVO DO ASSISTENTE === */
