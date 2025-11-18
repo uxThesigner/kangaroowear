@@ -2,7 +2,7 @@
 
 /* === PARTE 1: PÁGINA DE POUSO (LANDING) === */
 
-/* Ajusta o hero banner (que vem do page-construction.css) */
+/* Ajusta o hero banner */
 .exclusivas-page .construction-hero-banner {
     min-height: 40vh;
     max-height: 300px;
@@ -15,13 +15,12 @@
     background-color: rgba(0, 0, 0, 0.3);
     text-shadow: none;
 }
-/* Remove o ícone de "em construção" */
 .exclusivas-page .construction-hero-banner h1::before {
     content: none;
     margin-right: 0;
 }
 
-/* Seção de Introdução (Título e Botão) */
+/* Seção de Introdução */
 .landing-intro {
     padding: 60px 0;
     text-align: center;
@@ -43,20 +42,80 @@
     padding: 15px 40px;
 }
 
-/* Ajusta o carrossel de "Trabalhos Recentes" */
-.exclusivas-page .partner-slider-section {
-    padding-top: 0;
+/* === NOVO: Carrossel de Trabalhos Recentes === */
+.recent-works-section {
+    padding: 0 0 80px 0;
+    background-color: var(--color-background);
 }
-.exclusivas-page .partner-slider-section h2 {
-    color: var(--color-primary);
-    font-size: 2em;
+.recent-works-section h2 {
+    text-align: center;
+    margin-bottom: 40px;
     font-weight: 900;
+    font-size: 2em;
+    color: var(--color-primary);
+}
+
+.recent-works-slider {
+    display: flex;
+    overflow-x: scroll; /* Permite scroll manual também */
+    gap: 15px;
+    padding-bottom: 10px;
+    scrollbar-width: none; /* Esconde scrollbar Firefox */
+}
+.recent-works-slider::-webkit-scrollbar {
+    display: none; /* Esconde scrollbar Chrome/Safari */
+}
+
+/* Card Quadrado */
+.recent-work-card {
+    flex: 0 0 250px; /* Largura fixa */
+    width: 250px;
+    aspect-ratio: 1 / 1; /* Quadrado perfeito */
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.recent-work-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.recent-work-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Texto dentro da imagem (Overlay) */
+.recent-work-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0));
+    color: white;
+    pointer-events: none; /* Deixa clicar através do texto */
+}
+
+.recent-work-overlay h3 {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    color: var(--color-accent);
+    text-transform: uppercase;
+}
+.recent-work-overlay p {
+    font-size: 0.85em;
+    margin: 0;
+    color: #ddd;
+    line-height: 1.3;
 }
 
 
 /* === PARTE 2: O ASSISTENTE (WIZARD) === */
 
-/* Animação de Fade (será controlada pelo JS) */
 #landing-section, #wizard-section {
     transition: opacity 0.5s ease-out;
 }
@@ -68,15 +127,15 @@
 
 .wizard-grid {
     display: grid;
-    grid-template-columns: 1fr 1.5fr; /* Coluna da Imagem | Coluna do Conteúdo */
+    grid-template-columns: 1fr 1.5fr;
     gap: 60px;
     align-items: flex-start;
 }
 
-/* Coluna da Imagem (Esquerda) */
+/* Coluna da Imagem */
 .wizard-image-col {
-    position: sticky; /* Fica presa na tela enquanto rola */
-    top: 100px; /* (padding do header + 30px) */
+    position: sticky;
+    top: 100px;
     text-align: center;
 }
 .wizard-image-col img {
@@ -84,13 +143,11 @@
     height: auto;
     transition: transform 0.3s ease-out;
 }
-/* Efeito de "zoom-in" suave quando a imagem troca */
 .wizard-image-col img.in {
     transform: scale(1.05);
 }
 
-
-/* Coluna de Conteúdo (Direita) */
+/* Coluna de Conteúdo */
 .wizard-content-col h1 {
     font-size: 2.2em;
     font-weight: 800;
@@ -105,11 +162,7 @@
     margin-bottom: 25px;
 }
 
-/* --- Estilos dos Controles do Assistente --- */
-
-/* (Estilos dos botões quadrados de opção foram removidos) */
-
-/* Botões de Tamanho e Cor (Balões) */
+/* Controles */
 .wizard-balloons-group {
     display: flex;
     flex-wrap: wrap;
@@ -118,7 +171,7 @@
 .wizard-btn-balloon {
     background: #f9f9f9;
     border: 2px solid var(--color-border);
-    border-radius: 20px; /* Arredondado */
+    border-radius: 20px;
     padding: 8px 18px;
     font-size: 0.9em;
     font-weight: 600;
@@ -134,68 +187,30 @@
     color: white;
 }
 
-/* === ATUALIZAÇÃO (Ajuste 12) === */
-/* Caixa de Texto (Descrição) */
+/* TextArea */
 .wizard-textarea {
     width: 100%;
     min-height: 120px;
-    padding: 12px 15px; /* Mais padding interno */
-    border: 2px solid var(--color-border); /* Borda mais "robusta" */
-    font-size: 1.1em; /* Texto um pouco maior */
+    padding: 12px 15px;
+    border: 2px solid var(--color-border);
+    font-size: 1.1em;
     font-family: 'Poppins', sans-serif;
     resize: vertical;
-    border-radius: 5px; /* Canto arredondado */
+    border-radius: 5px;
     transition: border-color 0.2s, box-shadow 0.2s;
-    background-color: #fcfcfc; /* Fundo muito leve */
+    background-color: #fcfcfc;
 }
 .wizard-textarea:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4); /* Sombra neon mais forte */
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
     background-color: #fff;
 }
-/* === Fim da Atualização === */
 
+/* Upload (Sim/Não) */
+/* (Usamos os botões balão, então não precisa de estilo extra aqui) */
 
-/* Input de Arquivo (Referência) */
-.wizard-upload {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.9em;
-    width: 100%;
-    padding: 8px;
-    border: 1px dashed var(--color-border);
-    border-radius: 4px;
-    transition: border-color 0.2s;
-}
-.wizard-upload:hover {
-    border-color: var(--color-accent);
-}
-.wizard-upload::file-selector-button {
-    background-color: var(--color-light-gray);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    padding: 5px 10px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    margin-right: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-.wizard-upload::file-selector-button:hover {
-    background-color: var(--color-border);
-}
-
-/* Input de Número (Cores) - (Não é mais usado, mas deixado para o futuro) */
-.wizard-input-number {
-    width: 80px;
-    padding: 12px 10px;
-    border: 1px solid var(--color-border);
-    font-size: 1em;
-    font-family: 'Poppins', sans-serif;
-    border-radius: 4px;
-}
-
-/* Navegação (Voltar/Continuar) */
+/* Navegação */
 #wizard-navigation {
     display: flex;
     justify-content: space-between;
@@ -204,17 +219,8 @@
     border-top: 1px solid var(--color-light-gray);
     padding-top: 20px;
 }
-.wizard-btn-nav {
-    /* (Estilo vem do .btn) */
-}
-.wizard-btn-back {
-    /* (Estilo vem do .btn-secondary) */
-}
-.wizard-btn-add-cart {
-    /* (Estilo vem do .btn-primary) */
-}
 
-/* Resumo da Etapa Final (a lista de escolhas) */
+/* Resumo da Etapa Final */
 .wizard-final-summary {
     background-color: #f9f9f9;
     border: 1px solid var(--color-border);
@@ -238,7 +244,6 @@
     color: var(--color-primary);
     line-height: 1.4 !important;
 }
-/* Para a descrição, que pode ser longa */
 .wizard-final-summary p.summary-description {
     font-size: 1em !important;
     font-weight: 400;
@@ -246,24 +251,15 @@
     color: #333;
 }
 
-
-/* Resumo do Preço (Última Etapa) */
+/* Resumo do Preço (Escondido parcialmente) */
 #wizard-price-summary {
     background-color: #fdfdfd;
     border: 1px solid var(--color-light-gray);
     padding: 20px;
     margin-top: 30px;
 }
-
-/* Esconde o título "Resumo do Pedido" */
-#wizard-price-summary h3 {
-    display: none;
-}
-/* Esconde todas as linhas de preço, exceto a do total */
-#wizard-price-summary .summary-line:not(.total-line) {
-    display: none;
-}
-/* Ajusta a linha de total, já que ela agora é a primeira */
+#wizard-price-summary h3 { display: none; }
+#wizard-price-summary .summary-line:not(.total-line) { display: none; }
 #wizard-price-summary .summary-line.total-line {
     font-size: 1.2em;
     font-weight: 700;
@@ -276,31 +272,17 @@
     color: var(--color-highlight);
 }
 
-
-/* === PARTE 3: RESPONSIVO DO ASSISTENTE === */
-
+/* Responsivo */
 @media (max-width: 768px) {
-    .landing-intro h2 {
-        font-size: 2em;
-    }
-
-    .wizard-grid {
-        grid-template-columns: 1fr; /* Coluna única */
-        gap: 30px;
-    }
+    .landing-intro h2 { font-size: 2em; }
+    .wizard-grid { grid-template-columns: 1fr; gap: 30px; }
+    .wizard-image-col { position: static; top: 0; }
+    .wizard-image-col img { max-width: 250px; }
+    .wizard-content-col h1 { font-size: 1.8em; text-align: center; }
     
-    .wizard-image-col {
-        position: static; /* Remove o 'sticky' */
-        top: 0;
+    /* Ajuste do card no mobile */
+    .recent-work-card {
+        flex: 0 0 200px;
+        width: 200px;
     }
-    .wizard-image-col img {
-        max-width: 250px; /* Limita o tamanho do canguru */
-    }
-
-    .wizard-content-col h1 {
-        font-size: 1.8em;
-        text-align: center;
-    }
-    
-    /* (Removido o .wizard-options-grid responsivo) */
 }
