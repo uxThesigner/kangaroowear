@@ -1261,4 +1261,170 @@ function setupExclusivasPage() {
                     </div>
                 `;
                 wizardBody.querySelector(`.wizard-btn-balloon[data-value="${wizardData.material}"]`).classList.add('selected');
-                navHTML
+                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
+                break;
+                
+            case "size-color":
+                setKangaroo('exkangaroo5');
+                wizardTitle.textContent = "Qual o tamanho e cor da camisa?";
+                wizardBody.innerHTML = `
+                    <p>O preço varia para tamanhos maiores.</p>
+                    <div class="wizard-balloons-group" id="wizard-size-group">
+                        <button class="wizard-btn-balloon" data-value="PP">PP</button>
+                        <button class="wizard-btn-balloon" data-value="P">P</button>
+                        <button class="wizard-btn-balloon" data-value="M">M</button>
+                        <button class="wizard-btn-balloon" data-value="G">G</button>
+                        <button class="wizard-btn-balloon" data-value="GG">GG</button>
+                        <button class="wizard-btn-balloon" data-value="XG">XG</button>
+                        <button class="wizard-btn-balloon" data-value="XXG">XXG</button>
+                    </div>
+                    
+                    <p style="margin-top: 25px;">Cor da camisa:</p>
+                    <div class="wizard-balloons-group" id="wizard-color-group">
+                        <button class="wizard-btn-balloon" data-value="Preto">Preto</button>
+                        <button class="wizard-btn-balloon" data-value="Branco">Branco</button>
+                        <button class="wizard-btn-balloon" data-value="Cinza">Cinza</button>
+                    </div>
+                `;
+                wizardBody.querySelector(`#wizard-size-group .wizard-btn-balloon[data-value="${wizardData.tamanho}"]`).classList.add('selected');
+                wizardBody.querySelector(`#wizard-color-group .wizard-btn-balloon[data-value="${wizardData.cor}"]`).classList.add('selected');
+                
+                navHTML += `<button id="wizard-next-btn" class="btn btn-primary wizard-btn-nav">Continuar</button>`;
+                break;
+            
+            case "final":
+                setKangaroo('exkangaroo4'); 
+                wizardTitle.textContent = "Estamos quase acabando!";
+                
+                wizardBody.innerHTML = `
+                    <p>Confira seu pedido antes de adicionar ao carrinho. O valor total será exibido abaixo.</p>
+                    <div class="wizard-final-summary">
+                        <strong>Descrição da Arte:</strong>
+                        <p class="summary-description">"${wizardData.description}"</p>
+                        <hr>
+                        <strong>Tem Referências?</strong>
+                        <p>${wizardData.temReferencia ? 'Sim' : 'Não'}</p>
+                        <hr>
+                        <strong>Tipo de Algodão:</strong>
+                        <p>${wizardData.material === 'padrao' ? 'Algodão Padrão' : 'Algodão Premium'}</p>
+                        <hr>
+                        <strong>Tamanho:</strong>
+                        <p>${wizardData.tamanho}</p>
+                        <hr>
+                        <strong>Cor da Camisa:</strong>
+                        <p>${wizardData.cor}</p>
+                    </div>
+                `;
+                
+                wizardSummary.style.display = 'block';
+                updatePriceSummary();
+                
+                navHTML += `<button id="wizard-add-btn" class="btn btn-primary wizard-btn-add-cart"><i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho</button>`;
+                break;
+        }
+        
+        wizardNav.innerHTML = navHTML;
+        scrollTop();
+    }
+    
+    wizardBody.addEventListener('click', (e) => {
+        
+        if (e.target.closest('#wizard-ref-group .wizard-btn-balloon')) {
+            const btn = e.target.closest('#wizard-ref-group .wizard-btn-balloon');
+            wizardData.temReferencia = (btn.dataset.value === 'true'); 
+            wizardBody.querySelectorAll('#wizard-ref-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        if (e.target.closest('#wizard-material-group .wizard-btn-balloon')) {
+            const btn = e.target.closest('#wizard-material-group .wizard-btn-balloon');
+            wizardData.material = btn.dataset.value;
+            wizardBody.querySelectorAll('#wizard-material-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+        
+        if (e.target.closest('#wizard-size-group .wizard-btn-balloon')) {
+            const btn = e.target.closest('#wizard-size-group .wizard-btn-balloon');
+            wizardData.tamanho = btn.dataset.value;
+            wizardBody.querySelectorAll('#wizard-size-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+        
+        if (e.target.closest('#wizard-color-group .wizard-btn-balloon')) {
+            const btn = e.target.closest('#wizard-color-group .wizard-btn-balloon');
+            wizardData.cor = btn.dataset.value;
+            wizardBody.querySelectorAll('#wizard-color-group .wizard-btn-balloon').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+    });
+
+    wizardNav.addEventListener('click', (e) => {
+        if (e.target.id === 'wizard-next-btn') {
+            if (STEPS[wizardData.step] === 'description') {
+                const desc = document.getElementById('wizard-desc-input').value;
+                if (!desc) {
+                    alert('Por favor, descreva sua ideia para continuarmos.');
+                    return;
+                }
+                wizardData.description = desc;
+            }
+            
+            renderStep(wizardData.step + 1); 
+        }
+        
+        if (e.target.id === 'wizard-back-btn') {
+            renderStep(wizardData.step - 1); 
+        }
+        
+        if (e.target.id === 'wizard-cancel-btn') {
+            window.location.href = 'index.html'; 
+        }
+        
+        if (e.target.id === 'wizard-add-btn') {
+            const precoFinal = updatePriceSummary();
+            
+            let detalhesItem = `Material: ${wizardData.material}, Descrição: "${wizardData.description}"`;
+            if (wizardData.temReferencia) {
+                detalhesItem += " (AVISO: Cliente tem referências! Pedir o envio no WhatsApp)";
+            }
+            
+            const itemParaCarrinho = {
+                name: "Camisa Exclusiva (Customizada)",
+                image: "Imagens/Banners/exkangaroo1.png", 
+                price: precoFinal,
+                color: wizardData.cor,
+                size: wizardData.tamanho,
+                description: detalhesItem 
+            };
+            
+            addCustomItemToCart(itemParaCarrinho);
+            
+            wizardTitle.textContent = "Adicionado! 🎉";
+            wizardBody.innerHTML = `<p>Sua camisa exclusiva foi adicionada ao carrinho. Você será redirecionado em 3 segundos...</p>`;
+            wizardNav.innerHTML = '';
+            wizardSummary.style.display = 'none';
+            
+            setTimeout(() => {
+                window.location.href = 'carrinho.html';
+            }, 3000);
+        }
+    });
+
+    startBtn.addEventListener('click', () => {
+        landingSection.style.opacity = '0';
+        
+        setTimeout(() => {
+            landingSection.style.display = 'none'; 
+            
+            wizardSection.style.display = 'block';
+            
+            renderStep(0); 
+            
+            setTimeout(() => {
+                wizardSection.style.opacity = '1';
+            }, 50); 
+            
+        }, 500); 
+    });
+}
+// =========================================================
