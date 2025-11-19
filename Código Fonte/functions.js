@@ -1054,8 +1054,9 @@ function setupExclusivasPage() {
     const startBtn = document.getElementById('start-wizard-btn');
     
     // --- AJUSTE: Dados para o carrossel de "Trabalhos Recentes" ---
-    // (Como não temos um arquivo separado, definimos aqui)
-    const RECENT_WORKS_DATA = [
+    // RECENT_WORKS_DATA foi definido para gerar os cards
+    // mas para a animação "loop infinito" fluida, duplicamos a lista:
+    const BASE_WORKS = [
         { title: "Arte Anime", desc: "Design exclusivo", image: "work1.jpg" },
         { title: "Estilo Realista", desc: "Cliente Satisfeito", image: "work2.jpg" },
         { title: "Cartoon Fun", desc: "Personalizado", image: "work3.jpg" },
@@ -1064,6 +1065,9 @@ function setupExclusivasPage() {
         { title: "Geek Retro", desc: "Estilo 80s", image: "work6.jpg" }
     ];
     
+    // Duplicamos a lista para garantir que haja items suficientes para o scroll infinito
+    const RECENT_WORKS_DATA = [...BASE_WORKS, ...BASE_WORKS, ...BASE_WORKS];
+
     function setupRecentWorks() {
         const slider = document.getElementById('recent-works-slider');
         if (!slider) return;
@@ -1071,7 +1075,6 @@ function setupExclusivasPage() {
         // 1. Preencher o HTML
         let htmlContent = '';
         RECENT_WORKS_DATA.forEach(work => {
-            // Nota: Você deve criar as imagens em Imagens/Trabalhos/
             htmlContent += `
                 <div class="recent-work-card">
                     <img src="Imagens/Trabalhos/${work.image}" alt="${work.title}" loading="lazy">
@@ -1084,23 +1087,52 @@ function setupExclusivasPage() {
         });
         slider.innerHTML = htmlContent;
         
-        // 2. Automação (Auto-Scroll)
-        let scrollAmount = 0;
-        const speed = 1; // Velocidade do scroll (pixels por frame)
+        // 2. Automação (RequestAnimationFrame para scroll contínuo)
+        let animationId;
+        const speed = 0.8; // Velocidade (pixels por frame) - Ajuste conforme preferência
         
-        // Vamos usar setInterval para um scroll "passo a passo" (mais fácil de controlar)
-        setInterval(() => {
-            // Rola 265px (largura do card + gap) a cada 3 segundos
-            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
-                // Se chegou no fim, volta pro começo suavemente
-                slider.scrollTo({ left: 0, behavior: 'smooth' });
-            } else {
-                slider.scrollBy({ left: 265, behavior: 'smooth' });
+        function animateScroll() {
+            // Move o scroll
+            slider.scrollLeft += speed;
+            
+            // Lógica do Loop Infinito:
+            // Se rolou mais da metade do conteúdo (que é duplicado), volta pro início
+            // Isso cria a ilusão de infinito sem "pulo" visual
+            if (slider.scrollLeft >= (slider.scrollWidth / 3)) {
+                slider.scrollLeft = 0;
             }
-        }, 3000); // 3000ms = 3 segundos
+            
+            // Lógica do "Center Pop" (Efeito de destaque)
+            const centerPoint = slider.scrollLeft + (slider.clientWidth / 2);
+            const cards = slider.querySelectorAll('.recent-work-card');
+            
+            cards.forEach(card => {
+                // Centro do card em relação ao container
+                const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                const distance = Math.abs(centerPoint - cardCenter);
+                
+                // Se estiver perto do centro (ex: a menos de 100px), destaca
+                if (distance < 100) {
+                    card.classList.add('center');
+                } else {
+                    card.classList.remove('center');
+                }
+            });
+            
+            animationId = requestAnimationFrame(animateScroll);
+        }
+        
+        // Inicia a animação
+        animationId = requestAnimationFrame(animateScroll);
+        
+        // Opcional: Pausar no hover
+        slider.addEventListener('mouseenter', () => cancelAnimationFrame(animationId));
+        slider.addEventListener('mouseleave', () => {
+            cancelAnimationFrame(animationId); // Garante que não duplique
+            animationId = requestAnimationFrame(animateScroll);
+        });
     }
     
-    // Chama a função para iniciar o carrossel
     setupRecentWorks();
 
 
@@ -1108,14 +1140,12 @@ function setupExclusivasPage() {
         return;
     }
     
-    // --- Elementos do Assistente ---
     const wizardTitle = document.getElementById('wizard-title');
     const wizardBody = document.getElementById('wizard-step-body');
     const wizardNav = document.getElementById('wizard-navigation');
     const wizardSummary = document.getElementById('wizard-price-summary');
     const kangarooImg = document.getElementById('kangaroo-image');
     
-    // --- Regras de Preço ---
     const PRECOS = {
         ARTE_UNICA: 150.00, 
         ALGODAO: {
@@ -1134,7 +1164,6 @@ function setupExclusivasPage() {
         POR_COR: 8.00
     };
     
-    // --- Objeto para guardar os dados do assistente ---
     let wizardData = {
         step: 0,
         description: "",
@@ -1144,7 +1173,6 @@ function setupExclusivasPage() {
         cor: "Preto"
     };
     
-    // --- Definições das Etapas ---
     const STEPS = [
         "welcome", 
         "description", 
@@ -1154,9 +1182,6 @@ function setupExclusivasPage() {
         "final"
     ];
     
-    /**
-     * Troca a imagem do canguru com uma animação
-     */
     function setKangaroo(imageName) {
         kangarooImg.style.transform = 'scale(0.95)';
         kangarooImg.style.opacity = '0.7';
@@ -1188,9 +1213,6 @@ function setupExclusivasPage() {
         return total; 
     }
 
-    /**
-     * Função Mestra: Renderiza a etapa atual
-     */
     function renderStep(stepIndex) {
         wizardData.step = stepIndex;
         const stepName = STEPS[stepIndex];
@@ -1427,4 +1449,3 @@ function setupExclusivasPage() {
         }, 500); 
     });
 }
-// =========================================================
