@@ -42,7 +42,7 @@
     padding: 15px 40px;
 }
 
-/* === NOVO: Carrossel de Trabalhos Recentes === */
+/* === ATUALIZAÇÃO: Carrossel "Roleta" de Trabalhos Recentes === */
 .recent-works-section {
     padding: 0 0 80px 0;
     background-color: var(--color-background);
@@ -57,34 +57,47 @@
 
 .recent-works-slider {
     display: flex;
-    overflow-x: scroll; /* Permite scroll manual também */
-    gap: 15px;
-    padding-bottom: 10px;
-    scrollbar-width: none; /* Esconde scrollbar Firefox */
+    overflow-x: auto; /* Permite o scroll */
+    gap: 20px;
+    padding: 40px 0; /* Padding extra para o zoom não cortar */
+    scrollbar-width: none;
+    /* Importante para a animação fluida */
+    scroll-behavior: auto; 
 }
 .recent-works-slider::-webkit-scrollbar {
-    display: none; /* Esconde scrollbar Chrome/Safari */
+    display: none;
 }
 
-/* Card Quadrado */
+/* Card Quadrado (Estado Padrão: Inativo) */
 .recent-work-card {
-    flex: 0 0 250px; /* Largura fixa */
+    flex: 0 0 250px;
     width: 250px;
-    aspect-ratio: 1 / 1; /* Quadrado perfeito */
+    aspect-ratio: 1 / 1;
     position: relative;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    
+    /* Efeito de "Inativo" */
+    transform: scale(0.85); /* Menor */
+    filter: grayscale(100%); /* Preto e Branco */
+    opacity: 0.6; /* Meio transparente */
+    transition: all 0.4s ease-out; /* Transição suave */
 }
 
 .recent-work-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
 }
-.recent-work-card:hover img {
-    transform: scale(1.1);
+
+/* Card no Centro (Estado Ativo) */
+.recent-work-card.center {
+    transform: scale(1.15); /* Aumenta (Zoom) */
+    filter: grayscale(0%); /* Fica Colorido */
+    opacity: 1; /* Totalmente visível */
+    z-index: 2; /* Fica por cima dos outros */
+    box-shadow: 0 15px 30px rgba(0, 255, 0, 0.2); /* Glow suave */
 }
 
 /* Texto dentro da imagem (Overlay) */
@@ -96,7 +109,17 @@
     padding: 20px 15px;
     background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0));
     color: white;
-    pointer-events: none; /* Deixa clicar através do texto */
+    pointer-events: none;
+    
+    /* O texto só aparece 100% nítido quando está no centro */
+    opacity: 0; 
+    transform: translateY(20px);
+    transition: all 0.4s ease-out;
+}
+
+.recent-work-card.center .recent-work-overlay {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .recent-work-overlay h3 {
@@ -112,6 +135,7 @@
     color: #ddd;
     line-height: 1.3;
 }
+/* === Fim da Atualização === */
 
 
 /* === PARTE 2: O ASSISTENTE (WIZARD) === */
@@ -207,7 +231,7 @@
     background-color: #fff;
 }
 
-/* Upload (Sim/Não) */
+/* Input de Arquivo (Referência) */
 /* (Usamos os botões balão, então não precisa de estilo extra aqui) */
 
 /* Navegação */
@@ -284,5 +308,10 @@
     .recent-work-card {
         flex: 0 0 200px;
         width: 200px;
+        /* No mobile, reduzimos o efeito de escala para não quebrar o layout */
+        transform: scale(0.9); 
+    }
+    .recent-work-card.center {
+        transform: scale(1.05);
     }
 }
